@@ -1,0 +1,12 @@
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\port.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\port.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+mylot\port.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

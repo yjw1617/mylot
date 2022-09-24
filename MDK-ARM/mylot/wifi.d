@@ -1,0 +1,15 @@
+mylot\wifi.o: ..\Core\Src\wifi.c
+mylot\wifi.o: ../Core/Inc/wifi.h
+mylot\wifi.o: ../Core/Inc/message.h
+mylot\wifi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\wifi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\wifi.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
