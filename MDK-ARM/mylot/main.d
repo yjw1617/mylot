@@ -23,10 +23,12 @@ mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
-mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
+mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 mylot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
@@ -46,7 +48,9 @@ mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+mylot\main.o: ../Core/Inc/crc.h
 mylot\main.o: ../Core/Inc/dma.h
-mylot\main.o: ../Core/Inc/iwdg.h
+mylot\main.o: ../Core/Inc/tim.h
 mylot\main.o: ../Core/Inc/usart.h
 mylot\main.o: ../Core/Inc/gpio.h
+mylot\main.o: ../Core/Inc/fsmc.h

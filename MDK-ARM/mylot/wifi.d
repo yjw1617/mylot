@@ -13,3 +13,11 @@ mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\wifi.o: ../Core/Inc/common_dev.h
+mylot\wifi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+mylot\wifi.o: ../Core/Inc/mytestprotocol.h
+mylot\wifi.o: ../Core/Inc/xiaoyi.h
+mylot\wifi.o: ../Core/Inc/common_timer.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+mylot\wifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\wifi.o: ../Core/Inc/common_task.h

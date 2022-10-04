@@ -1,0 +1,10 @@
+mylot\mainled.o: ..\Middlewares\Third_Party\STemWin\Application\image\main\MainLed.c
+mylot\mainled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\mainled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\mainled.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

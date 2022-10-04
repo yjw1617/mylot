@@ -22,98 +22,76 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 D:\STM407Project\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  09/24/2022
+Project File Date:  10/04/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
-Note: source file '..\Core\Src\message.c' - object file renamed from 'mylot\message.o' to 'mylot\message_1.o'.
-assembling startup_stm32f407xx.s...
-compiling dma.c...
-compiling stm32f4xx_hal_rcc_ex.c...
-compiling gpio.c...
-compiling stm32f4xx_hal_timebase_tim.c...
-compiling stm32f4xx_hal_flash_ramfunc.c...
-compiling stm32f4xx_it.c...
-../Core/Inc/message.h(44): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+compiling mygui_TempDLG.c...
+../Core/Inc/message.h(62): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message.h(48): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(64): warning:  #1295-D: Deprecated declaration message_init - give arg types
+  void message_init();
+../Core/Inc/message.h(67): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Src/stm32f4xx_it.c: 2 warnings, 0 errors
-compiling iwdg.c...
-compiling stm32f4xx_hal_flash_ex.c...
-compiling stm32f4xx_hal_msp.c...
-compiling stm32f4xx_hal_gpio.c...
-compiling usart.c...
-compiling stm32f4xx_hal_flash.c...
-compiling stm32f4xx_hal_rcc.c...
-compiling main.c...
-compiling croutine.c...
-compiling freertos.c...
-../Core/Inc/message.h(44): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui.h(25): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(24): warning:  #1295-D: Deprecated declaration mygui_mes_to_ui_show_main - give arg types
+  void mygui_mes_to_ui_show_main();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(34): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_task_main - give arg types
+  void mygui_task_main();
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c(144): warning:  #223-D: function "printf" declared implicitly
+  				LOG("show main\r\n");
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c(81): warning:  #177-D: variable "pData"  was declared but never referenced
+    const void * pData;
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c(83): warning:  #177-D: variable "FileSize"  was declared but never referenced
+    U32          FileSize;
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c: 13 warnings, 0 errors
+compiling mygui.c...
+../Core/Inc/message.h(62): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message.h(48): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(64): warning:  #1295-D: Deprecated declaration message_init - give arg types
+  void message_init();
+../Core/Inc/message.h(67): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/wifi.h(6): warning:  #1295-D: Deprecated declaration wifi_init - give arg types
-  void wifi_init();
-../Core/Inc/wifi.h(8): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Src/freertos.c: 4 warnings, 0 errors
-compiling list.c...
-compiling event_groups.c...
-compiling stream_buffer.c...
-compiling queue.c...
-compiling tasks.c...
-compiling timers.c...
-compiling heap_4.c...
-compiling cmsis_os.c...
-compiling port.c...
-compiling wifi.c...
-../Core/Inc/message.h(44): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
-  void uart1_interrupt_handle();
-../Core/Inc/message.h(48): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/wifi.h(6): warning:  #1295-D: Deprecated declaration wifi_init - give arg types
-  void wifi_init();
-../Core/Inc/wifi.h(8): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\wifi.c(34): warning:  #223-D: function "printf" declared implicitly
-  					LOG("ADDR_MCU send msg to wifi\r\n");
-..\Core\Src\wifi.c(38): warning:  #223-D: function "printf" declared implicitly
-  			LOG("WIFI_dequeue errQUEUE_EMPTY\r\n");
-..\Core\Src\wifi.c(41): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui.h(25): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/utils.h(3): warning:  #1-D: last line of file ends without a newline
+  void utils_uint32_to_str(uint8_t* str, uint32_t arg);
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(24): warning:  #1295-D: Deprecated declaration mygui_mes_to_ui_show_main - give arg types
+  void mygui_mes_to_ui_show_main();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(34): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_task_main - give arg types
+  void mygui_task_main();
+..\Core\Src\mygui.c(17): warning:  #940-D: missing return statement at end of non-void function "on" 
   }
-..\Core\Src\wifi.c: 7 warnings, 0 errors
-compiling stm32f4xx_hal_pwr_ex.c...
-compiling stm32f4xx_hal.c...
-compiling stm32f4xx_hal_dma_ex.c...
-compiling stm32f4xx_hal_pwr.c...
-compiling stm32f4xx_hal_dma.c...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_hal_iwdg.c...
-compiling stm32f4xx_hal_exti.c...
-compiling stm32f4xx_hal_cortex.c...
-compiling stm32f4xx_hal_tim_ex.c...
-compiling stm32f4xx_hal_uart.c...
-compiling stm32f4xx_hal_tim.c...
-compiling message.c...
-../Core/Inc/message.h(44): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
-  void uart1_interrupt_handle();
-../Core/Inc/message.h(48): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/mcu.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/wifi.h(6): warning:  #1295-D: Deprecated declaration wifi_init - give arg types
-  void wifi_init();
-../Core/Inc/wifi.h(8): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\message.c(98): warning:  #177-D: variable "i"  was declared but never referenced
-  	uint8_t i = 0;
-..\Core\Src\message.c: 6 warnings, 0 errors
+..\Core\Src\mygui.c(24): warning:  #940-D: missing return statement at end of non-void function "off" 
+  }
+..\Core\Src\mygui.c(31): warning:  #940-D: missing return statement at end of non-void function "reset" 
+  }
+..\Core\Src\mygui.c(27): warning:  #177-D: variable "mydev"  was declared but never referenced
+  	MyGUI_dev* mydev = (MyGUI_dev*)my_dev;
+..\Core\Src\mygui.c(101): warning:  #940-D: missing return statement at end of non-void function "ioctl" 
+  }
+..\Core\Src\mygui.c: 16 warnings, 0 errors
 linking...
-Program Size: Code=13096 RO-data=540 RW-data=132 ZI-data=17828  
-FromELF: creating hex file...
-"mylot\mylot.axf" - 0 Error(s), 19 Warning(s).
+Program Size: Code=110228 RO-data=462104 RW-data=708 ZI-data=20944  
+"mylot\mylot.axf" - 0 Error(s), 29 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -137,7 +115,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:25
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

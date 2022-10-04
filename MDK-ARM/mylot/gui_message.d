@@ -1,0 +1,17 @@
+mylot\gui_message.o: ..\Core\Src\gui_message.c
+mylot\gui_message.o: ../Core/Inc/gui_message.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\gui_message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\gui_message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+mylot\gui_message.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\gui_message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\gui_message.o: ../Core/Inc/gui_task.h
+mylot\gui_message.o: ../Core/Inc/message.h
+mylot\gui_message.o: ../Core/Inc/common_dev.h

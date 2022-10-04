@@ -1,0 +1,10 @@
+mylot\subalarmopen.o: ..\Middlewares\Third_Party\STemWin\Application\image\sub\SubAlarmOpen.c
+mylot\subalarmopen.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\subalarmopen.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\subalarmopen.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

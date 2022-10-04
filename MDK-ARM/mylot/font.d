@@ -1,0 +1,9 @@
+mylot\font.o: ..\Middlewares\Third_Party\STemWin\Application\font\font.c
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\font.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\font.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

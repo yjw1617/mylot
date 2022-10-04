@@ -1,0 +1,10 @@
+mylot\subledclose.o: ..\Middlewares\Third_Party\STemWin\Application\image\sub\SubLedClose.c
+mylot\subledclose.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\subledclose.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\subledclose.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

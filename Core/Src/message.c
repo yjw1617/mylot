@@ -6,81 +6,90 @@
 #include "semphr.h"
 #include <stdio.h>
 #include <string.h>
-#include "mcu.h"
-#include "wifi.h"
+#include "mcu_task.h"
+#include "wifi_task.h"
+#include "gui_task.h"
+#include "common_task.h"
+
+typedef struct Message_task{
+	Common_Task common_task;
+	QueueHandle_t Message_Queue;
+	uint8_t uart1_Frame_buf[FRAME_MAX_LEN];
+}Message_task;
+
+static Message_task g_message_task;
 
 extern DMA_HandleTypeDef hdma_usart1_rx;
 
-static uint8_t uart1_Frame_buf[FRAME_MAX_LEN];
+static char message_check(const Message_t* const mes);
+static void message_make_fromISR(Message_t* const frame, const uint8_t* const buf);
 
-static char Message_check(const Message_t* const mes);
-static void Message_make_fromISR(Message_t* const frame, const uint8_t* const buf);
-
-static QueueHandle_t Message_Queue;
-static void Message_init(){
-	//使能串口1，2，3空闲中断
+void message_init(){
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 	//	__HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
 	//	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
-	//开启DMA搬运
-	HAL_UART_Receive_DMA(&huart1, uart1_Frame_buf, FRAME_MAX_LEN);
+
+	HAL_UART_Receive_DMA(&huart1, g_message_task.uart1_Frame_buf, FRAME_MAX_LEN);
 	//	HAL_UART_Receive_DMA(&huart2, uart2_mes_buf, R_MAX_LEN);
 	//	HAL_UART_Receive_DMA(&huart3, uart3_mes_buf, R_MAX_LEN);
-	Message_Queue = xQueueCreate(MES_QUEUE_LEN, MES_QUEUE_ITEM_SIZE);
+	g_message_task.Message_Queue = xQueueCreate(MES_QUEUE_LEN, MES_QUEUE_ITEM_SIZE);
+	if(g_message_task.Message_Queue == NULL){
+		LOG("\r\nxQueueCreate g_message_task.Message_Queue error\r\n");
+	}else{
+		LOG("\r\nxQueueCreate g_message_task.Message_Queue success\r\n");
+	}
 }
 
-uint8_t Message_queue(Message_t *mes, uint32_t delay_ms){
-	return xQueueSend(Message_Queue, &mes, pdMS_TO_TICKS(delay_ms));
+uint8_t message_queue(Message_t *mes, uint32_t delay_ms){
+	return xQueueSend(g_message_task.Message_Queue, mes, delay_ms);
 }
 
-uint8_t Message_dequeue(Message_t *mes, uint32_t delay_ms){
-	return xQueueReceive( Message_Queue, &mes, pdMS_TO_TICKS(delay_ms));
+uint8_t message_dequeue(Message_t *mes, uint32_t delay_ms){
+	return xQueueReceive( g_message_task.Message_Queue, mes, delay_ms);
 }
 
 void uart1_interrupt_handle(){
 	Frame_t frame1_tmp;
 	uint16_t uart1_rece_len = 0;
 	Message_t message_tmp = {0};
-	//判断是否产生空闲中断
+
 	if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) == SET){
-		__HAL_UART_CLEAR_IDLEFLAG(&huart1);//清除中断标志
-		//停止DMA
+		__HAL_UART_CLEAR_IDLEFLAG(&huart1);
+
 		HAL_UART_DMAStop(&huart1);
-		//将接受长度求出
-		uart1_rece_len = FRAME_MAX_LEN - hdma_usart1_rx.Instance->NDTR;//试试这里能不能通过strlen求出长度
+
+		uart1_rece_len = FRAME_MAX_LEN - hdma_usart1_rx.Instance->NDTR;
 		
-		//将接受的数据添加到uart1_msg_S中,每次对USArt1进行读取后都需要清空缓冲区
+		
 		frame1_tmp.len = uart1_rece_len;
 		
-		//寻找uart1_Frame_buf中有效部分
-		memcpy((&frame1_tmp.r_buf[0]), uart1_Frame_buf, uart1_rece_len);
-		printf("len = %d\r\n", frame1_tmp.len);
-		//检验消息帧
+
+		memcpy((&frame1_tmp.r_buf[0]), g_message_task.uart1_Frame_buf, uart1_rece_len);
 		for(uint8_t i = 0; i < frame1_tmp.len; i++){
 			if(frame1_tmp.r_buf[i] == 0xaa && frame1_tmp.r_buf[i + 1] == 0x33){
-				Message_make_fromISR(&message_tmp, &(frame1_tmp.r_buf[i]));
-				//校验这包消息
-				uint8_t ret = Message_check(&message_tmp);//长度位payload长度+8
-				if(ret){//如果检验成功
-					//将消息打入到消息队列中
-					if(xQueueSendFromISR(Message_Queue, &message_tmp, NULL) != pdTRUE){
-						printf("xQueueSendFromISR error\r\n");
+				message_make_fromISR(&message_tmp, &(frame1_tmp.r_buf[i]));
+
+				uint8_t ret = message_check(&message_tmp);
+				if(ret){
+				
+					if(xQueueSendFromISR(g_message_task.Message_Queue, &message_tmp, NULL) != pdTRUE){
+						LOG("\r\nxQueueSendFromISR error\r\n");
 					}
 				}
 			}
 		}
-		//将DMA_Usart1_RxBuffer清空
-		memset(uart1_Frame_buf, 0, FRAME_MAX_LEN);
+
+		memset(g_message_task.uart1_Frame_buf, 0, FRAME_MAX_LEN);
 		memset(&message_tmp, 0, sizeof(Message_t));
 		memset(&frame1_tmp, 0, sizeof(Frame_t));
-		//再次开启DMA
-		HAL_UART_Receive_DMA(&huart1, uart1_Frame_buf, FRAME_MAX_LEN);
+
+		HAL_UART_Receive_DMA(&huart1, g_message_task.uart1_Frame_buf, FRAME_MAX_LEN);
 	}
 }
-static char Message_check(const Message_t* const mes){
+static char message_check(const Message_t* const mes){
 	return 1;
 }
-static void Message_make_fromISR(Message_t* const frame, const uint8_t* const buf){
+static void message_make_fromISR(Message_t* const frame, const uint8_t* const buf){
 	frame->head1 = buf[0];
 	frame->head2 = buf[1];
 	frame->addr_src = buf[2];
@@ -91,26 +100,33 @@ static void Message_make_fromISR(Message_t* const frame, const uint8_t* const bu
 	memcpy(frame->payload, &buf[7], frame->len);
 	frame->check_num = buf[frame->len + 7];
 }
-void MessageHandle(void const * argument){
-	Message_init();
+void message_handle(const void* const handle){
+	message_init();
 	Message_t message_tmp = {0};
 	int8_t ret = 0;
 	uint8_t i = 0;
 	for(;;){
-		ret = Message_dequeue(&message_tmp, portMAX_DELAY);
-		LOG("kkkkk\r\n");
-		printf("ddd\r\n");
-		if(ret == pdPASS){//处理uart1接收到的消息
-			switch(message_tmp.addr_dest){
-				case ADDR_MCU:
-					//将消息给到mcu消息队列里面
+		ret = message_dequeue(&message_tmp, portMAX_DELAY);
+		if(ret == pdPASS){
+			switch(message_tmp.type){
+				case MES_TYPE_MCU:
 					mcu_mes_deal(&message_tmp);
 					break;
-				case ADDR_WIFI:
-					
-					//将消息给到wifi消息队列里面
-//					ret = Wifi_queue(&message_tmp, 0);
-//					(ret == pdPASS) ? LOG("WIFI_queue success") : LOG("WIFI_queue FULL\r\n");
+				case MES_TYPE_WIFI:
+					ret = xQueueSend(wifi_get_Wifi_Queue(), &message_tmp, 0);
+					if(ret != pdPASS){
+						LOG("Wifi_queue full\r\n");
+					}else{
+						LOG("Wifi_insert success\r\n");
+					}
+					break;
+				case MESSAGE_TYPE_GUI:
+					ret = xQueueSend(gui_get_gui_Queue(), &message_tmp, 0);
+					if(ret != pdPASS){
+						LOG("Gui_queue full\r\n");
+					}else{
+						LOG("Gui_insert success\r\n");
+					}
 					break;
 				default:
 					LOG("Unknown message\r\n");
@@ -120,7 +136,7 @@ void MessageHandle(void const * argument){
   }
 }
 
-void log_frame(const Message_t* const mes){
+void message_info(const Message_t* const mes){
 	printf("\r\n");
 	printf("fram.head1 = %.2x\r\n", mes->head1);
 	printf("fram.head2 = %.2x\r\n", mes->head2);
@@ -136,6 +152,6 @@ void log_frame(const Message_t* const mes){
 	printf("\r\nframe.check_num = %.2x\r\n", mes->check_num);
 }
 
-void Message_send(const Message_t* const mes){
+void message_send(const Message_t* const mes){
 	
 }

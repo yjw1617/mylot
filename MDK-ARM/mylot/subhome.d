@@ -1,0 +1,10 @@
+mylot\subhome.o: ..\Middlewares\Third_Party\STemWin\Application\image\sub\SubHome.c
+mylot\subhome.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\subhome.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\subhome.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

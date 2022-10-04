@@ -1,0 +1,10 @@
+mylot\subhum.o: ..\Middlewares\Third_Party\STemWin\Application\image\sub\SubHum.c
+mylot\subhum.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/GUI.h
+mylot\subhum.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/GUI_ConfDefaults.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/Config/GUIConf.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Type.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/LCD.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/Global.h
+mylot\subhum.o: ../Middlewares/Third_Party/STemWin/inc/GUI_Version.h

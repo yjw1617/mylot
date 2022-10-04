@@ -52,10 +52,10 @@
           <OutputName>mylot</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
-          <DebugInformation>1</DebugInformation>
+          <CreateHexFile>0</CreateHexFile>
+          <DebugInformation>0</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath></ListingPath>
+          <ListingPath>..\listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;      ../Drivers/STM32F4xx_HAL_Driver/Inc;      ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;      ../Middlewares/Third_Party/FreeRTOS/Source/include;      ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;      ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;      ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;      ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;                 ../Drivers/STM32F4xx_HAL_Driver/Inc;                 ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                 ../Middlewares/Third_Party/FreeRTOS/Source/include;                 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                 ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                 ../Drivers/CMSIS/Include;                 ../Middlewares/Third_Party/STemWin/src;                 ../Middlewares/Third_Party/STemWin/inc;                 ../Middlewares/Third_Party/STemWin/OS;                 ../Middlewares/Third_Party/STemWin/Config;                 ../HARDWARE/inc;                 ../SYSTEM/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,14 +409,24 @@
               <FilePath>../Core/Src/freertos.c</FilePath>
             </File>
             <File>
+              <FileName>crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/crc.c</FilePath>
+            </File>
+            <File>
               <FileName>dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/dma.c</FilePath>
             </File>
             <File>
-              <FileName>iwdg.c</FileName>
+              <FileName>fsmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/iwdg.c</FilePath>
+              <FilePath>../Core/Src/fsmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/tim.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
@@ -443,6 +453,11 @@
         <Group>
           <GroupName>Drivers/STM32F4xx_HAL_Driver</GroupName>
           <Files>
+            <File>
+              <FileName>stm32f4xx_hal_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c</FilePath>
+            </File>
             <File>
               <FileName>stm32f4xx_hal_rcc.c</FileName>
               <FileType>1</FileType>
@@ -509,9 +524,14 @@
               <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_iwdg.c</FileName>
+              <FileName>stm32f4xx_ll_fsmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c</FilePath>
+              <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_sram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_tim.c</FileName>
@@ -604,14 +624,344 @@
               <FilePath>..\Core\Src\message.c</FilePath>
             </File>
             <File>
-              <FileName>mcu.c</FileName>
+              <FileName>message.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\message.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/task</GroupName>
+          <Files>
+            <File>
+              <FileName>mcu_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\mcu.c</FilePath>
+              <FilePath>..\Core\Src\mcu_task.c</FilePath>
             </File>
             <File>
-              <FileName>wifi.c</FileName>
+              <FileName>wifi_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\wifi.c</FilePath>
+              <FilePath>..\Core\Src\wifi_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\gui_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/utils</GroupName>
+          <Files>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\utils.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/dev</GroupName>
+          <Files>
+            <File>
+              <FileName>mytestprotocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mytestprotocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>xiaoyi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\xiaoyi.c</FilePath>
+            </File>
+            <File>
+              <FileName>mytestprotocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\mytestprotocol.h</FilePath>
+            </File>
+            <File>
+              <FileName>xiaoyi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\xiaoyi.h</FilePath>
+            </File>
+            <File>
+              <FileName>mygui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mygui.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\mygui.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/common</GroupName>
+          <Files>
+            <File>
+              <FileName>common_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\common_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>common_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\common_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>common_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\common_timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Middlewares/STemwin</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_X_OS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\OS\GUI_X_OS.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIConf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Config\GUIConf.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_Template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Config\GUIDRV_Template.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCDConf_FlexColor_Template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Config\LCDConf_FlexColor_Template.c</FilePath>
+            </File>
+            <File>
+              <FileName>STemWin_CM4_OS_wc16_ot.a</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Lib\STemWin_CM4_OS_wc16_ot.a</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_X_Touch_Analog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\src\GUI_X_Touch_Analog.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/system</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\delay\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>mySys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\sys\mySys.c</FilePath>
+            </File>
+            <File>
+              <FileName>myUsart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\usart\myUsart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/hardware</GroupName>
+          <Files>
+            <File>
+              <FileName>24cxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\24CXX\24cxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>myiic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\IIC\myiic.c</FilePath>
+            </File>
+            <File>
+              <FileName>myLcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\LCD\myLcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>ctiic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TOUCH\ctiic.c</FilePath>
+            </File>
+            <File>
+              <FileName>ft5206.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TOUCH\ft5206.c</FilePath>
+            </File>
+            <File>
+              <FileName>gt9147.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TOUCH\gt9147.c</FilePath>
+            </File>
+            <File>
+              <FileName>ott2001a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TOUCH\ott2001a.c</FilePath>
+            </File>
+            <File>
+              <FileName>touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TOUCH\touch.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/mygui</GroupName>
+          <Files>
+            <File>
+              <FileName>mygui_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mygui_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_AlarmDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_AlarmDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_FanDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_FanDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_HumDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_HumDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_LedDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_LedDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_LightDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_LightDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_MainDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_MainDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_TempDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c</FilePath>
+            </File>
+            <File>
+              <FileName>mygui_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\mygui_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/font</GroupName>
+          <Files>
+            <File>
+              <FileName>font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\font\font.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/image</GroupName>
+          <Files>
+            <File>
+              <FileName>MainAlarm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainAlarm.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainFan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainFan.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainHum.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainHum.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainLed.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainLight.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainLight.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainTemp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\main\MainTemp.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubAlarmClose.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubAlarmClose.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubAlarmOpen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubAlarmOpen.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubFanClose.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubFanClose.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubFanOpen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubFanOpen.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubHome.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubHome.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubHum.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubHum.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubLedClose.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubLedClose.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubLedOpen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubLedOpen.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubLight.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubLight.c</FilePath>
+            </File>
+            <File>
+              <FileName>SubTemp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubTemp.c</FilePath>
             </File>
           </Files>
         </Group>

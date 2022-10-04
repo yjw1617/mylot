@@ -26,8 +26,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "message.h"
-#include "wifi.h"
+#include "wifi_task.h"
+#include "gui_task.h"
+#include "myLcd.h"
+#include "touch.h"
+#include "GUI.h"
+#include <stdint.h>
+#include "mygui_api.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +58,8 @@
 /* USER CODE END Variables */
 osThreadId MessageHandleHandle;
 osThreadId WifiHandleHandle;
+osThreadId GuiHandleHandle;
+osThreadId TouchHandleHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -59,11 +68,16 @@ osThreadId WifiHandleHandle;
 
 void MessageHandle_task(void const * argument);
 void WifiHandle_task(void const * argument);
+void GuiHandle_task(void const * argument);
+void TouchHandle_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* GetTimerTaskMemory prototype (linked to static allocation support) */
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -78,6 +92,19 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
+/* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
+static StaticTask_t xTimerTaskTCBBuffer;
+static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
+
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
+{
+  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
+  *ppxTimerTaskStackBuffer = &xTimerStack[0];
+  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+  /* place for user code */
+}
+/* USER CODE END GET_TIMER_TASK_MEMORY */
+
 /**
   * @brief  FreeRTOS initialization
   * @param  None
@@ -85,7 +112,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+	
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -106,12 +133,20 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of MessageHandle */
-  osThreadDef(MessageHandle, MessageHandle_task, osPriorityNormal, 0, 256);
+  osThreadDef(MessageHandle, MessageHandle_task, osPriorityAboveNormal, 0, 256);
   MessageHandleHandle = osThreadCreate(osThread(MessageHandle), NULL);
 
   /* definition and creation of WifiHandle */
-  osThreadDef(WifiHandle, WifiHandle_task, osPriorityNormal, 0, 128);
+  osThreadDef(WifiHandle, WifiHandle_task, osPriorityLow, 0, 128);
   WifiHandleHandle = osThreadCreate(osThread(WifiHandle), NULL);
+
+  /* definition and creation of GuiHandle */
+  osThreadDef(GuiHandle, GuiHandle_task, osPriorityIdle, 0, 2048);
+  GuiHandleHandle = osThreadCreate(osThread(GuiHandle), NULL);
+
+  /* definition and creation of TouchHandle */
+  osThreadDef(TouchHandle, TouchHandle_task, osPriorityIdle, 0, 256);
+  TouchHandleHandle = osThreadCreate(osThread(TouchHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -129,7 +164,7 @@ void MX_FREERTOS_Init(void) {
 void MessageHandle_task(void const * argument)
 {
   /* USER CODE BEGIN MessageHandle_task */
-	MessageHandle(argument);
+	message_handle(MessageHandleHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -148,13 +183,68 @@ void MessageHandle_task(void const * argument)
 void WifiHandle_task(void const * argument)
 {
   /* USER CODE BEGIN WifiHandle_task */
-	WifiHandle(argument);
+	wifi_handle(WifiHandleHandle);
+//	Wifi p_wifi;
+//	wifi_init(&p_wifi, 1, WifiHandleHandle);
+//	p_wifi->handler();
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
   /* USER CODE END WifiHandle_task */
+}
+
+/* USER CODE BEGIN Header_GuiHandle_task */
+/**
+* @brief Function implementing the GuiHandle thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_GuiHandle_task */
+void GuiHandle_task(void const * argument)
+{
+  /* USER CODE BEGIN GuiHandle_task */
+	mygui_task_main();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END GuiHandle_task */
+}
+
+/* USER CODE BEGIN Header_TouchHandle_task */
+/**
+* @brief Function implementing the TouchHandle thread.
+* @param argument: Not used
+* @retval None
+*/
+uint8_t flag = 0;
+/* USER CODE END Header_TouchHandle_task */
+void TouchHandle_task(void const * argument)
+{
+  /* USER CODE BEGIN TouchHandle_task */
+  /* Infinite loop */
+//	while(1) {	
+//		GUI_TOUCH_Exec();
+//		GUI_Delay(5);
+//	}       //调用GUI_Delay函数延时20MS(�?终目的是调用GUI_Exec()函数)
+	gui_handle(GuiHandleHandle);
+  for(;;)
+  {
+//		while(!flag){
+//		osDelay(1);
+//		};
+//		GUI_TOUCH_Exec();	
+//		GUI_Exec();
+//		GUI_X_ExecIdle();
+//		GUI_TOUCH_Exec();	
+//		GUI_Delay(20);
+		osDelay(1);
+//		LOG("9999\r\n");
+  }
+  /* USER CODE END TouchHandle_task */
 }
 
 /* Private application code --------------------------------------------------*/
