@@ -97,7 +97,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // Initialization of ''
     //
     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);
-//    TEXT_SetText(hItem, "温度传感器");
+    TEXT_SetText(hItem, "温度");
     TEXT_SetFont(hItem, &GUI_Fontfont);
     TEXT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);
     TEXT_SetTextColor(hItem, GUI_MAKE_COLOR(0x00FFFFFF));

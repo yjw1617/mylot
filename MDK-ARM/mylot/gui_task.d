@@ -13,6 +13,7 @@ mylot\gui_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrapper
 mylot\gui_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\gui_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\gui_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\gui_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\gui_task.o: ../Core/Inc/common_dev.h
 mylot\gui_task.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\gui_task.o: ../Core/Inc/common_task.h

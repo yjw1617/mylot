@@ -1,41 +1,55 @@
-#include "xiaoyi.h"
+#include "leinuo.h"
 #include "message.h"
 #include "string.h"
 
 static uint8_t connect(void* my_dev){
-	LOG("xiaoyi wifi connect\r\n");
+	LOG("leinuo wifi connect\r\n");
 }
 
 static uint8_t on(void* my_dev){
 	XiaoyiWifi_dev* mydev = (XiaoyiWifi_dev*)my_dev;
 	xSemaphoreTake(mydev->mutex, portMAX_DELAY);
-	LOG("xiaoyi wifi %s on\r\n", mydev->dev.name);
+	LOG("leinuo wifi %s on\r\n", mydev->dev.name);
 	xSemaphoreGive(mydev->mutex);
 }
 
 static uint8_t off(void* my_dev){
 	XiaoyiWifi_dev* mydev = (XiaoyiWifi_dev*)my_dev;
 	xSemaphoreTake(mydev->mutex, portMAX_DELAY);
-	LOG("xiaoyi wifi %s off\r\n", mydev->dev.name);
+	LOG("leinuo wifi %s off\r\n", mydev->dev.name);
 	xSemaphoreGive(mydev->mutex);
 }
 
 static uint8_t reset(void* my_dev){
 	XiaoyiWifi_dev* mydev = (XiaoyiWifi_dev*)my_dev;
 	xSemaphoreTake(mydev->mutex, portMAX_DELAY);
-	LOG("xiaoyi wifi reset\r\n");
+	LOG("leinuo wifi reset\r\n");
 	xSemaphoreGive(mydev->mutex);
 }
 
-static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg){
+static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg, uint16_t len){
 	XiaoyiWifi_dev* mydev = (XiaoyiWifi_dev*)my_dev;
-	xSemaphoreTake(mydev->mutex, portMAX_DELAY);
-	LOG("xiaoyi wifi ioctl\r\n");
-	xSemaphoreGive(mydev->mutex);
+	uint8_t* payload = 0;
+	if(len > 0){
+		payload = (uint8_t*)arg;
+	}
+	switch(cmd){
+		case CMD_WIFI_XIAOYI_ON:
+			on(mydev);
+			break;
+		case CMD_WIFI_XIAOYI_OFF:
+			off(mydev);
+			break;
+		case CMD_WIFI_XIAOYI_CONNECT:
+			connect(mydev);
+			break;
+		case CMD_WIFI_XIAOYI_RESET:
+			reset(mydev);
+	}
 }
 
 static void timer_callback(TimerHandle_t xTimer){
-	LOG("xiaoyi timer callback\r\n");
+	LOG("leinuo timer callback\r\n");
 }
 
 static operations wifi_opts = {
@@ -46,11 +60,20 @@ static operations wifi_opts = {
 	.ioctl = ioctl,
 };
 
-operations* xiaoyi_get_mydev_p(){
+operations* leinuo_get_mydev_p(){
 	return &wifi_opts;
 }
 
-void xiaoyi_init(XiaoyiWifi_dev* const mydev, uint16_t dev_addr, const uint8_t* const dev_name, const uint8_t* const timer_name){
+uint8_t leinuo_whether_leinuo_protocol(uint8_t* frame){
+	for(uint8_t i = 0; i < FRAME_MAX_LEN; i++){
+		if(frame[i] == XIAOYI_MESSAGE_HEAD1 && frame[i + 1] == XIAOYI_MESSAGE_HEAD2){//如果消息头校验成功
+			//校验消息校验位
+			
+		}
+	}
+}
+
+void leinuo_init(XiaoyiWifi_dev* const mydev, uint16_t dev_addr, const uint8_t* const dev_name, const uint8_t* const timer_name){
 
 	mydev->dev.mydev = mydev;
 	mydev->dev.addr = dev_addr;

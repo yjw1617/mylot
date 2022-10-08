@@ -12,6 +12,7 @@ mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers
 mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\message.o: ../Core/Inc/usart.h
 mylot\message.o: ../Core/Inc/main.h
 mylot\message.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
@@ -46,7 +47,6 @@ mylot\message.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 mylot\message.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 mylot\message.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 mylot\message.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-mylot\message.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\message.o: ../Core/Inc/mcu_task.h
@@ -54,3 +54,6 @@ mylot\message.o: ../Core/Inc/wifi_task.h
 mylot\message.o: ../Core/Inc/common_dev.h
 mylot\message.o: ../Core/Inc/gui_task.h
 mylot\message.o: ../Core/Inc/common_task.h
+mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\errno.h
+mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

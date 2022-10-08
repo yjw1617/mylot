@@ -7,7 +7,7 @@ typedef struct operations{
 	uint8_t (*off)(void*);
 	uint8_t (*reset)(void*);
 	uint8_t (*connect)(void*);
-	uint8_t (*ioctl)(void* my_dev, uint16_t cmd, uint32_t arg);
+	uint8_t (*ioctl)(void* my_dev, uint16_t cmd, uint32_t arg, uint16_t len);
 }operations;	
 
 typedef struct Dev {

@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;                 ../Drivers/STM32F4xx_HAL_Driver/Inc;                 ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                 ../Middlewares/Third_Party/FreeRTOS/Source/include;                 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                 ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                 ../Drivers/CMSIS/Include;                 ../Middlewares/Third_Party/STemWin/src;                 ../Middlewares/Third_Party/STemWin/inc;                 ../Middlewares/Third_Party/STemWin/OS;                 ../Middlewares/Third_Party/STemWin/Config;                 ../HARDWARE/inc;                 ../SYSTEM/inc</IncludePath>
+              <IncludePath>../Core/Inc;                        ../Drivers/STM32F4xx_HAL_Driver/Inc;                        ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                        ../Middlewares/Third_Party/FreeRTOS/Source/include;                        ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                        ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                        ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                        ../Drivers/CMSIS/Include;                        ../Middlewares/Third_Party/STemWin/src;                        ../Middlewares/Third_Party/STemWin/inc;                        ../Middlewares/Third_Party/STemWin/OS;                        ../Middlewares/Third_Party/STemWin/Config;                        ../HARDWARE/inc;                        ../SYSTEM/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -648,6 +648,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\gui_task.c</FilePath>
             </File>
+            <File>
+              <FileName>gui_poll_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\gui_poll_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -674,19 +679,9 @@
               <FilePath>..\Core\Src\mytestprotocol.c</FilePath>
             </File>
             <File>
-              <FileName>xiaoyi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\xiaoyi.c</FilePath>
-            </File>
-            <File>
               <FileName>mytestprotocol.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\mytestprotocol.h</FilePath>
-            </File>
-            <File>
-              <FileName>xiaoyi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\xiaoyi.h</FilePath>
             </File>
             <File>
               <FileName>mygui.c</FileName>
@@ -697,6 +692,11 @@
               <FileName>mygui.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\mygui.h</FilePath>
+            </File>
+            <File>
+              <FileName>leinuo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\leinuo.c</FilePath>
             </File>
           </Files>
         </Group>

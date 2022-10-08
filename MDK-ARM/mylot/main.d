@@ -54,3 +54,4 @@ mylot\main.o: ../Core/Inc/tim.h
 mylot\main.o: ../Core/Inc/usart.h
 mylot\main.o: ../Core/Inc/gpio.h
 mylot\main.o: ../Core/Inc/fsmc.h
+mylot\main.o: ../Core/Inc/message.h

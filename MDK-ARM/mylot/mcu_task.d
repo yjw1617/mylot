@@ -2,3 +2,15 @@ mylot\mcu_task.o: ..\Core\Src\mcu_task.c
 mylot\mcu_task.o: ../Core/Inc/mcu_task.h
 mylot\mcu_task.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\mcu_task.o: ../Core/Inc/message.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\mcu_task.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\mcu_task.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h

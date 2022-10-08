@@ -81,8 +81,6 @@ extern GUI_CONST_STORAGE GUI_BITMAP bmSubLedOpen;
 /** ֿ **/
 extern GUI_CONST_STORAGE GUI_FONT GUI_Fontfont;
 
-/**LED״̬ 任 ı ־**/
-static char status = 0;//0Ϊ ر ״̬  1Ϊ    ״̬
 // USER END
 
 /*********************************************************************
@@ -117,7 +115,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // USER START (Optionally insert additional code for further widget initialization)
     /**  ͼƬ    ť  **/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-    status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
+    mydev->ui_led_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
 
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
     BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubHome);
@@ -131,7 +129,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 			mygui_mes_to_lcd_wakeup(1);
 			return;
 		}
-		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
+		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			mygui_mes_to_lcd_wakeup(1);
 		}
@@ -144,9 +142,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         break;
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
-        status = !status;
+        mydev->ui_led_status = !mydev->ui_led_status;
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-        if(status){
+				mydev->ui_led_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
+        if(mydev->ui_led_status){
 					LED_CONTROL(GPIO_PIN_RESET);
 				}else{
 					LED_CONTROL(GPIO_PIN_SET);
@@ -208,18 +207,15 @@ WM_HWIN mygui_LedCreate(void) {
 //	
 //}
 
-void mygui_open_led(MyGUI_dev* dev){
+void mygui_set_ui_led(MyGUI_dev* mydev, uint8_t flag){
+	mydev->ui_alarm_status = flag;
 	WM_HWIN hItem;
 	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
-  BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen);
-	dev->ui_led_status = 1;
-}
-
-void mygui_close_led(MyGUI_dev* dev){
-	WM_HWIN hItem;
-	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
-  BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
-	dev->ui_led_status = 0;
+	if(flag == 1){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen);
+	}else if(flag == 0){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
+	}
 }
 
 // USER START (Optionally insert additional public code)

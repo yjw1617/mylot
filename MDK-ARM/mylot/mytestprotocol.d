@@ -2,5 +2,17 @@ mylot\mytestprotocol.o: ..\Core\Src\mytestprotocol.c
 mylot\mytestprotocol.o: ../Core/Inc/mytestprotocol.h
 mylot\mytestprotocol.o: ../Core/Inc/message.h
 mylot\mytestprotocol.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\mytestprotocol.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\mytestprotocol.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\mytestprotocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\mytestprotocol.o: ../Core/Inc/common_dev.h
 mylot\mytestprotocol.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

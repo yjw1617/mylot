@@ -119,8 +119,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     /**获取句柄**/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
     //给按键绑定图片
-    status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
-		
+    mydev->ui_alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
     //给按键绑定图片
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
     BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubHome);
@@ -150,10 +149,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-        status = !status;//  תһ µƵ ״̬
-        status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
-				
-				status ? ALARM_CONTROL(GPIO_PIN_SET) : ALARM_CONTROL(GPIO_PIN_RESET);
+        mydev->ui_alarm_status = !mydev->ui_alarm_status;//  תһ µƵ ״̬
+        mydev->ui_alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
+				mydev->ui_alarm_status ? ALARM_CONTROL(GPIO_PIN_SET) : ALARM_CONTROL(GPIO_PIN_RESET);
         // USER END
         break;
       // USER START (Optionally insert additional code for further notification handling)
@@ -199,14 +197,25 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 *
 *       CreateWindow
 */
+static WM_HWIN hWin;
 WM_HWIN mygui_AlarmCreate(void);
 WM_HWIN mygui_AlarmCreate(void) {
-  WM_HWIN hWin;
-
+  
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
   return hWin;
 }
 
+
+void mygui_set_ui_alarm(MyGUI_dev* mydev, uint8_t flag){
+	mydev->ui_alarm_status = flag;
+	WM_HWIN hItem;
+	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
+	if(flag == 1){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen);
+	}else if(flag == 0){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
+	}
+}
 // USER START (Optionally insert additional public code)
 // USER END
 

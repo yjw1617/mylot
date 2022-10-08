@@ -53,6 +53,7 @@ mylot\freertos.o: ../Core/Inc/message.h
 mylot\freertos.o: ../Core/Inc/wifi_task.h
 mylot\freertos.o: ../Core/Inc/common_dev.h
 mylot\freertos.o: ../Core/Inc/gui_task.h
+mylot\freertos.o: ../Core/Inc/gui_poll_task.h
 mylot\freertos.o: ../HARDWARE/inc/myLcd.h
 mylot\freertos.o: ../SYSTEM/inc/mySys.h
 mylot\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

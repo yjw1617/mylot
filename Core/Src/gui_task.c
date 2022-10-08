@@ -27,7 +27,6 @@ void gui_handle(TaskHandle_t handle){
 	MyGUI_dev* mygui_dev = dev_mydev_create(sizeof(MyGUI_dev));
 	mygui_init(mygui_dev, MESSAGE_ADDR_MY_GUI, (uint8_t*)"my_gui", (uint8_t*)"my_gui_timer");
 	dev_register(&(mygui_dev->dev));
-	
 	Message_t message_tmp = {0};//接收消息队列过来的消息
 	int8_t ret = 0;
 	for(;;){
@@ -38,35 +37,10 @@ void gui_handle(TaskHandle_t handle){
 			message_info(&message_tmp);
 			Dev* dev = dev_find_dev_by_addr(message_tmp.addr_dest);
 			if(dev != NULL){
-				dev->ops->ioctl(dev->mydev, message_tmp.cmd, message_tmp.payload[0]);
+				dev->ops->ioctl(dev->mydev, message_tmp.cmd, (uint32_t)message_tmp.payload, message_tmp.len);
 			}else{
 				LOG("dev_find_dev_by_addr failed\r\n");
 			}
 		}
 	}
 }
-	
-
-//void MainTask(void)
-//{	
-//		WM_SetCreateFlags(WM_CF_MEMDEV);	
-//    GUI_Init();                     //初始化emWin
-//    GUI_UC_SetEncodeUTF8();         //使能utf-8编码
-//    MainCreate();
-//    /** \brief
-//    HumCreate();    //显示湿度界面
-//                    //显示光亮界面
-//     *
-//     * \param
-//     * \param
-//     * \return
-//     *
-//     */
-//		char data[10] = {};
-//		static uint8_t num = 0;
-//    while(1) {	
-//			GUI_TOUCH_Exec();
-//			GUI_Delay(5);
-//		}       //调用GUI_Delay函数延时20MS(最终目的是调用GUI_Exec()函数)
-
-//}

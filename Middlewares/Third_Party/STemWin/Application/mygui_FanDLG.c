@@ -115,7 +115,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 
     /**  ͼƬ    ť  **/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-    status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
+    mydev->ui_fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
 
 
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
@@ -143,9 +143,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         break;
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
-        status = !status;
+        mydev->ui_fan_status = !mydev->ui_fan_status;
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-        status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
+        mydev->ui_fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
         // USER END
         break;
       // USER START (Optionally insert additional code for further notification handling)
@@ -191,14 +191,23 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 *
 *       CreateWindow
 */
+static WM_HWIN hWin;
 WM_HWIN mygui_FanCreate(void);
 WM_HWIN mygui_FanCreate(void) {
-  WM_HWIN hWin;
-
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
   return hWin;
 }
 
+void mygui_set_ui_fan(MyGUI_dev* mydev, uint8_t flag){
+	mydev->ui_fan_status = flag;
+	WM_HWIN hItem;
+	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
+	if(flag == 1){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen);
+	}else if(flag == 0){
+		BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
+	}
+}
 // USER START (Optionally insert additional public code)
 // USER END
 

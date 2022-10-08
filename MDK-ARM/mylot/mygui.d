@@ -2,8 +2,6 @@ mylot\mygui.o: ..\Core\Src\mygui.c
 mylot\mygui.o: ../Core/Inc/mygui.h
 mylot\mygui.o: ../Core/Inc/message.h
 mylot\mygui.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-mylot\mygui.o: ../Core/Inc/common_dev.h
-mylot\mygui.o: ../Core/Inc/common_timer.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mygui.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 mylot\mygui.o: ../Core/Inc/FreeRTOSConfig.h
@@ -12,9 +10,13 @@ mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\mygui.o: ../Core/Inc/common_dev.h
+mylot\mygui.o: ../Core/Inc/common_timer.h
+mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\mygui.o: ../Middlewares/Third_Party/STemWin/inc/dialog.h
 mylot\mygui.o: ../Middlewares/Third_Party/STemWin/inc/WM.h
@@ -98,5 +100,4 @@ mylot\mygui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 mylot\mygui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 mylot\mygui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 mylot\mygui.o: ../Core/Inc/mygui_api.h
-mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\mygui.o: ../Core/Inc/gui_task.h

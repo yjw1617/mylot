@@ -273,22 +273,22 @@ WM_HWIN mygui_MainCreate(void) {
   return hWin;
 }
 
-extern uint8_t flag;
 
 void mygui_show_ui_main(){
 	GUI_EndDialog(hWin, 0);
   mygui_MainCreate();
 }
 
-void mygui_task_main(){
+/*给freertos调用的接口*/
+void mygui_poll_task_handle(){
 	WM_SetCreateFlags(WM_CF_MEMDEV);	
 	GUI_Init();                     //初始化emWin
 	GUI_UC_SetEncodeUTF8();         //使能utf-8编码
 	mygui_MainCreate();
-	flag = 1;
 	while(1){
 		GUI_TOUCH_Exec();	
-		GUI_Delay(20);
+		GUI_Delay(10);
+		vTaskDelay(1);
 	}
 }
 

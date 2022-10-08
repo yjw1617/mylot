@@ -49,8 +49,6 @@ mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
 mylot\mygui_alarmdlg.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/mygui.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/message.h
-mylot\mygui_alarmdlg.o: ../Core/Inc/common_dev.h
-mylot\mygui_alarmdlg.o: ../Core/Inc/common_timer.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/FreeRTOSConfig.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -58,10 +56,13 @@ mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/porta
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\mygui_alarmdlg.o: ../Core/Inc/common_dev.h
+mylot\mygui_alarmdlg.o: ../Core/Inc/common_timer.h
+mylot\mygui_alarmdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/gui_task.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/gpio.h
 mylot\mygui_alarmdlg.o: ../Core/Inc/main.h

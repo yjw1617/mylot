@@ -30,6 +30,7 @@
 #include "message.h"
 #include "wifi_task.h"
 #include "gui_task.h"
+#include "gui_poll_task.h"
 #include "myLcd.h"
 #include "touch.h"
 #include "GUI.h"
@@ -59,7 +60,7 @@
 osThreadId MessageHandleHandle;
 osThreadId WifiHandleHandle;
 osThreadId GuiHandleHandle;
-osThreadId TouchHandleHandle;
+osThreadId GuiPollHandleHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -69,7 +70,7 @@ osThreadId TouchHandleHandle;
 void MessageHandle_task(void const * argument);
 void WifiHandle_task(void const * argument);
 void GuiHandle_task(void const * argument);
-void TouchHandle_task(void const * argument);
+void GuiPollHandle_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -141,12 +142,12 @@ void MX_FREERTOS_Init(void) {
   WifiHandleHandle = osThreadCreate(osThread(WifiHandle), NULL);
 
   /* definition and creation of GuiHandle */
-  osThreadDef(GuiHandle, GuiHandle_task, osPriorityIdle, 0, 2048);
+  osThreadDef(GuiHandle, GuiHandle_task, osPriorityIdle, 0, 256);
   GuiHandleHandle = osThreadCreate(osThread(GuiHandle), NULL);
 
-  /* definition and creation of TouchHandle */
-  osThreadDef(TouchHandle, TouchHandle_task, osPriorityIdle, 0, 256);
-  TouchHandleHandle = osThreadCreate(osThread(TouchHandle), NULL);
+  /* definition and creation of GuiPollHandle */
+  osThreadDef(GuiPollHandle, GuiPollHandle_task, osPriorityIdle, 0, 2048);
+  GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -205,7 +206,7 @@ void WifiHandle_task(void const * argument)
 void GuiHandle_task(void const * argument)
 {
   /* USER CODE BEGIN GuiHandle_task */
-	mygui_task_main();
+	gui_handle(GuiHandleHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -214,37 +215,23 @@ void GuiHandle_task(void const * argument)
   /* USER CODE END GuiHandle_task */
 }
 
-/* USER CODE BEGIN Header_TouchHandle_task */
+/* USER CODE BEGIN Header_GuiPollHandle_task */
 /**
-* @brief Function implementing the TouchHandle thread.
+* @brief Function implementing the GuiPollHandle thread.
 * @param argument: Not used
 * @retval None
 */
-uint8_t flag = 0;
-/* USER CODE END Header_TouchHandle_task */
-void TouchHandle_task(void const * argument)
+/* USER CODE END Header_GuiPollHandle_task */
+void GuiPollHandle_task(void const * argument)
 {
-  /* USER CODE BEGIN TouchHandle_task */
+  /* USER CODE BEGIN GuiPollHandle_task */
+	gui_poll_handle(GuiPollHandleHandle);
   /* Infinite loop */
-//	while(1) {	
-//		GUI_TOUCH_Exec();
-//		GUI_Delay(5);
-//	}       //调用GUI_Delay函数延时20MS(�?终目的是调用GUI_Exec()函数)
-	gui_handle(GuiHandleHandle);
   for(;;)
   {
-//		while(!flag){
-//		osDelay(1);
-//		};
-//		GUI_TOUCH_Exec();	
-//		GUI_Exec();
-//		GUI_X_ExecIdle();
-//		GUI_TOUCH_Exec();	
-//		GUI_Delay(20);
-		osDelay(1);
-//		LOG("9999\r\n");
+    osDelay(1);
   }
-  /* USER CODE END TouchHandle_task */
+  /* USER CODE END GuiPollHandle_task */
 }
 
 /* Private application code --------------------------------------------------*/
