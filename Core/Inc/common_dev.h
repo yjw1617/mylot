@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #define DEV_MAX_NUM 10 //设备库的最大设备数目
-#define DEV_NAME_MAX_LEN 20
+#define DEV_NAME_MAX_LEN 20 //设备名最大长度
 typedef struct operations{
 	uint8_t (*on)(void*);
 	uint8_t (*off)(void*);
@@ -31,4 +31,7 @@ Dev* dev_find_dev_by_name(uint8_t* dev_name);
 
 Dev* dev_find_dev_by_addr(uint16_t addr);
 
+void dev_init(Dev* dev, operations* opts);
+
+int8_t dev_add(Dev* dev);
 

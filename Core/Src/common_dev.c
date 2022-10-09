@@ -8,7 +8,7 @@ void* dev_mydev_create(uint16_t size){
 	return pvPortMalloc(size);
 }
 
-int8_t dev_register(Dev* dev){
+int8_t dev_add(Dev* dev){
 	for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
 		if(dev_con.dev[i] == 0){
 			dev_con.dev[i] = dev;
@@ -55,6 +55,12 @@ Dev* dev_find_dev_by_name(uint8_t* dev_name){
 	LOG("dev_find_dev_by_name\r\n");
 	return NULL;
 }
+
+
+void dev_init(Dev* dev, operations* opts){
+	dev->ops = opts;
+}
+
 
 
 

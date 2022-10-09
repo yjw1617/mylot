@@ -26,7 +26,7 @@ void gui_handle(TaskHandle_t handle){
 	//创建mygui设备
 	MyGUI_dev* mygui_dev = dev_mydev_create(sizeof(MyGUI_dev));
 	mygui_init(mygui_dev, MESSAGE_ADDR_MY_GUI, (uint8_t*)"my_gui", (uint8_t*)"my_gui_timer");
-	dev_register(&(mygui_dev->dev));
+	dev_add(&(mygui_dev->dev));
 	Message_t message_tmp = {0};//接收消息队列过来的消息
 	int8_t ret = 0;
 	for(;;){

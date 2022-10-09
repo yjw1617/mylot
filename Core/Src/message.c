@@ -8,9 +8,7 @@
 #include "wifi_task.h"
 #include "gui_task.h"
 #include "common_task.h"
-#include <assert.h>
-#include <errno.h>
-#include <math.h>
+
 extern DMA_HandleTypeDef hdma_usart1_rx;
 
 typedef struct Message_task{
@@ -31,7 +29,7 @@ static int8_t message_protocol_register(Message_protocol* protocol);
 
 static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name);
 
-static uint8_t* message_protocol_find_type(Frame_t* frame);
+static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len);
 //end
 
 //消息相关接口
@@ -79,24 +77,56 @@ static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
 	return NULL;
 }
 
-static uint8_t* message_protocol_find_type(Frame_t* frame){
+static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len){
 	//Determines the length of the received message
 //	assert(frame->len <= FRAME_MAX_LEN);
-	for(uint8_t i = 0; i < frame->len; i++){
+	for(uint8_t i = 0; i < len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
-			if(frame->r_buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
+			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
 				//message head2 ok  
-				if(frame->r_buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+				if(buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+					return g_message_task.message_protocol_controller.protocols[j]->type;
+				}
+				//message end ok
+				if(buf[buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+					return g_message_task.message_protocol_controller.protocols[j]->type;
+				}
+			}
+		}
+	}
+	return -1;
+}
+
+uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index){
+	//Determines the length of the received message
+//	assert(frame->len <= FRAME_MAX_LEN);
+	for(uint8_t i = 0; i < len; i++){
+		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
+			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
+				//message head2 ok  
+				if(buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+					*index = i;
 					return g_message_task.message_protocol_controller.protocols[j]->name;
 				}
 				//message end ok
-				if(frame->r_buf[frame->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+				if(buf[buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+					*index = i;
 					return g_message_task.message_protocol_controller.protocols[j]->name;
 				}
 			}
 		}
 	}
-	return 0;
+	return NULL;
+}
+
+static void message_protocol_copy(Message_protocol* protocol_src, Message_protocol protocol_dest){
+	memcpy(protocol_src->name, protocol_dest.name, Message_Protocol_Name_Len);
+	protocol_src->type = protocol_dest.type;
+	protocol_src->head1 = protocol_dest.head1;
+	protocol_src->head2 = protocol_dest.head2;
+	protocol_src->len_index = protocol_dest.len_index;
+	protocol_src->len_index_more = protocol_dest.len_index_more;
+	protocol_src->end = protocol_dest.end;
 }
 //end
 
@@ -155,32 +185,16 @@ void message_handle(const void* const handle){
 //	perror("hello\r\n");
 //	uint8_t j = 6 / 0;
 //	LOG("err = %s\r\n", strerror(errno)); 
-	//创建雷诺消息结构
-	Message_protocol protocol_leinuo = {
-		.name = "leinuo1",
-		.head1 = 0xaa,
-		.head2 = 0x33,
-		.len_index = 6,
-		.end = 0x00,
-	};
+	//创建并添加雷诺消息模型
 	Message_protocol* message_protocol_leinuo = message_protocol_create(sizeof(Message_protocol));
-	memcpy(message_protocol_leinuo, &protocol_leinuo, sizeof(Message_protocol));
+	//下面为一个协议支持两个类型的设备
+	message_protocol_copy(message_protocol_leinuo, (Message_protocol){.name = "leinuo", .type = Protocol_Type_Wifi | Protocol_Type_Gui , .head1=0xaa, .head2=0x33, .len_index = 6, .len_index_more = 8, .end = 0x66});
 	message_protocol_register(message_protocol_leinuo);
 	
-	
-	//创建yy消息结构
-	Message_protocol protocol_yy = {
-		.name = "yy1",
-		.head1 = 0xaa,
-		.head2 = 0x33,
-		.len_index = 6,
-		.len_index_more = 8,
-		.end = 0x66,
-	};
+	//创建并添加yy消息模型
 	Message_protocol* message_protocol_yy = message_protocol_create(sizeof(Message_protocol));
-	memcpy(message_protocol_yy, &protocol_yy, sizeof(Message_protocol));
+	message_protocol_copy(message_protocol_yy, (Message_protocol){.name = "yy", .type = Protocol_Type_Wifi, .head1=0xaa, .head2=0x55, .len_index = 6, .len_index_more = 8, .end = 0x55});
 	message_protocol_register(message_protocol_yy);
-	
 	
 	Frame_t frame_temp = {};
 	int8_t ret = 0;
@@ -189,7 +203,31 @@ void message_handle(const void* const handle){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
 		if(ret == pdPASS){
 			//将消息给到协议库查询协议种类
-			LOG("mes type = %s\r\n",message_protocol_find_type(&frame_temp));
+			int8_t protocol_type = message_protocol_find_type(frame_temp.r_buf, frame_temp.len);
+			switch(protocol_type){
+				case Protocol_Type_Wifi | Protocol_Type_Gui:
+					LOG("wifi or gui type\r\n");	
+					//发送消息给wifi队列
+					ret = xQueueSend(wifi_get_Wifi_Queue(), &frame_temp, 0);
+					if(ret != pdPASS){
+						LOG("Wifi_queue full\r\n");
+					}else{
+						LOG("Wifi_insert success\r\n");
+					}
+					//发送消息给gui队列
+					ret = xQueueSend(gui_get_gui_Queue(), &frame_temp, 0);
+					if(ret != pdPASS){
+						LOG("Wifi_queue full\r\n");
+					}else{
+						LOG("Wifi_insert success\r\n");
+					}
+					break;
+				case Protocol_Type_Zigbee:
+					LOG("Zigbee type\r\n");
+					break;
+				case -1:
+					break;
+			}
 //			switch(message_tmp.type){
 //				case MESSAGE_TYPE_MCU:
 //					mcu_mes_deal(&message_tmp);
