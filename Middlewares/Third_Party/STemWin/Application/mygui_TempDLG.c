@@ -188,7 +188,7 @@ void mygui_set_ui_temp(uint8_t* temp){
 
 void mygui_show_ui_temp(){
 	GUI_EndDialog(hWin, 0);
-  mygui_TempCreate();
+	mygui_TempCreate();
 }
 // USER START (Optionally insert additional public code)
 // USER END

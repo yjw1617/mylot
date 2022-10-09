@@ -16,8 +16,9 @@ mylot\wifi_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\wifi_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\wifi_task.o: ../Core/Inc/common_dev.h
 mylot\wifi_task.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-mylot\wifi_task.o: ../Core/Inc/mytestprotocol.h
-mylot\wifi_task.o: ../Core/Inc/leinuo.h
+mylot\wifi_task.o: ../Core/Inc/mytestprotocol_driver.h
+mylot\wifi_task.o: ../Core/Inc/leinuo_driver.h
 mylot\wifi_task.o: ../Core/Inc/common_timer.h
 mylot\wifi_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\wifi_task.o: ../Core/Inc/common_task.h
+mylot\wifi_task.o: ../Core/Inc/leinuo_service.h

@@ -54,6 +54,3 @@ mylot\message.o: ../Core/Inc/wifi_task.h
 mylot\message.o: ../Core/Inc/common_dev.h
 mylot\message.o: ../Core/Inc/gui_task.h
 mylot\message.o: ../Core/Inc/common_task.h
-mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
-mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\errno.h
-mylot\message.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

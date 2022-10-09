@@ -1,0 +1,17 @@
+mylot\leiluo_service.o: ..\Core\Src\leiluo_service.c
+mylot\leiluo_service.o: ../Core/Inc/leinuo_service.h
+mylot\leiluo_service.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+mylot\leiluo_service.o: ../Core/Inc/message.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\leiluo_service.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\leiluo_service.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\leiluo_service.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\leiluo_service.o: ../Core/Inc/common_dev.h

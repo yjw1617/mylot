@@ -21,45 +21,15 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.8.0
 Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
-D:\STM407Project\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  10/08/2022
+D:\STM407Project\mylot\mylot\MDK-ARM\mylot.uvprojx
+Project File Date:  10/09/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
-compiling message.c...
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  											while(!log_flag){vTaskDelay(1);}																				\	
-../Core/Inc/message.h(83): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
-  void uart1_interrupt_handle();
-../Core/Inc/message.h(85): warning:  #1295-D: Deprecated declaration message_init - give arg types
-  void message_init();
-../Core/Inc/message.h(88): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/wifi_task.h(12): warning:  #1295-D: Deprecated declaration wifi_get_Wifi_Queue - give arg types
-  QueueHandle_t wifi_get_Wifi_Queue();
-../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
-  QueueHandle_t gui_get_gui_Queue();
-..\Core\Src\message.c(66): warning:  #940-D: missing return statement at end of non-void function "unregister_dev" 
-  }
-..\Core\Src\message.c(70): warning:  #940-D: missing return statement at end of non-void function "message_protocol_del" 
-  }
-..\Core\Src\message.c(187): warning:  #177-D: variable "i"  was declared but never referenced
-  	uint8_t i = 0;
-..\Core\Src\message.c(68): warning:  #177-D: function "message_protocol_del"  was declared but never referenced
-  static uint8_t message_protocol_del(Message_protocol* protocol){
-..\Core\Src\message.c(72): warning:  #177-D: function "message_find_protocol_by_name"  was declared but never referenced
-  static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
-..\Core\Src\message.c(137): warning:  #177-D: function "message_check"  was declared but never referenced
-  static char message_check(const Message_t* const mes){
-..\Core\Src\message.c(140): warning:  #177-D: function "message_make_fromISR"  was declared but never referenced
-  static void message_make_fromISR(Message_t* const frame, const uint8_t* const buf){
-..\Core\Src\message.c(60): warning:  #177-D: function "unregister_dev"  was declared but never referenced
-  static uint8_t unregister_dev(Message_protocol* protocol){
-..\Core\Src\message.c: 14 warnings, 0 errors
 linking...
-Program Size: Code=111508 RO-data=462088 RW-data=736 ZI-data=20980  
-"mylot\mylot.axf" - 0 Error(s), 14 Warning(s).
+Program Size: Code=112684 RO-data=462140 RW-data=716 ZI-data=21000  
+"mylot\mylot.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -83,7 +53,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

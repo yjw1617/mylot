@@ -671,18 +671,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>App/dev</GroupName>
+          <GroupName>App/dev/driver</GroupName>
           <Files>
-            <File>
-              <FileName>mytestprotocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\mytestprotocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>mytestprotocol.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\mytestprotocol.h</FilePath>
-            </File>
             <File>
               <FileName>mygui.c</FileName>
               <FileType>1</FileType>
@@ -694,9 +684,14 @@
               <FilePath>..\Core\Inc\mygui.h</FilePath>
             </File>
             <File>
-              <FileName>leinuo.c</FileName>
+              <FileName>mytestprotocol_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\leinuo.c</FilePath>
+              <FilePath>..\Core\Src\mytestprotocol_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>leinuo_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\leinuo_driver.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -962,6 +957,16 @@
               <FileName>SubTemp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Middlewares\Third_Party\STemWin\Application\image\sub\SubTemp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App/dev/service</GroupName>
+          <Files>
+            <File>
+              <FileName>leiluo_service.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\leiluo_service.c</FilePath>
             </File>
           </Files>
         </Group>
