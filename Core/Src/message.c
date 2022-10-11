@@ -97,6 +97,26 @@ static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len){
 	return -1;
 }
 
+static int8_t message_protocol_find_addr(uint8_t* buf, uint8_t len){
+	//Determines the length of the received message
+//	assert(frame->len <= FRAME_MAX_LEN);
+	for(uint8_t i = 0; i < len; i++){
+		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
+			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
+				//message head2 ok  
+				if(buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+					return buf[i+g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
+				}
+				//message end ok
+				if(buf[buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+					return buf[i+g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
+				}
+			}
+		}
+	}
+	return -1;
+}
+
 uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index){
 	//Determines the length of the received message
 //	assert(frame->len <= FRAME_MAX_LEN);
@@ -178,78 +198,98 @@ static void message_make_fromISR(Message_t* const frame, const uint8_t* const bu
 	memcpy(frame->payload, &buf[7], frame->len);
 	frame->check_num = buf[frame->len + 7];
 }
+
+void message_make_msg_by_protocoltype(uint8_t message_type, uint8_t* buf){
+
+}
 void message_handle(const void* const handle){
 	message_init();
-//	assert_param(4>6);
-//	assert(4 > 6);
-//	perror("hello\r\n");
-//	uint8_t j = 6 / 0;
 //	LOG("err = %s\r\n", strerror(errno)); 
 	//创建并添加雷诺消息模型
 	Message_protocol* message_protocol_leinuo = message_protocol_create(sizeof(Message_protocol));
 	//下面为一个协议支持两个类型的设备
-	message_protocol_copy(message_protocol_leinuo, (Message_protocol){.name = "leinuo", .type = Protocol_Type_Wifi | Protocol_Type_Gui , .head1=0xaa, .head2=0x33, .len_index = 6, .len_index_more = 8, .end = 0x66});
+	message_protocol_copy(message_protocol_leinuo, 
+	(Message_protocol){
+		.name = "leinuo", 
+		.type = Protocol_Type_Wifi | Protocol_Type_Gui , 
+		.head1=0xaa, .head2=0x33, .len_index = 6, 
+		.len_index_more = 8, 
+		.end = 0x66
+	});
 	message_protocol_register(message_protocol_leinuo);
 	
 	//创建并添加yy消息模型
 	Message_protocol* message_protocol_yy = message_protocol_create(sizeof(Message_protocol));
-	message_protocol_copy(message_protocol_yy, (Message_protocol){.name = "yy", .type = Protocol_Type_Wifi, .head1=0xaa, .head2=0x55, .len_index = 6, .len_index_more = 8, .end = 0x55});
+	message_protocol_copy(message_protocol_yy, 
+	(Message_protocol){
+		.name = "yy", 
+		.type = Protocol_Type_Wifi, 
+		.head1=0xaa, .head2=0x55, 
+		.len_index = 6, 
+		.len_index_more = 8, 
+		.end = 0x55
+	});
 	message_protocol_register(message_protocol_yy);
+	
+	//这是自己mcu内部用的协议
+	Message_protocol* message_protocol_mcu = message_protocol_create(sizeof(Message_protocol));
+	message_protocol_copy(message_protocol_mcu, 
+	(Message_protocol){
+		.name = "mcu", 
+		.type = MESSAGE_TYPE_MCU, 
+		.head1=0xff, .head2=0x55, 
+		.len_index = 6, 
+		.len_index_more = 8, 
+		.end = 0x55
+	});
+	message_protocol_register(message_protocol_mcu);
+	
 	
 	Frame_t frame_temp = {};
 	int8_t ret = 0;
 	uint8_t i = 0;
+	uint8_t dest_addr = 0;
+	uint8_t message_type = 0;
+	Dev* dev = 0;
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
 		if(ret == pdPASS){
-			//将消息给到协议库查询协议种类
-			int8_t protocol_type = message_protocol_find_type(frame_temp.r_buf, frame_temp.len);
-			switch(protocol_type){
-				case Protocol_Type_Wifi | Protocol_Type_Gui:
-					LOG("wifi or gui type\r\n");	
-					//发送消息给wifi队列
-					ret = xQueueSend(wifi_get_Wifi_Queue(), &frame_temp, 0);
-					if(ret != pdPASS){
-						LOG("Wifi_queue full\r\n");
-					}else{
-						LOG("Wifi_insert success\r\n");
-					}
-					//发送消息给gui队列
-					ret = xQueueSend(gui_get_gui_Queue(), &frame_temp, 0);
-					if(ret != pdPASS){
-						LOG("Wifi_queue full\r\n");
-					}else{
-						LOG("Wifi_insert success\r\n");
-					}
-					break;
-				case Protocol_Type_Zigbee:
-					LOG("Zigbee type\r\n");
-					break;
-				case -1:
-					break;
+			//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中
+			dest_addr = message_protocol_find_addr(frame_temp.r_buf, frame_temp.len);
+			//将消息发送给设备的消息队列中等待处理
+			dev = dev_find_dev_by_addr(dest_addr);
+			ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
+			if(ret != pdPASS){
+				LOG("dev->Message_Queue full\r\n");
 			}
-//			switch(message_tmp.type){
-//				case MESSAGE_TYPE_MCU:
-//					mcu_mes_deal(&message_tmp);
-//					break;
-//				case MESSAGE_TYPE_WIFI:
-//					ret = xQueueSend(wifi_get_Wifi_Queue(), &message_tmp, 0);
+			
+			//将消息给到协议库查询协议种类
+//			int8_t protocol_type = message_protocol_find_type(frame_temp.r_buf, frame_temp.len);
+//			switch(protocol_type){
+//				case Protocol_Type_Wifi | Protocol_Type_Gui://发送消息给所有遵循该协议的设备
+//					LOG("wifi or gui type\r\n");	
+//					//发送消息给wifi队列
+//					ret = xQueueSend(wifi_get_Wifi_Queue(), &frame_temp, 0);
+//					if(ret != pdPASS){
+//						LOG("Wifi_queue full\r\n");
+//					}else{
+//						LOG("Wifi_insert success\r\n");
+//					}
+//					//发送消息给gui队列
+//					ret = xQueueSend(gui_get_gui_Queue(), &frame_temp, 0);
 //					if(ret != pdPASS){
 //						LOG("Wifi_queue full\r\n");
 //					}else{
 //						LOG("Wifi_insert success\r\n");
 //					}
 //					break;
-//				case MESSAGE_TYPE_GUI:
-//					ret = xQueueSend(gui_get_gui_Queue(), &message_tmp, 0);
-//					if(ret != pdPASS){
-//						LOG("Gui_queue full\r\n");
-//					}else{
-//						LOG("Gui_insert success\r\n");
-//					}
+//				case Protocol_Type_Zigbee://发送消息给所有遵循该协议的设备
+//					LOG("Zigbee type\r\n");
 //					break;
-//				default:
-//					LOG("Unknown message\r\n");
+//				case MESSAGE_TYPE_MCU://发送消息给所有遵循该协议的设备
+//					
+//					break;
+//				case -1:
 //					break;
 //			}
 		}

@@ -1,24 +1,10 @@
-#include "leinuo_driver.h"
+#include "leinuo_dev.h"
 #include "message.h"
 #include "string.h"
 #include "usart.h"
 #include "utils.h"
 #define LeiNuoWifi_Dev_Max_NUM 5
 static LeiNuoWifi_dev* pg_mydev[LeiNuoWifi_Dev_Max_NUM];
-
-typedef struct Leinuo_Msg{
-	uint8_t head1;
-	uint8_t head2;
-	uint8_t addr_src;
-	uint8_t addr_dest;
-	uint8_t type;
-	uint8_t cmd;
-	uint16_t len;
-	uint8_t payload[PAYLOAD_MAX_LEN];
-	uint8_t check_num;
-}Leinuo_Msg;
-
-
 
 static void send_message(Leinuo_Msg msg){
 	uint8_t w_buf[FRAME_MAX_LEN] = {};

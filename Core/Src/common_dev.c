@@ -56,6 +56,28 @@ Dev* dev_find_dev_by_name(uint8_t* dev_name){
 	return NULL;
 }
 
+uint8_t dev_find_protocoltype_by_addr(uint16_t addr){
+	for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
+		if(dev_con.dev[i]->addr == addr){
+			return dev_con.dev[i]->protocol_type;
+		}
+	}
+}
+
+void dev_poll_handle(){
+	BaseType_t ret = 0;
+	Frame_t frame_temp = {};
+	for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
+		if(dev_con.dev[i] != 0){
+			//接收dev的消息队列
+			ret = xQueueReceive(dev_con.dev[i]->Message_Queue, &frame_temp ,0);
+			if(ret == pdPASS){
+				//将消息传入dev设备的解析函数
+				dev_con.dev[i]->ops->msg_parse(dev_con.dev[i], frame_temp.r_buf, frame_temp.len);
+			}
+		}
+	}
+}
 
 void dev_init(Dev* dev, operations* opts){
 	dev->ops = opts;

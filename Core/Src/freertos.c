@@ -36,6 +36,7 @@
 #include "GUI.h"
 #include <stdint.h>
 #include "mygui_api.h"
+#include "dev_handle.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,6 +62,7 @@ osThreadId MessageHandleHandle;
 osThreadId WifiHandleHandle;
 osThreadId GuiHandleHandle;
 osThreadId GuiPollHandleHandle;
+osThreadId DevHandleHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -71,6 +73,7 @@ void MessageHandle_task(void const * argument);
 void WifiHandle_task(void const * argument);
 void GuiHandle_task(void const * argument);
 void GuiPollHandle_task(void const * argument);
+void DevHandle_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -148,6 +151,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of GuiPollHandle */
   osThreadDef(GuiPollHandle, GuiPollHandle_task, osPriorityIdle, 0, 2048);
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
+
+  /* definition and creation of DevHandle */
+  osThreadDef(DevHandle, DevHandle_task, osPriorityIdle, 0, 128);
+  DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -232,6 +239,25 @@ void GuiPollHandle_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END GuiPollHandle_task */
+}
+
+/* USER CODE BEGIN Header_DevHandle_task */
+/**
+* @brief Function implementing the DevHandle thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_DevHandle_task */
+void DevHandle_task(void const * argument)
+{
+  /* USER CODE BEGIN DevHandle_task */
+  dev_handle();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END DevHandle_task */
 }
 
 /* Private application code --------------------------------------------------*/

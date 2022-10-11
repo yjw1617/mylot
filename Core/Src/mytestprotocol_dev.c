@@ -1,4 +1,4 @@
-#include "mytestprotocol_driver.h"
+#include "mytestprotocol_dev.h"
 #include "message.h"
 #include <string.h>
 static uint8_t on(void* my_dev){

@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;                        ../Drivers/STM32F4xx_HAL_Driver/Inc;                        ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                        ../Middlewares/Third_Party/FreeRTOS/Source/include;                        ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                        ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                        ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                        ../Drivers/CMSIS/Include;                        ../Middlewares/Third_Party/STemWin/src;                        ../Middlewares/Third_Party/STemWin/inc;                        ../Middlewares/Third_Party/STemWin/OS;                        ../Middlewares/Third_Party/STemWin/Config;                        ../HARDWARE/inc;                        ../SYSTEM/inc</IncludePath>
+              <IncludePath>../Core/Inc;                         ../Drivers/STM32F4xx_HAL_Driver/Inc;                         ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                         ../Middlewares/Third_Party/FreeRTOS/Source/include;                         ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                         ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                         ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                         ../Drivers/CMSIS/Include;                         ../Middlewares/Third_Party/STemWin/src;                         ../Middlewares/Third_Party/STemWin/inc;                         ../Middlewares/Third_Party/STemWin/OS;                         ../Middlewares/Third_Party/STemWin/Config;                         ../HARDWARE/inc;                         ../SYSTEM/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -671,7 +671,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>App/dev/driver</GroupName>
+          <GroupName>App/dev</GroupName>
           <Files>
             <File>
               <FileName>mygui.c</FileName>
@@ -684,14 +684,34 @@
               <FilePath>..\Core\Inc\mygui.h</FilePath>
             </File>
             <File>
-              <FileName>mytestprotocol_driver.c</FileName>
+              <FileName>mytestprotocol_dev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\mytestprotocol_driver.c</FilePath>
+              <FilePath>..\Core\Src\mytestprotocol_dev.c</FilePath>
             </File>
             <File>
-              <FileName>leinuo_driver.c</FileName>
+              <FileName>mytestprotocol_dev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\mytestprotocol_dev.h</FilePath>
+            </File>
+            <File>
+              <FileName>leinuo_dev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\leinuo_driver.c</FilePath>
+              <FilePath>..\Core\Src\leinuo_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>leinuo_dev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\leinuo_dev.h</FilePath>
+            </File>
+            <File>
+              <FileName>dev_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\dev_handle.h</FilePath>
+            </File>
+            <File>
+              <FileName>dev_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\dev_handle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -704,14 +724,29 @@
               <FilePath>..\Core\Src\common_task.c</FilePath>
             </File>
             <File>
+              <FileName>common_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\common_task.h</FilePath>
+            </File>
+            <File>
               <FileName>common_dev.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\common_dev.c</FilePath>
             </File>
             <File>
+              <FileName>common_dev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\common_dev.h</FilePath>
+            </File>
+            <File>
               <FileName>common_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\common_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>common_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\common_timer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -964,9 +999,14 @@
           <GroupName>App/dev/service</GroupName>
           <Files>
             <File>
-              <FileName>leiluo_service.c</FileName>
+              <FileName>leinuo_service.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\leiluo_service.c</FilePath>
+              <FilePath>..\Core\Src\leinuo_service.c</FilePath>
+            </File>
+            <File>
+              <FileName>leinuo_service.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\leinuo_service.h</FilePath>
             </File>
           </Files>
         </Group>

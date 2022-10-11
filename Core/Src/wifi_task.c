@@ -2,8 +2,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "string.h"
-#include "mytestprotocol_driver.h"
-#include "leinuo_driver.h"
+#include "mytestprotocol_dev.h"
+#include "leinuo_dev.h"
 #include "common_task.h"
 #include "leinuo_service.h"
 typedef struct Wifi_task{
@@ -22,12 +22,8 @@ QueueHandle_t wifi_get_Wifi_Queue(){
 	return  g_wifi_task.Wifi_Queue;
 }
 
-
-
-
 void wifi_handle(TaskHandle_t handle){
 	wifi_init(handle);
-	
 	leinuo_driver_init();//初始化leinuo驱动层
 	Frame_t frame_tmp = {0};
 	int8_t ret = 0;

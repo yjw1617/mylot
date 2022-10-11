@@ -1,18 +1,15 @@
 #include "leinuo_service.h"
 #include "message.h"
 #include "common_dev.h"
+#include "leinuo_dev.h"
 static int8_t leinuo_parse_msg(uint8_t* rbuf, uint8_t len);
-typedef struct Leinuo_Msg{
-	uint8_t head1;
-	uint8_t head2;
-	uint8_t addr_src;
-	uint8_t addr_dest;
-	uint8_t type;
-	uint8_t cmd;
-	uint16_t len;
-	uint8_t payload[PAYLOAD_MAX_LEN];
-	uint8_t check_num;
-}Leinuo_Msg;
+
+typedef struct Leinuo{
+	uint8_t dev_addr;//与设备号绑定
+	uint8_t status;//wfi状态
+}Leinuo;
+
+static Leinuo leinuo[5];
 
 static int8_t leinuo_check_checkNum(uint8_t* buf, uint8_t len){
 	uint16_t sum = 0;
@@ -60,6 +57,14 @@ int8_t leinuo_deal_recv_msg(uint8_t* rbuf, uint8_t len){
 	leinuo_parse_msg(rbuf, len);
 }
 
+void leinuo_service_init(){
+	leinuo[0].dev_addr = Message_Addr_Wifi_LEINUO1;
+	leinuo[1].dev_addr = Message_Addr_Wifi_LEINUO2;
+	leinuo[2].dev_addr = Message_Addr_Wifi_LEINUO3;
+	leinuo[3].dev_addr = Message_Addr_Wifi_LEINUO4;
+	leinuo[4].dev_addr = Message_Addr_Wifi_LEINUO5;
+}
+
 //解析消息
 static int8_t leinuo_parse_msg(uint8_t* rbuf, uint8_t len){
 	Leinuo_Msg leinuo_msg = {};
@@ -71,6 +76,7 @@ static int8_t leinuo_parse_msg(uint8_t* rbuf, uint8_t len){
 		LOG("dev_find_dev_by_addr error\r\n");
 		return -1;
 	}
+	
 	switch(leinuo_msg.cmd){
 		case Leinuo_Cmd_On:
 			dev->ops->on(dev);

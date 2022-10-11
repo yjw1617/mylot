@@ -48,8 +48,8 @@
 "mylot\gui_poll_task.o"
 "mylot\utils.o"
 "mylot\mygui.o"
-"mylot\mytestprotocol_driver.o"
-"mylot\leinuo_driver.o"
+"mylot\mytestprotocol_dev.o"
+"mylot\leinuo_dev.o"
 "mylot\common_task.o"
 "mylot\common_dev.o"
 "mylot\common_timer.o"
@@ -95,7 +95,7 @@
 "mylot\subledopen.o"
 "mylot\sublight.o"
 "mylot\subtemp.o"
-"mylot\leiluo_service.o"
+"mylot\leinuo_service.o"
 --library_type=microlib --nodebug --strict --scatter "mylot\mylot.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

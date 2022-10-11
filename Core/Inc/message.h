@@ -28,7 +28,6 @@ static volatile uint8_t log_flag = 1;
 //message head1
 enum Message_Head1{
 	Message_Head1_leinuo = 0xaa,
-	
 };
 
 enum Message_Head2{
@@ -36,14 +35,14 @@ enum Message_Head2{
 };
 
 enum Message_Addr{
-	MESSAGE_ADDR_MCU = 0x00,
-	MESSAGE_ADDR_WIFI_TEST = 0x01,
+	MESSAGE_Addr_MCU = 0x00,
+	MESSAGE_Addr_WIFI_TEST = 0x01,
 	Message_Addr_Wifi_LEINUO1 = 0x02,
 	Message_Addr_Wifi_LEINUO2 = 0x03,
 	Message_Addr_Wifi_LEINUO3 = 0x04,
 	Message_Addr_Wifi_LEINUO4 = 0x05,
 	Message_Addr_Wifi_LEINUO5 = 0x06,
-	MESSAGE_ADDR_MY_GUI = 0x07,
+	MESSAGE_Addr_MY_GUI = 0x07,
 };
 
 enum Message_Type{
@@ -53,14 +52,12 @@ enum Message_Type{
 	MESSAGE_TYPE_GUI = 0x03,
 };
 
-//enum Message_Cmd{
-//	
-//}
-//#define CMD_WIFI_XIAOYI_ON 0
-//#define CMD_WIFI_XIAOYI_OFF 1
-//#define CMD_WIFI_XIAOYI_CONNECT 2
-//#define CMD_WIFI_XIAOYI_RESET 3
-//#define MESSAGE_CMD_PRINT_MEMORY 0
+enum Message_Cmd{
+	Leinuo_Cmd_On = 0x00,
+	Leinuo_Cmd_Off = 0x01,
+	Leinuo_Cmd_Reset = 0x02,
+	Leinuo_Cmd_Connect_Net = 0x03,
+};
 
 #define Message_Protocol_Max_Num 5	//消息类型的最大数目
 #define Message_Protocol_Name_Len 10
@@ -94,6 +91,8 @@ typedef struct Message_protocol{
 	uint8_t head2;
 	uint8_t len_index;
 	uint8_t len_index_more;//知道长度了，需要找数据尾还需要一个数，这个数根据具体协议来决定
+	uint8_t dest_addr_index;//目标设备地址下标
+	uint8_t src_addr_index;//发送设备地址下标
 	uint8_t end;
 }Message_protocol;
 
