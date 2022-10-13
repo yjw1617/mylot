@@ -75,7 +75,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
 	//获取mygui的设备句柄
-	Dev* dev = dev_find_dev_by_addr(MESSAGE_ADDR_MY_GUI);
+	Dev* dev = dev_find_dev_by_addr(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
 	
   const void * pData;

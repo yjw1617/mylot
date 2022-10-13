@@ -42,7 +42,7 @@ enum Message_Addr{
 	Message_Addr_Wifi_LEINUO3 = 0x04,
 	Message_Addr_Wifi_LEINUO4 = 0x05,
 	Message_Addr_Wifi_LEINUO5 = 0x06,
-	MESSAGE_Addr_MY_GUI = 0x07,
+	Message_Addr_MY_GUI = 0x07,
 };
 
 enum Message_Type{
@@ -83,6 +83,19 @@ enum Message_Protocol_Type{
 	Protocol_Type_Zigbee = (1<<1),
 	Protocol_Type_Gui = (1<<2),
 };
+
+typedef struct Message_Leinuo_t{
+	uint8_t head1;
+	uint8_t head2;
+	uint8_t addr_src;
+	uint8_t addr_dest;
+	uint8_t type;
+	uint8_t cmd;
+	uint16_t len;
+	uint8_t payload[PAYLOAD_MAX_LEN];
+	uint8_t check_num;
+}Message_Leinuo_t;
+
 
 typedef struct Message_protocol{
 	uint8_t name[Message_Protocol_Name_Len];

@@ -3,7 +3,7 @@
 #include "string.h"
 #include "usart.h"
 #include "utils.h"
-#define LeiNuoWifi_Dev_Max_NUM 5
+#define LeiNuoWifi_Dev_Max_NUM 3
 static LeiNuoWifi_dev* pg_mydev[LeiNuoWifi_Dev_Max_NUM];
 
 static void send_message(Leinuo_Msg msg){
@@ -71,13 +71,33 @@ static void timer_callback(TimerHandle_t xTimer){
 	LOG("leinuo timer callback\r\n");
 }
 
+
+
+static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
+	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
+	for(uint8_t i = 0; i < len; i++){
+		LOG("%.2x ", buf[i]);
+	}
+	uint8_t data[len];
+	memcpy(data, buf, len);
+	//将消息解析出来封装成结构体
+	Message_Leinuo_t* mes = (Message_Leinuo_t*)data;
+	if(mes->addr_src == MESSAGE_Addr_MCU){
+		LOG("leinuo recv mes from mcu\r\n");
+	}else if(mes->addr_src == Message_Addr_Wifi_LEINUO1){
+		LOG("leinuo recv mse from Message_Addr_Wifi_LEINUO1");
+	}
+}
+
 static operations opts = {
 	.on = on,
 	.off = off,
 	.reset = reset,
 	.connect = connect,
 	.ioctl = ioctl,
+	.msg_parse = msg_parse,
 };
+
 
 operations* leinuo_get_mydev_p(){
 	return &opts;
@@ -95,7 +115,7 @@ static void leinuo_timer_init(LeiNuoWifi_dev* mydev){
 	commom_timer_init(&mydev->timer);
 }
 
-int8_t leinuo_driver_init(){
+int8_t leinuo_dev_init(){
 	int8_t ret = 0;
 	for(uint8_t i = 0; i < LeiNuoWifi_Dev_Max_NUM; i++){
 		pg_mydev[i]= dev_mydev_create(sizeof(LeiNuoWifi_dev));//创建雷诺结构体
@@ -103,9 +123,11 @@ int8_t leinuo_driver_init(){
 			LOG("dev_mydev_%d create LeiNuoWifi_dev error\r\n", i);
 			return -1;
 		}
+		
 		memset(pg_mydev[i], 0, sizeof(LeiNuoWifi_dev));//初始化leino结构体为0
 		dev_init(&pg_mydev[i]->dev, &opts);//绑定操作函数
 		pg_mydev[i]->dev.mydev = pg_mydev[i];//将自己的mydev指针指向子类
+		pg_mydev[i]->Message_Queue = xQueueCreate(2 , FRAME_MAX_LEN);
 		ret = dev_add(&pg_mydev[i]->dev);//add dev to linux kernel
 		if(ret == -1){
 			LOG("dev %d add err\r\n", i);
@@ -127,11 +149,8 @@ int8_t leinuo_driver_init(){
 	pg_mydev[2]->dev.addr = Message_Addr_Wifi_LEINUO3;//LeiNuo设备的地址
 	memcpy(pg_mydev[2]->dev.name, "LeiNuoWifi3", strlen((char*)"LeiNuoWifi3"));
 	
-	pg_mydev[3]->dev.addr = Message_Addr_Wifi_LEINUO4;//LeiNuo设备的地址
-	memcpy(pg_mydev[3]->dev.name, "LeiNuoWifi4", strlen((char*)"LeiNuoWifi4"));
 	
-	pg_mydev[4]->dev.addr = Message_Addr_Wifi_LEINUO5;//LeiNuo设备的地址
-	memcpy(pg_mydev[4]->dev.name, "LeiNuoWifi5", strlen((char*)"LeiNuoWifi5"));
+	
 }
 
 

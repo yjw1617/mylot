@@ -50,6 +50,7 @@
 "mylot\mygui.o"
 "mylot\mytestprotocol_dev.o"
 "mylot\leinuo_dev.o"
+"mylot\dev_handle.o"
 "mylot\common_task.o"
 "mylot\common_dev.o"
 "mylot\common_timer.o"

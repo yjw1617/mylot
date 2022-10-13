@@ -47,7 +47,7 @@ static int8_t message_protocol_register(Message_protocol* protocol){
 		if(g_message_task.message_protocol_controller.protocols[i] == 0){
 			g_message_task.message_protocol_controller.protocols[i] = protocol;
 			g_message_task.message_protocol_controller.num++;
-			LOG("protocol success\r\n");
+			LOG("message_protocol_register success\r\n");
 			return pdTRUE;
 		}
 	}
@@ -97,19 +97,24 @@ static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len){
 	return -1;
 }
 
-static int8_t message_protocol_find_addr(uint8_t* buf, uint8_t len){
+static int8_t message_protocol_find_addr(uint8_t* buf, uint8_t len, uint8_t* index_useful){
 	//Determines the length of the received message
 //	assert(frame->len <= FRAME_MAX_LEN);
 	for(uint8_t i = 0; i < len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
 			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
+				LOG("i = %d, head1 == %.2x\r\n", i, buf[i]);
 				//message head2 ok  
 				if(buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
-					return buf[i+g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
+					LOG("i = %d, head2 3 == %.2x\r\n", i, buf[i+1]);
+					*index_useful = i;
+					LOG("g_message_task.message_protocol_controller.protocols[j]->dest_addr_index == %.2x\r\n", g_message_task.message_protocol_controller.protocols[j]->dest_addr_index);
+					return buf[i + g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
 				}
 				//message end ok
 				if(buf[buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
-					return buf[i+g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
+					*index_useful = i;
+					return buf[i + g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
 				}
 			}
 		}
@@ -147,6 +152,7 @@ static void message_protocol_copy(Message_protocol* protocol_src, Message_protoc
 	protocol_src->len_index = protocol_dest.len_index;
 	protocol_src->len_index_more = protocol_dest.len_index_more;
 	protocol_src->end = protocol_dest.end;
+	protocol_src->dest_addr_index = protocol_dest.dest_addr_index;
 }
 //end
 
@@ -237,10 +243,9 @@ void message_handle(const void* const handle){
 	(Message_protocol){
 		.name = "mcu", 
 		.type = MESSAGE_TYPE_MCU, 
-		.head1=0xff, .head2=0x55, 
-		.len_index = 6, 
-		.len_index_more = 8, 
-		.end = 0x55
+		.head1=0xff, 
+		.head2=0x55, 
+		.dest_addr_index = 0x03,
 	});
 	message_protocol_register(message_protocol_mcu);
 	
@@ -251,16 +256,25 @@ void message_handle(const void* const handle){
 	uint8_t dest_addr = 0;
 	uint8_t message_type = 0;
 	Dev* dev = 0;
+	uint8_t index_useful = 0;
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
 		if(ret == pdPASS){
+			for(uint8_t k = 0; k < frame_temp.len; k++){
+				LOG("%.2x ", frame_temp.r_buf[k]);
+			}
+			LOG("frame len = %d\r\n", frame_temp.len);
 			//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中
-			dest_addr = message_protocol_find_addr(frame_temp.r_buf, frame_temp.len);
+			dest_addr = message_protocol_find_addr(frame_temp.r_buf, frame_temp.len, &index_useful);
+			LOG("dest_addr = %d\r\n", dest_addr);
 			//将消息发送给设备的消息队列中等待处理
 			dev = dev_find_dev_by_addr(dest_addr);
-			ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
-			if(ret != pdPASS){
-				LOG("dev->Message_Queue full\r\n");
+			LOG("xQueueReceive\r\n");
+			if(dev->Message_Queue != NULL){
+				ret = xQueueSend(dev->Message_Queue, &frame_temp.r_buf[index_useful], 0);
+				if(ret != pdPASS){
+					LOG("dev->Message_Queue full\r\n");
+				}
 			}
 			
 			//将消息给到协议库查询协议种类

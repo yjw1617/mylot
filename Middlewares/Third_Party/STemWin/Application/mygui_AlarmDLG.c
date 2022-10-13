@@ -93,7 +93,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-	Dev* dev = dev_find_dev_by_addr(MESSAGE_ADDR_MY_GUI);
+	Dev* dev = dev_find_dev_by_addr(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
   WM_HWIN hItem;
   int     NCode;

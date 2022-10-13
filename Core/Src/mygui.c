@@ -100,7 +100,7 @@ static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg, uint16_t len){
 
 static void timer_callback(TimerHandle_t xTimer){
 	//得到mydev的句柄
-	Dev* dev = dev_find_dev_by_addr(MESSAGE_ADDR_MY_GUI);
+	Dev* dev = dev_find_dev_by_addr(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
 	LOG("pvTimerGetTimerID = %d\r\n", *((uint32_t*)pvTimerGetTimerID(xTimer)));
 	if(*((uint32_t*)pvTimerGetTimerID(xTimer)) == 0){//10s定时到达

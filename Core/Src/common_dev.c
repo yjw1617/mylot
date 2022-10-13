@@ -67,15 +67,21 @@ uint8_t dev_find_protocoltype_by_addr(uint16_t addr){
 void dev_poll_handle(){
 	BaseType_t ret = 0;
 	Frame_t frame_temp = {};
-	for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
-		if(dev_con.dev[i] != 0){
-			//接收dev的消息队列
-			ret = xQueueReceive(dev_con.dev[i]->Message_Queue, &frame_temp ,0);
-			if(ret == pdPASS){
-				//将消息传入dev设备的解析函数
-				dev_con.dev[i]->ops->msg_parse(dev_con.dev[i], frame_temp.r_buf, frame_temp.len);
+	for(;;){
+//		LOG("frame_temp\r\n");
+		for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
+			if(dev_con.dev[i] != NULL){
+				//接收dev的消息队列
+				if(dev_con.dev[i]->Message_Queue != NULL){
+					ret = xQueueReceive(dev_con.dev[i]->Message_Queue, &frame_temp ,1);
+					if(ret == pdPASS){
+						//将消息传入dev设备的解析函数
+						dev_con.dev[i]->ops->msg_parse(dev_con.dev[i], frame_temp.r_buf, frame_temp.len);
+					}
+				}
 			}
 		}
+		vTaskDelay(1);
 	}
 }
 

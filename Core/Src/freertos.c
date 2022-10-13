@@ -59,7 +59,6 @@
 
 /* USER CODE END Variables */
 osThreadId MessageHandleHandle;
-osThreadId WifiHandleHandle;
 osThreadId GuiHandleHandle;
 osThreadId GuiPollHandleHandle;
 osThreadId DevHandleHandle;
@@ -70,7 +69,6 @@ osThreadId DevHandleHandle;
 /* USER CODE END FunctionPrototypes */
 
 void MessageHandle_task(void const * argument);
-void WifiHandle_task(void const * argument);
 void GuiHandle_task(void const * argument);
 void GuiPollHandle_task(void const * argument);
 void DevHandle_task(void const * argument);
@@ -140,10 +138,6 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(MessageHandle, MessageHandle_task, osPriorityAboveNormal, 0, 256);
   MessageHandleHandle = osThreadCreate(osThread(MessageHandle), NULL);
 
-  /* definition and creation of WifiHandle */
-  osThreadDef(WifiHandle, WifiHandle_task, osPriorityLow, 0, 128);
-  WifiHandleHandle = osThreadCreate(osThread(WifiHandle), NULL);
-
   /* definition and creation of GuiHandle */
   osThreadDef(GuiHandle, GuiHandle_task, osPriorityIdle, 0, 256);
   GuiHandleHandle = osThreadCreate(osThread(GuiHandle), NULL);
@@ -153,7 +147,7 @@ void MX_FREERTOS_Init(void) {
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* definition and creation of DevHandle */
-  osThreadDef(DevHandle, DevHandle_task, osPriorityIdle, 0, 128);
+  osThreadDef(DevHandle, DevHandle_task, osPriorityLow, 0, 256);
   DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -172,35 +166,13 @@ void MX_FREERTOS_Init(void) {
 void MessageHandle_task(void const * argument)
 {
   /* USER CODE BEGIN MessageHandle_task */
-	message_handle(MessageHandleHandle);
+  message_handle(MessageHandleHandle);
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
   /* USER CODE END MessageHandle_task */
-}
-
-/* USER CODE BEGIN Header_WifiHandle_task */
-/**
-* @brief Function implementing the WifiHandle thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_WifiHandle_task */
-void WifiHandle_task(void const * argument)
-{
-  /* USER CODE BEGIN WifiHandle_task */
-	wifi_handle(WifiHandleHandle);
-//	Wifi p_wifi;
-//	wifi_init(&p_wifi, 1, WifiHandleHandle);
-//	p_wifi->handler();
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END WifiHandle_task */
 }
 
 /* USER CODE BEGIN Header_GuiHandle_task */
@@ -213,7 +185,7 @@ void WifiHandle_task(void const * argument)
 void GuiHandle_task(void const * argument)
 {
   /* USER CODE BEGIN GuiHandle_task */
-	gui_handle(GuiHandleHandle);
+  gui_handle(GuiHandleHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -251,6 +223,7 @@ void GuiPollHandle_task(void const * argument)
 void DevHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevHandle_task */
+	vTaskDelay(10000);
   dev_handle();
   /* Infinite loop */
   for(;;)

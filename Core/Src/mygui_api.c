@@ -2,7 +2,7 @@
 void mygui_mes_to_lcd_wakeup(uint8_t data){
 	Message_t message = {
 		.type = MESSAGE_TYPE_GUI,
-		.addr_dest = MESSAGE_ADDR_MY_GUI,
+		.addr_dest = Message_Addr_MY_GUI,
 		.cmd = CMD_GUI_LCD_WAKEUP,
 		.payload = {data},
 	};

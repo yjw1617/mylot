@@ -109,3 +109,4 @@ mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/TREEVIEW.h
 mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
 mylot\freertos.o: ../Core/Inc/mygui.h
 mylot\freertos.o: ../Core/Inc/common_timer.h
+mylot\freertos.o: ../Core/Inc/dev_handle.h

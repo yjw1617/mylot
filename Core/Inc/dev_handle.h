@@ -1,1 +1,2 @@
-#pragame once
+#pragma once
+void dev_handle();
