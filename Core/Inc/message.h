@@ -63,7 +63,8 @@ enum Message_Cmd{
 #define Message_Protocol_Name_Len 10
 #define Message_Protocol_Type_Len 10
 typedef struct Frame_t{
-	uint16_t len;
+	uint8_t index_useful;
+	uint8_t len;
 	uint8_t r_buf[FRAME_MAX_LEN];
 }Frame_t;
 typedef struct Message_t{

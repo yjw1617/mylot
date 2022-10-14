@@ -27,109 +27,37 @@ Project File Date:  10/13/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
-compiling leinuo_dev.c...
-../Core/Inc/message.h(12): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(122): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
-  void uart1_interrupt_handle();
-../Core/Inc/message.h(124): warning:  #1295-D: Deprecated declaration message_init - give arg types
-  void message_init();
-../Core/Inc/message.h(131): warning:  #1-D: last line of file ends without a newline
-  #endif
+compiling common_dev.c...
 ../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
   void dev_poll_handle();
-../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
-  void commom_timer_init(Common_Timer* commom_timer);
-../Core/Inc/leinuo_dev.h(29): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
-  int8_t leinuo_dev_init();
-../Core/Inc/leinuo_dev.h(31): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
-  operations* leinuo_get_mydev_p();
-../Core/Inc/leinuo_dev.h(33): warning:  #1-D: last line of file ends without a newline
-  uint8_t leinuo_is_leinuo_protocol(uint8_t* frame);
-../Core/Inc/utils.h(4): warning:  #1-D: last line of file ends without a newline
-  uint8_t utils_calculate_check_num(uint8_t* msg,uint8_t index_start, uint8_t len);
-..\Core\Src\leinuo_dev.c(26): warning:  #223-D: function "printf" declared implicitly
-  	LOG("wifi connect\r\n");
-..\Core\Src\leinuo_dev.c(27): warning:  #940-D: missing return statement at end of non-void function "connect" 
-  }
-..\Core\Src\leinuo_dev.c(32): warning:  #223-D: function "printf" declared implicitly
-  	LOG("wifi %s on\r\n", mydev->dev.name);
-..\Core\Src\leinuo_dev.c(46): warning:  #940-D: missing return statement at end of non-void function "on" 
-  }
-..\Core\Src\leinuo_dev.c(51): warning:  #223-D: function "printf" declared implicitly
-  	LOG("wifi %s off\r\n", mydev->dev.name);
-..\Core\Src\leinuo_dev.c(53): warning:  #940-D: missing return statement at end of non-void function "off" 
-  }
-..\Core\Src\leinuo_dev.c(58): warning:  #223-D: function "printf" declared implicitly
-  	LOG("wifi reset\r\n");
-..\Core\Src\leinuo_dev.c(60): warning:  #940-D: missing return statement at end of non-void function "reset" 
-  }
-..\Core\Src\leinuo_dev.c(68): warning:  #940-D: missing return statement at end of non-void function "ioctl" 
-  }
-..\Core\Src\leinuo_dev.c(63): warning:  #177-D: variable "mydev"  was declared but never referenced
-  	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-..\Core\Src\leinuo_dev.c(64): warning:  #550-D: variable "payload"  was set but never used
-  	uint8_t* payload = 0;
-..\Core\Src\leinuo_dev.c(71): warning:  #223-D: function "printf" declared implicitly
-  	LOG("leinuo timer callback\r\n");
-..\Core\Src\leinuo_dev.c(79): warning:  #223-D: function "printf" declared implicitly
-  		LOG("%.2x ", buf[i]);
-..\Core\Src\leinuo_dev.c(86): warning:  #223-D: function "printf" declared implicitly
-  		LOG("leinuo recv mes from mcu\r\n");
-..\Core\Src\leinuo_dev.c(88): warning:  #223-D: function "printf" declared implicitly
-  		LOG("leinuo recv mse from Message_Addr_Wifi_LEINUO1");
-..\Core\Src\leinuo_dev.c(90): warning:  #940-D: missing return statement at end of non-void function "msg_parse" 
-  }
-..\Core\Src\leinuo_dev.c(77): warning:  #177-D: variable "mydev"  was declared but never referenced
-  	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-..\Core\Src\leinuo_dev.c(123): warning:  #223-D: function "printf" declared implicitly
-  			LOG("dev_mydev_%d create LeiNuoWifi_dev error\r\n", i);
-..\Core\Src\leinuo_dev.c(133): warning:  #223-D: function "printf" declared implicitly
-  			LOG("dev %d add err\r\n", i);
-..\Core\Src\leinuo_dev.c(138): warning:  #223-D: function "printf" declared implicitly
-  			LOG("xSemaphoreCreateMutex %d err\r\n", i);
-..\Core\Src\leinuo_dev.c(154): warning:  #940-D: missing return statement at end of non-void function "leinuo_dev_init" 
-  }
-..\Core\Src\leinuo_dev.c: 31 warnings, 0 errors
-compiling message.c...
 ../Core/Inc/message.h(12): warning:  #1565-D: white space between backslash and newline in line splice ignored
   					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(122): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+../Core/Inc/message.h(123): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message.h(124): warning:  #1295-D: Deprecated declaration message_init - give arg types
+../Core/Inc/message.h(125): warning:  #1295-D: Deprecated declaration message_init - give arg types
   void message_init();
-../Core/Inc/message.h(131): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(132): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
-  void dev_poll_handle();
-../Core/Inc/wifi_task.h(12): warning:  #1295-D: Deprecated declaration wifi_get_Wifi_Queue - give arg types
-  QueueHandle_t wifi_get_Wifi_Queue();
-../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
-  QueueHandle_t gui_get_gui_Queue();
-..\Core\Src\message.c(64): warning:  #940-D: missing return statement at end of non-void function "unregister_dev" 
+..\Core\Src\common_dev.c(16): warning:  #223-D: function "printf" declared implicitly
+  			LOG("dev_register success\r\n");
+..\Core\Src\common_dev.c(17): warning:  #223-D: function "printf" declared implicitly
+  			LOG("addr = %d\r\n", dev->addr);
+..\Core\Src\common_dev.c(21): warning:  #223-D: function "printf" declared implicitly
+  	LOG("dev_register buf full\r\n");
+..\Core\Src\common_dev.c(31): warning:  #940-D: missing return statement at end of non-void function "unregister_dev" 
   }
-..\Core\Src\message.c(68): warning:  #940-D: missing return statement at end of non-void function "message_protocol_del" 
+..\Core\Src\common_dev.c(35): warning:  #940-D: missing return statement at end of non-void function "dev_del" 
   }
-..\Core\Src\message.c(255): warning:  #177-D: variable "i"  was declared but never referenced
-  	uint8_t i = 0;
-..\Core\Src\message.c(257): warning:  #177-D: variable "message_type"  was declared but never referenced
-  	uint8_t message_type = 0;
-..\Core\Src\message.c(66): warning:  #177-D: function "message_protocol_del"  was declared but never referenced
-  static uint8_t message_protocol_del(Message_protocol* protocol){
-..\Core\Src\message.c(70): warning:  #177-D: function "message_find_protocol_by_name"  was declared but never referenced
-  static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
-..\Core\Src\message.c(80): warning:  #177-D: function "message_protocol_find_type"  was declared but never referenced
-  static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len){
-..\Core\Src\message.c(193): warning:  #177-D: function "message_check"  was declared but never referenced
-  static char message_check(const Message_t* const mes){
-..\Core\Src\message.c(196): warning:  #177-D: function "message_make_fromISR"  was declared but never referenced
-  static void message_make_fromISR(Message_t* const frame, const uint8_t* const buf){
-..\Core\Src\message.c(58): warning:  #177-D: function "unregister_dev"  was declared but never referenced
-  static uint8_t unregister_dev(Message_protocol* protocol){
-..\Core\Src\message.c: 17 warnings, 0 errors
+..\Core\Src\common_dev.c(44): warning:  #223-D: function "printf" declared implicitly
+  	LOG("dev_find_dev_by_addr fail\r\n");
+..\Core\Src\common_dev.c(55): warning:  #223-D: function "printf" declared implicitly
+  	LOG("dev_find_dev_by_name\r\n");
+..\Core\Src\common_dev.c(65): warning:  #940-D: missing return statement at end of non-void function "dev_find_protocoltype_by_addr" 
+  }
+..\Core\Src\common_dev.c: 13 warnings, 0 errors
 linking...
-Program Size: Code=112828 RO-data=462244 RW-data=728 ZI-data=21996  
-"mylot\mylot.axf" - 0 Error(s), 48 Warning(s).
+Program Size: Code=112740 RO-data=462160 RW-data=728 ZI-data=21996  
+"mylot\mylot.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -153,7 +81,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

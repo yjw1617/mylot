@@ -166,6 +166,7 @@ void MX_FREERTOS_Init(void) {
 void MessageHandle_task(void const * argument)
 {
   /* USER CODE BEGIN MessageHandle_task */
+	common_dev_init();
   message_handle(MessageHandleHandle);
   /* Infinite loop */
   for(;;)
@@ -223,7 +224,7 @@ void GuiPollHandle_task(void const * argument)
 void DevHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevHandle_task */
-	vTaskDelay(10000);
+	vTaskDelay(5000);
   dev_handle();
   /* Infinite loop */
   for(;;)

@@ -64,22 +64,31 @@ uint8_t dev_find_protocoltype_by_addr(uint16_t addr){
 	}
 }
 
+void common_dev_init(){
+	memset(&dev_con, 0, sizeof(dev_controller));
+	
+}
 void dev_poll_handle(){
 	BaseType_t ret = 0;
 	Frame_t frame_temp = {};
 	for(;;){
-//		LOG("frame_temp\r\n");
 		for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
-			if(dev_con.dev[i] != NULL){
 				//接收dev的消息队列
-				if(dev_con.dev[i]->Message_Queue != NULL){
-					ret = xQueueReceive(dev_con.dev[i]->Message_Queue, &frame_temp ,1);
-					if(ret == pdPASS){
-						//将消息传入dev设备的解析函数
-						dev_con.dev[i]->ops->msg_parse(dev_con.dev[i], frame_temp.r_buf, frame_temp.len);
+				if(dev_con.dev[i] != NULL){
+//					LOG("kk dev_addr = %d\r\n", dev_con.dev[i]->addr);
+					if(dev_con.dev[i]->Message_Queue != NULL){
+//						LOG("hh dev_addr = %d\r\n", dev_con.dev[i]->addr);
+//						LOG("kk i = %d\r\n", i);
+						if(dev_con.dev[i]->ops->msg_parse != NULL){
+//							LOG("qq dev_addr = %d\r\n", dev_con.dev[i]->addr);
+							ret = xQueueReceive(dev_con.dev[i]->Message_Queue, &frame_temp ,0);
+							if(ret == pdPASS){
+								//将消息传入dev设备的解析函数
+								dev_con.dev[i]->ops->msg_parse(dev_con.dev[i], &frame_temp.r_buf[frame_temp.index_useful], frame_temp.len);
+							}
+						}
 					}
 				}
-			}
 		}
 		vTaskDelay(1);
 	}

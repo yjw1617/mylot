@@ -21,7 +21,6 @@ typedef struct Leinuo_Msg{
 typedef struct LeiNuoWifi_dev{
 	uint8_t status;//wifi状态
 	Dev dev;
-	QueueHandle_t Message_Queue;
 	SemaphoreHandle_t mutex;
 	Common_Timer timer;
 }LeiNuoWifi_dev;
