@@ -22,42 +22,87 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 D:\STM407Project\mylot\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  10/13/2022
+Project File Date:  10/16/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
-compiling common_dev.c...
+Note: source file '..\Core\Src\dev_handle.c' - object file renamed from 'mylot\dev_handle.o' to 'mylot\dev_handle_1.o'.
+compiling mygui.c...
+../Core/Inc/common_dev.h(45): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
 ../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
   void dev_poll_handle();
-../Core/Inc/message.h(12): warning:  #1565-D: white space between backslash and newline in line splice ignored
+../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
   					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(123): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+../Core/Inc/message.h(145): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message.h(125): warning:  #1295-D: Deprecated declaration message_init - give arg types
+../Core/Inc/message.h(147): warning:  #1295-D: Deprecated declaration message_init - give arg types
   void message_init();
-../Core/Inc/message.h(132): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(157): warning:  #1-D: last line of file ends without a newline
   #endif
-..\Core\Src\common_dev.c(16): warning:  #223-D: function "printf" declared implicitly
-  			LOG("dev_register success\r\n");
-..\Core\Src\common_dev.c(17): warning:  #223-D: function "printf" declared implicitly
-  			LOG("addr = %d\r\n", dev->addr);
-..\Core\Src\common_dev.c(21): warning:  #223-D: function "printf" declared implicitly
-  	LOG("dev_register buf full\r\n");
-..\Core\Src\common_dev.c(31): warning:  #940-D: missing return statement at end of non-void function "unregister_dev" 
+../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui.h(47): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui.h(48): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/utils.h(4): warning:  #1-D: last line of file ends without a newline
+  uint8_t utils_calculate_check_num(uint8_t* msg,uint8_t index_start, uint8_t len);
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Core\Src\mygui.c(83): warning:  #68-D: integer conversion resulted in a change of sign
+  		return -1;
+..\Core\Src\mygui.c(178): warning:  #940-D: missing return statement at end of non-void function "msg_parse" 
   }
-..\Core\Src\common_dev.c(35): warning:  #940-D: missing return statement at end of non-void function "dev_del" 
+..\Core\Src\mygui.c(242): warning:  #940-D: missing return statement at end of non-void function "mygui_init" 
   }
-..\Core\Src\common_dev.c(44): warning:  #223-D: function "printf" declared implicitly
-  	LOG("dev_find_dev_by_addr fail\r\n");
-..\Core\Src\common_dev.c(55): warning:  #223-D: function "printf" declared implicitly
-  	LOG("dev_find_dev_by_name\r\n");
-..\Core\Src\common_dev.c(65): warning:  #940-D: missing return statement at end of non-void function "dev_find_protocoltype_by_addr" 
-  }
-..\Core\Src\common_dev.c: 13 warnings, 0 errors
+..\Core\Src\mygui.c: 17 warnings, 0 errors
+compiling freertos.c...
+../Core/Inc/common_dev.h(45): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
+  					while(!log_flag){vTaskDelay(1);}	\	
+../Core/Inc/message.h(145): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+  void uart1_interrupt_handle();
+../Core/Inc/message.h(147): warning:  #1295-D: Deprecated declaration message_init - give arg types
+  void message_init();
+../Core/Inc/message.h(157): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/wifi_task.h(12): warning:  #1295-D: Deprecated declaration wifi_get_Wifi_Queue - give arg types
+  QueueHandle_t wifi_get_Wifi_Queue();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/gui_poll_task.h(4): warning:  #1-D: last line of file ends without a newline
+  void gui_poll_handle(TaskHandle_t handle);
+../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui.h(47): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui.h(48): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+../Core/Inc/dev_handle.h(2): warning:  #1-D: last line of file ends without a newline
+  void dev_handle();
+../Core/Inc/dev_handle.h(2): warning:  #1295-D: Deprecated declaration dev_handle - give arg types
+  void dev_handle();
+../Core/Src/freertos.c: 17 warnings, 0 errors
 linking...
-Program Size: Code=112740 RO-data=462160 RW-data=728 ZI-data=21996  
-"mylot\mylot.axf" - 0 Error(s), 13 Warning(s).
+Program Size: Code=113608 RO-data=463180 RW-data=728 ZI-data=21948  
+"mylot\mylot.axf" - 0 Error(s), 34 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -81,7 +126,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

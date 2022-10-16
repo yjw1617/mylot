@@ -48,3 +48,4 @@ mylot\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\stm32f4xx_it.o: ../Core/Inc/common_dev.h

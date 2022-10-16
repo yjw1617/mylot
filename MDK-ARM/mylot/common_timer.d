@@ -15,3 +15,4 @@ mylot\common_timer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\common_timer.o: ../Core/Inc/message.h
 mylot\common_timer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\common_timer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\common_timer.o: ../Core/Inc/common_dev.h

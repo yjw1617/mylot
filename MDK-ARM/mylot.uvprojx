@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;                           ../Drivers/STM32F4xx_HAL_Driver/Inc;                           ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                           ../Middlewares/Third_Party/FreeRTOS/Source/include;                           ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                           ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                           ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                           ../Drivers/CMSIS/Include;                           ../Middlewares/Third_Party/STemWin/src;                           ../Middlewares/Third_Party/STemWin/inc;                           ../Middlewares/Third_Party/STemWin/OS;                           ../Middlewares/Third_Party/STemWin/Config;                           ../HARDWARE/inc;                           ../SYSTEM/inc</IncludePath>
+              <IncludePath>../Core/Inc;                            ../Drivers/STM32F4xx_HAL_Driver/Inc;                            ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                            ../Middlewares/Third_Party/FreeRTOS/Source/include;                            ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                            ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                            ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                            ../Drivers/CMSIS/Include;                            ../Middlewares/Third_Party/STemWin/src;                            ../Middlewares/Third_Party/STemWin/inc;                            ../Middlewares/Third_Party/STemWin/OS;                            ../Middlewares/Third_Party/STemWin/Config;                            ../HARDWARE/inc;                            ../SYSTEM/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -703,16 +703,6 @@
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\leinuo_dev.h</FilePath>
             </File>
-            <File>
-              <FileName>dev_handle.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\dev_handle.h</FilePath>
-            </File>
-            <File>
-              <FileName>dev_handle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\dev_handle.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -859,6 +849,11 @@
               <FilePath>..\Core\Src\mygui_api.c</FilePath>
             </File>
             <File>
+              <FileName>mygui_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\mygui_api.h</FilePath>
+            </File>
+            <File>
               <FileName>mygui_AlarmDLG.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_AlarmDLG.c</FilePath>
@@ -892,11 +887,6 @@
               <FileName>mygui_TempDLG.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c</FilePath>
-            </File>
-            <File>
-              <FileName>mygui_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\mygui_api.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -996,17 +986,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>App/dev/service</GroupName>
+          <GroupName>App/dev/handle</GroupName>
           <Files>
             <File>
-              <FileName>leinuo_service.c</FileName>
+              <FileName>dev_handle.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\leinuo_service.c</FilePath>
+              <FilePath>..\Core\Src\dev_handle.c</FilePath>
             </File>
             <File>
-              <FileName>leinuo_service.h</FileName>
+              <FileName>dev_handle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\leinuo_service.h</FilePath>
+              <FilePath>..\Core\Inc\dev_handle.h</FilePath>
             </File>
           </Files>
         </Group>

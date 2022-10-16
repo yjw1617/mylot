@@ -64,3 +64,4 @@ mylot\mygui_tempdlg.o: ../Core/Inc/common_dev.h
 mylot\mygui_tempdlg.o: ../Core/Inc/common_timer.h
 mylot\mygui_tempdlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui_tempdlg.o: ../Core/Inc/gui_task.h
+mylot\mygui_tempdlg.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

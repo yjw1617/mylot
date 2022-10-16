@@ -14,3 +14,4 @@ mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\mcu_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\mcu_task.o: ../Core/Inc/common_dev.h

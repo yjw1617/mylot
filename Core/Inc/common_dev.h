@@ -28,21 +28,21 @@ typedef struct dev_controller{
 	uint16_t num;
 	Dev* dev[DEV_MAX_NUM];
 }dev_controller;
-void* dev_mydev_create(uint16_t size);
+void* common_mydev_create(uint16_t size);
 
-uint8_t dev_del(Dev* dev);
+uint8_t common_dev_del(Dev* dev);
 
-int8_t dev_register(Dev* dev);
+int8_t common_dev_register(Dev* dev);
 
-Dev* dev_find_dev_by_name(uint8_t* dev_name);
+Dev* common_dev_find_dev_by_name(uint8_t* dev_name);
 
-Dev* dev_find_dev_by_addr(uint16_t addr);
+Dev* common_dev_find_dev_by_addr(uint16_t addr);
 
-uint8_t dev_find_protocoltype_by_addr(uint16_t addr);
+void common_dev_opts_init(Dev* dev, operations* opts);
 
-void dev_init(Dev* dev, operations* opts);
+int8_t common_dev_register(Dev* dev);
 
-int8_t dev_add(Dev* dev);
+dev_controller* common_dev_get_controller();
 
 void dev_poll_handle();
 

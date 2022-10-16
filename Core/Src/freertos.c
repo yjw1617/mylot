@@ -59,7 +59,6 @@
 
 /* USER CODE END Variables */
 osThreadId MessageHandleHandle;
-osThreadId GuiHandleHandle;
 osThreadId GuiPollHandleHandle;
 osThreadId DevHandleHandle;
 
@@ -69,7 +68,6 @@ osThreadId DevHandleHandle;
 /* USER CODE END FunctionPrototypes */
 
 void MessageHandle_task(void const * argument);
-void GuiHandle_task(void const * argument);
 void GuiPollHandle_task(void const * argument);
 void DevHandle_task(void const * argument);
 
@@ -138,16 +136,12 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(MessageHandle, MessageHandle_task, osPriorityAboveNormal, 0, 256);
   MessageHandleHandle = osThreadCreate(osThread(MessageHandle), NULL);
 
-  /* definition and creation of GuiHandle */
-  osThreadDef(GuiHandle, GuiHandle_task, osPriorityIdle, 0, 256);
-  GuiHandleHandle = osThreadCreate(osThread(GuiHandle), NULL);
-
   /* definition and creation of GuiPollHandle */
   osThreadDef(GuiPollHandle, GuiPollHandle_task, osPriorityIdle, 0, 2048);
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* definition and creation of DevHandle */
-  osThreadDef(DevHandle, DevHandle_task, osPriorityLow, 0, 256);
+  osThreadDef(DevHandle, DevHandle_task, osPriorityBelowNormal, 0, 256);
   DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -166,7 +160,6 @@ void MX_FREERTOS_Init(void) {
 void MessageHandle_task(void const * argument)
 {
   /* USER CODE BEGIN MessageHandle_task */
-	common_dev_init();
   message_handle(MessageHandleHandle);
   /* Infinite loop */
   for(;;)
@@ -174,25 +167,6 @@ void MessageHandle_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END MessageHandle_task */
-}
-
-/* USER CODE BEGIN Header_GuiHandle_task */
-/**
-* @brief Function implementing the GuiHandle thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_GuiHandle_task */
-void GuiHandle_task(void const * argument)
-{
-  /* USER CODE BEGIN GuiHandle_task */
-  gui_handle(GuiHandleHandle);
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END GuiHandle_task */
 }
 
 /* USER CODE BEGIN Header_GuiPollHandle_task */
@@ -224,7 +198,6 @@ void GuiPollHandle_task(void const * argument)
 void DevHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevHandle_task */
-	vTaskDelay(5000);
   dev_handle();
   /* Infinite loop */
   for(;;)

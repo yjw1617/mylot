@@ -5,6 +5,7 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "common_dev.h"
 #define SUPPORT_LOG
 #ifdef SUPPORT_LOG
 static volatile uint8_t log_flag = 1;
@@ -52,20 +53,16 @@ enum Message_Type{
 	MESSAGE_TYPE_GUI = 0x03,
 };
 
-enum Message_Cmd{
-	Leinuo_Cmd_On = 0x00,
-	Leinuo_Cmd_Off = 0x01,
-	Leinuo_Cmd_Reset = 0x02,
-	Leinuo_Cmd_Connect_Net = 0x03,
-};
 
 #define Message_Protocol_Max_Num 5	//消息类型的最大数目
 #define Message_Protocol_Name_Len 10
 #define Message_Protocol_Type_Len 10
+
 typedef struct Frame_t{
 	uint8_t index_useful;
 	uint8_t len;
 	uint8_t r_buf[FRAME_MAX_LEN];
+	uint8_t type;
 }Frame_t;
 typedef struct Message_t{
 	uint8_t head1;
@@ -80,9 +77,10 @@ typedef struct Message_t{
 }Message_t;
 
 enum Message_Protocol_Type{
-	Protocol_Type_Wifi = (1<<0),
-	Protocol_Type_Zigbee = (1<<1),
-	Protocol_Type_Gui = (1<<2),
+	Protocol_Type_Wifi = 0x01,
+	Protocol_Type_Zigbee = 0x02,
+	Protocol_Type_G_Gui = 0x03,
+	Protocol_Type_Mcu = 0x04,
 };
 
 typedef struct Message_Leinuo_t{
@@ -97,7 +95,31 @@ typedef struct Message_Leinuo_t{
 	uint8_t check_num;
 }Message_Leinuo_t;
 
+typedef struct Message_g_gui_t{
+	uint8_t head1;
+	uint8_t head2;
+	uint8_t addr_src;
+	uint8_t addr_dest;
+	uint8_t type;
+	uint8_t cmd;
+	uint16_t len;
+	uint8_t payload[PAYLOAD_MAX_LEN];
+	uint8_t check_num;
+}Message_g_gui_t;
 
+typedef struct Message_Mcu_t{
+	uint8_t head1;
+	uint8_t head2;
+	uint8_t addr_src;
+	uint8_t addr_dest;
+	uint8_t type;
+	uint8_t cmd;
+	uint16_t len;
+	uint8_t payload[PAYLOAD_MAX_LEN];
+	uint8_t check_num;
+}Message_Mcu_t;
+
+//消息模型，用于创建消息模型
 typedef struct Message_protocol{
 	uint8_t name[Message_Protocol_Name_Len];
 	uint8_t type;
@@ -109,7 +131,7 @@ typedef struct Message_protocol{
 	uint8_t src_addr_index;//发送设备地址下标
 	uint8_t end;
 }Message_protocol;
-
+//消息模型管理者
 typedef struct Message_protocol_controller{
 	uint16_t num;
 	Message_protocol* protocols[Message_Protocol_Max_Num];
@@ -128,5 +150,8 @@ void message_send(const Message_t* const mes);
 
 //消息协议管理函数
 uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index);
+int8_t message_protocol_find_type(Frame_t* fram);
+void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type);
+void message_log(Dev* dev);
 //end
 #endif

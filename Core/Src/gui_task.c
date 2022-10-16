@@ -23,10 +23,8 @@ QueueHandle_t gui_get_gui_Queue(){
 //wifi处理函数
 void gui_handle(TaskHandle_t handle){
 	gui_task_init(handle);
-	//创建mygui设备
-	MyGUI_dev* mygui_dev = dev_mydev_create(sizeof(MyGUI_dev));
-	mygui_init(mygui_dev, Message_Addr_MY_GUI, (uint8_t*)"my_gui", (uint8_t*)"my_gui_timer");
-	dev_add(&(mygui_dev->dev));
+	
+	
 	Message_t message_tmp = {0};//接收消息队列过来的消息
 	int8_t ret = 0;
 	for(;;){
@@ -35,11 +33,11 @@ void gui_handle(TaskHandle_t handle){
 		if(ret == pdPASS){//处理uart1接收到的消息
 			//打印接收到的消息
 			message_info(&message_tmp);
-			Dev* dev = dev_find_dev_by_addr(message_tmp.addr_dest);
+			Dev* dev = common_dev_find_dev_by_addr(message_tmp.addr_dest);
 			if(dev != NULL){
 				dev->ops->ioctl(dev->mydev, message_tmp.cmd, (uint32_t)message_tmp.payload, message_tmp.len);
 			}else{
-				LOG("dev_find_dev_by_addr failed\r\n");
+				LOG("common_dev_find_dev_by_addr failed\r\n");
 			}
 		}
 	}

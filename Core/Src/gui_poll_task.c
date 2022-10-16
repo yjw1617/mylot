@@ -14,6 +14,6 @@ static void gui_poll_task_init(TaskHandle_t handle){
 }
 
 void gui_poll_handle(TaskHandle_t handle){
-	gui_poll_task_init(handle);
+//	gui_poll_task_init(handle);
 	mygui_poll_task_handle();
 }

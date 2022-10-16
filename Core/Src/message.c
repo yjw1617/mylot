@@ -29,7 +29,7 @@ static int8_t message_protocol_register(Message_protocol* protocol);
 
 static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name);
 
-static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len);
+static int8_t message_protocol_find_type(Frame_t* fram);
 //end
 
 //消息相关接口
@@ -55,7 +55,7 @@ static int8_t message_protocol_register(Message_protocol* protocol){
 	return pdFALSE;
 }
 
-static uint8_t unregister_dev(Message_protocol* protocol){
+static uint8_t common_dev_unregister(Message_protocol* protocol){
 	for(uint16_t i = 0; i < Message_Protocol_Max_Num; i++){
 		if(protocol == g_message_task.message_protocol_controller.protocols[i]){
 			g_message_task.message_protocol_controller.protocols[i] = 0;
@@ -77,18 +77,18 @@ static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
 	return NULL;
 }
 
-static int8_t message_protocol_find_type(uint8_t* buf, uint8_t len){
+int8_t message_protocol_find_type(Frame_t* fram){
 	//Determines the length of the received message
 //	assert(frame->len <= FRAME_MAX_LEN);
-	for(uint8_t i = 0; i < len; i++){
+	for(uint8_t i = 0; i < fram->len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
-			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
+			if(fram->r_buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
 				//message head2 ok  
-				if(buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+				if(fram->r_buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
 					return g_message_task.message_protocol_controller.protocols[j]->type;
 				}
 				//message end ok
-				if(buf[buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+				if(fram->r_buf[fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
 					return g_message_task.message_protocol_controller.protocols[j]->type;
 				}
 			}
@@ -106,6 +106,7 @@ static int8_t message_protocol_find_addr(Frame_t* fram){
 				LOG("i = %d, head1 == %.2x\r\n", i, fram->r_buf[i]);
 				//message head2 ok  
 				if(fram->r_buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
+					LOG("i = %d, head2 == %.2x\r\n", i, fram->r_buf[i + 1]);
 					fram->index_useful = i;
 					fram->len = fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more;
 					return fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
@@ -206,6 +207,51 @@ static void message_make_fromISR(Message_t* const frame, const uint8_t* const bu
 	frame->check_num = buf[frame->len + 7];
 }
 
+static uint8_t message_get_checknum(uint8_t* start, uint8_t len){
+	uint8_t sum = 0;
+	for(uint8_t i = 0; i < len; i++){
+		sum += start[i];
+	}
+	return sum % 256;
+}
+
+void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type){
+	LOG("message_send_to_dev\r\n");
+	Frame_t frame = {};
+	if(protocol_type == Protocol_Type_G_Gui){
+		Message_g_gui_t* mes = (Message_g_gui_t*)message;
+		LOG("addr = %d\r\n", mes->addr_dest);
+		frame.r_buf[0] = 0xbb,
+		frame.r_buf[1] = 0x44,
+		frame.r_buf[2] = mes->addr_src,
+		frame.r_buf[3] = mes->addr_dest,
+//		frame.r_buf[4] = mes->type,
+		frame.r_buf[5] = mes->cmd,
+		frame.r_buf[6] = mes->len,
+		memcpy(&frame.r_buf[7], mes->payload, mes->len);
+		frame.r_buf[7 + mes->len] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
+		frame.len = 8 + mes->len;
+	}
+	if(protocol_type == Protocol_Type_Mcu){
+		Message_g_gui_t* mes = (Message_g_gui_t*)message;
+		//封包
+		frame.r_buf[0] = 0xbb,
+		frame.r_buf[1] = 0x44,
+		frame.r_buf[2] = mes->addr_src,
+		frame.r_buf[3] = mes->addr_dest,
+		frame.r_buf[4] = mes->type,
+		frame.r_buf[5] = mes->cmd,
+		frame.r_buf[6] = mes->len,
+		memcpy(&frame.r_buf[7], mes->payload, mes->len);
+		frame.r_buf[mes->len + 7] = 0x99;
+		frame.len = 8 + mes->len;
+	}
+	frame.index_useful = 0;
+	if(xQueueSend(dev_dest->Message_Queue, &frame, 0) != pdPASS){
+		LOG("xQueueSend(gui_get_gui_Queue(), &message_tmp, 0 error\r\n");
+	}
+}
+
 void message_make_msg_by_protocoltype(uint8_t message_type, uint8_t* buf){
 
 }
@@ -218,8 +264,10 @@ void message_handle(const void* const handle){
 	message_protocol_copy(message_protocol_leinuo, 
 	(Message_protocol){
 		.name = "leinuo", 
-		.type = Protocol_Type_Wifi | Protocol_Type_Gui , 
-		.head1=0xaa, .head2=0x33, .len_index = 6, 
+		.type = Protocol_Type_G_Gui , 
+		.head1=0xaa, 
+		.head2=0x33, 
+		.len_index = 6, 
 		.len_index_more = 8, 
 		.end = 0x66
 	});
@@ -253,6 +301,19 @@ void message_handle(const void* const handle){
 	});
 	message_protocol_register(message_protocol_mcu);
 	
+	//这是mygui用的协议
+	Message_protocol* message_protocol_mygui = message_protocol_create(sizeof(Message_protocol));
+	message_protocol_copy(message_protocol_mygui, 
+	(Message_protocol){
+		.name = "mygui", 
+		.type = MESSAGE_TYPE_MCU, 
+		.head1=0xbb, 
+		.head2=0x44, 
+		.len_index = 6, 
+		.len_index_more = 8, 
+		.dest_addr_index = 3,
+	});
+	message_protocol_register(message_protocol_mygui);
 	
 	Frame_t frame_temp = {};
 	int8_t ret = 0;
@@ -265,15 +326,12 @@ void message_handle(const void* const handle){
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
 		if(ret == pdPASS){
-			for(uint8_t k = 0; k < frame_temp.len; k++){
-				LOG("%.2x ", frame_temp.r_buf[k]);
-			}
 			LOG("frame len = %d\r\n", frame_temp.len);
 			//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中
 			dest_addr = message_protocol_find_addr(&frame_temp);
 			LOG("dest_addr = %d\r\n", dest_addr);
 			//将消息发送给设备的消息队列中等待处理
-			dev = dev_find_dev_by_addr(dest_addr);
+			dev = common_dev_find_dev_by_addr(dest_addr);
 			if(dev != NULL){
 				if(dev->Message_Queue != NULL){
 					ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
@@ -282,39 +340,9 @@ void message_handle(const void* const handle){
 					}
 				}
 			}else{
-				LOG("dev_find_dev_by_addr error\r\n");
+				LOG("common_dev_find_dev_by_addr error\r\n");
 			}
-			
-			
-			//将消息给到协议库查询协议种类
-//			int8_t protocol_type = message_protocol_find_type(frame_temp.r_buf, frame_temp.len);
-//			switch(protocol_type){
-//				case Protocol_Type_Wifi | Protocol_Type_Gui://发送消息给所有遵循该协议的设备
-//					LOG("wifi or gui type\r\n");	
-//					//发送消息给wifi队列
-//					ret = xQueueSend(wifi_get_Wifi_Queue(), &frame_temp, 0);
-//					if(ret != pdPASS){
-//						LOG("Wifi_queue full\r\n");
-//					}else{
-//						LOG("Wifi_insert success\r\n");
-//					}
-//					//发送消息给gui队列
-//					ret = xQueueSend(gui_get_gui_Queue(), &frame_temp, 0);
-//					if(ret != pdPASS){
-//						LOG("Wifi_queue full\r\n");
-//					}else{
-//						LOG("Wifi_insert success\r\n");
-//					}
-//					break;
-//				case Protocol_Type_Zigbee://发送消息给所有遵循该协议的设备
-//					LOG("Zigbee type\r\n");
-//					break;
-//				case MESSAGE_TYPE_MCU://发送消息给所有遵循该协议的设备
-//					
-//					break;
-//				case -1:
-//					break;
-//			}
+			memset(&frame_temp, 0, sizeof(Frame_t)); 
 		}
   }
 }
@@ -335,6 +363,10 @@ void message_info(const Message_t* const mes){
 	printf("\r\nframe.check_num = %.2x\r\n", mes->check_num);
 }
 
+void message_log(Dev* dev){
+	LOG("dev addr = %d\r\n", dev->addr);
+	LOG("dev name = %s\r\n", dev->name);
+}
 void message_send(const Message_t* const mes){
 	
 }

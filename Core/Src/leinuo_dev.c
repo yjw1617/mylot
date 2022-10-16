@@ -72,17 +72,24 @@ static void timer_callback(TimerHandle_t xTimer){
 }
 
 
-
+/*一个设备可以支持多个类型的消息协议*/
 static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
 	uint8_t data[len];
 	memcpy(data, buf, len);
 	//将消息解析出来封装成结构体
 	Message_Leinuo_t* mes = (Message_Leinuo_t*)data;
-	if(mes->addr_src == MESSAGE_Addr_MCU){
-		LOG("%s recv mes from mcu\r\n", mydev->dev.name);
-	}else if(mes->addr_src == Message_Addr_Wifi_LEINUO1){
-		LOG("%s recv mse from Message_Addr_Wifi_LEINUO1", mydev->dev.name);
+	if(mes->addr_src == MESSAGE_Addr_MCU){	//发送消息的是mcu,根据mcu说的语言来解析
+		switch(mes->cmd){
+			case Leinuo_Cmd_Wake:
+					
+				break;
+			case Leinuo_Cmd_Off:
+				
+				break;
+		}
+	}else if(mes->addr_src == Message_Addr_Wifi_LEINUO1){ //发送消息的是Message_Addr_Wifi_LEINUO1,根据Message_Addr_Wifi_LEINUO1说的语言来解析
+
 	}
 }
 
@@ -114,21 +121,21 @@ static void leinuo_timer_init(LeiNuoWifi_dev* mydev){
 int8_t leinuo_dev_init(){
 	int8_t ret = 0;
 	for(uint8_t i = 0; i < LeiNuoWifi_Dev_Max_NUM; i++){
-		pg_mydev[i]= dev_mydev_create(sizeof(LeiNuoWifi_dev));//创建雷诺结构体
+		pg_mydev[i]= common_mydev_create(sizeof(LeiNuoWifi_dev));//创建雷诺结构体
 		if(pg_mydev[i] == NULL){
 			LOG("dev_mydev_%d create LeiNuoWifi_dev error\r\n", i);
 			return -1;
 		}
 		
 		memset(pg_mydev[i], 0, sizeof(LeiNuoWifi_dev));//初始化leino结构体为0
-		dev_init(&pg_mydev[i]->dev, &opts);//绑定操作函数
+		common_dev_opts_init(&pg_mydev[i]->dev, &opts);//绑定操作函数
 		pg_mydev[i]->dev.mydev = pg_mydev[i];//将自己的mydev指针指向子类
 		pg_mydev[i]->dev.Message_Queue = xQueueCreate(2 , sizeof(Frame_t));
 		if(pg_mydev[i]->dev.Message_Queue == NULL){
 			LOG("xQueueCreate heap is full\r\n");
 			return -1;
 		}
-		ret = dev_add(&pg_mydev[i]->dev);//add dev to linux kernel
+		ret = common_dev_register(&pg_mydev[i]->dev);//add dev to linux kernel
 		if(ret == -1){
 			LOG("dev %d add err\r\n", i);
 			return -1;
@@ -141,13 +148,13 @@ int8_t leinuo_dev_init(){
 		leinuo_timer_init(pg_mydev[i]);//定时器初始化
 	}
 	//给不同的雷诺设备命名和设置地址
-	pg_mydev[0]->dev.addr = Message_Addr_Wifi_LEINUO1;//LeiNuo设备的地址
+	pg_mydev[0]->dev.addr = Message_Addr_Wifi_LEINUO1;//Message_Addr_Wifi_LEINUO1设备的地址
 	memcpy(pg_mydev[0]->dev.name, "LeiNuoWifi1", strlen((char*)"LeiNuoWifi1"));
 	
-	pg_mydev[1]->dev.addr = Message_Addr_Wifi_LEINUO2;//LeiNuo设备的地址
+	pg_mydev[1]->dev.addr = Message_Addr_Wifi_LEINUO2;//Message_Addr_Wifi_LEINUO2设备的地址
 	memcpy(pg_mydev[1]->dev.name, "LeiNuoWifi2", strlen((char*)"LeiNuoWifi2"));
 	
-	pg_mydev[2]->dev.addr = Message_Addr_Wifi_LEINUO3;//LeiNuo设备的地址
+	pg_mydev[2]->dev.addr = Message_Addr_Wifi_LEINUO3;//Message_Addr_Wifi_LEINUO3设备的地址
 	memcpy(pg_mydev[2]->dev.name, "LeiNuoWifi3", strlen((char*)"LeiNuoWifi3"));
 }
 

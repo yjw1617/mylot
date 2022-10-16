@@ -24,7 +24,7 @@
 
 
 #include "mygui_api.h"
-
+#include <stdio.h>
 /*********************************************************************
 *
 *       Defines
@@ -75,7 +75,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
 	//获取mygui的设备句柄
-	Dev* dev = dev_find_dev_by_addr(Message_Addr_MY_GUI);
+	Dev* dev = common_dev_find_dev_by_addr(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
 	
   const void * pData;
@@ -125,12 +125,25 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     NCode = pMsg->Data.v;
 		if((mydev->lcd_status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
-			mygui_mes_to_lcd_wakeup(1);
+			Message_g_gui_t mes = {
+				.addr_src = MESSAGE_Addr_MCU,
+				.addr_dest = Message_Addr_MY_GUI,
+				.cmd = CMD_GUI_LCD_WAKEUP,
+				.len = 1,
+			};
+			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 			return;
 		}
 		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
-			mygui_mes_to_lcd_wakeup(1);
+			Message_g_gui_t mes = {
+				.addr_src = MESSAGE_Addr_MCU,
+				.addr_dest = Message_Addr_MY_GUI,
+				.cmd = CMD_GUI_LCD_WAKEUP,
+				.len = 1,
+				.payload = {1},
+			};
+			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 		}
     switch(Id) {
     case ID_BUTTON_0: // Notifications sent by ''
@@ -158,7 +171,15 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER END
   default:
     WM_DefaultProc(pMsg);
-		mygui_mes_to_lcd_wakeup(0);
+		//发送消息给mugui设备将屏幕唤醒
+			Message_g_gui_t mes = {
+				.addr_src = MESSAGE_Addr_MCU,
+				.addr_dest = Message_Addr_MY_GUI,
+				.cmd = CMD_GUI_LCD_WAKEUP,
+				.len = 1,
+				.payload = {0},
+			};
+			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
     break;
   }
 }
@@ -180,10 +201,15 @@ WM_HWIN mygui_TempCreate(void) {
   return hWin;
 }
 
-void mygui_set_ui_temp(uint8_t* temp){
+
+void mygui_set_ui_temp(MyGUI_dev* mydev, uint16_t temp){
+	mydev->ui_temp = temp;
 	WM_HWIN hItem;
 	hItem = WM_GetDialogItem(hWin, ID_TEXT_1);
-	TEXT_SetText(hItem, (char*)temp);
+	uint8_t str[10] = {};
+	//将uint16转为字符串
+	sprintf((char*)str ,"%d", temp);
+	TEXT_SetText(hItem, (char*)str);
 }
 
 void mygui_show_ui_temp(){

@@ -21,7 +21,6 @@ static operations opts = {
 	.off = off,
 	.reset = reset,
 	.connect = connect,
-	.ioctl = ioctl,
 };
 void mytestwifi_init(TestWifi_dev* const mydev, uint16_t dev_addr, const uint8_t* const dev_name, const uint8_t* const timer_name){
 	/*初始化传入参数*/
