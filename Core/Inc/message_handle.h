@@ -44,6 +44,10 @@ enum Message_Addr{
 	Message_Addr_Wifi_LEINUO4 = 0x05,
 	Message_Addr_Wifi_LEINUO5 = 0x06,
 	Message_Addr_MY_GUI = 0x07,
+	Message_Addr_Leinuo = 0x08,
+	Message_Addr_uart1 = 0x09,
+	Message_Addr_uart2 = 0xa0,
+	Message_Addr_uart3 = 0xa1,
 };
 
 enum Message_Type{
@@ -71,7 +75,7 @@ typedef struct Message_t{
 	uint8_t addr_dest;
 	uint8_t type;
 	uint8_t cmd;
-	uint16_t len;
+	uint8_t len;
 	uint8_t payload[PAYLOAD_MAX_LEN];
 	uint8_t check_num;
 }Message_t;
@@ -81,6 +85,7 @@ enum Message_Protocol_Type{
 	Protocol_Type_Zigbee = 0x02,
 	Protocol_Type_G_Gui = 0x03,
 	Protocol_Type_Mcu = 0x04,
+	Protocol_Type_Leinuo = 0x05,
 };
 
 typedef struct Message_Leinuo_t{
@@ -90,7 +95,7 @@ typedef struct Message_Leinuo_t{
 	uint8_t addr_dest;
 	uint8_t type;
 	uint8_t cmd;
-	uint16_t len;
+	uint8_t len;
 	uint8_t payload[PAYLOAD_MAX_LEN];
 	uint8_t check_num;
 }Message_Leinuo_t;
@@ -102,7 +107,7 @@ typedef struct Message_g_gui_t{
 	uint8_t addr_dest;
 	uint8_t type;
 	uint8_t cmd;
-	uint16_t len;
+	uint8_t len;
 	uint8_t payload[PAYLOAD_MAX_LEN];
 	uint8_t check_num;
 }Message_g_gui_t;
@@ -114,7 +119,7 @@ typedef struct Message_Mcu_t{
 	uint8_t addr_dest;
 	uint8_t type;
 	uint8_t cmd;
-	uint16_t len;
+	uint8_t len;
 	uint8_t payload[PAYLOAD_MAX_LEN];
 	uint8_t check_num;
 }Message_Mcu_t;
@@ -152,6 +157,6 @@ void message_send(const Message_t* const mes);
 uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index);
 int8_t message_protocol_find_type(Frame_t* fram);
 void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type);
-void message_log(Dev* dev);
+void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_len);
 //end
 #endif

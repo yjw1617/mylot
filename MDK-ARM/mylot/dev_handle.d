@@ -15,6 +15,7 @@ mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\dev_handle.o: ../Core/Inc/leinuo_dev.h
-mylot\dev_handle.o: ../Core/Inc/message.h
+mylot\dev_handle.o: ../Core/Inc/message_handle.h
 mylot\dev_handle.o: ../Core/Inc/common_timer.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+mylot\dev_handle.o: ../Core/Inc/mygui.h

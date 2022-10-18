@@ -1,6 +1,6 @@
 mylot\leinuo_dev.o: ..\Core\Src\leinuo_dev.c
 mylot\leinuo_dev.o: ../Core/Inc/leinuo_dev.h
-mylot\leinuo_dev.o: ../Core/Inc/message.h
+mylot\leinuo_dev.o: ../Core/Inc/message_handle.h
 mylot\leinuo_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\leinuo_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\leinuo_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

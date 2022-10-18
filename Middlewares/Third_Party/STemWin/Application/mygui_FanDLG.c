@@ -115,7 +115,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 
     /**  ͼƬ    ť  **/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-    mydev->ui_fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
+    mydev->ui.fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
 
 
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
@@ -125,22 +125,19 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd_status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
+		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
 				.addr_dest = Message_Addr_MY_GUI,
 				.cmd = CMD_GUI_LCD_WAKEUP,
-				.type = 0x00,
 				.len = 1,
 				.payload = {0},
 			};
 			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 			return;
 		}
-		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
+		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -160,9 +157,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         break;
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
-        mydev->ui_fan_status = !mydev->ui_fan_status;
+        mydev->ui.fan_status = !mydev->ui.fan_status;
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-        mydev->ui_fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
+        mydev->ui.fan_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubFanClose);
         // USER END
         break;
       // USER START (Optionally insert additional code for further notification handling)
@@ -224,7 +221,7 @@ WM_HWIN mygui_FanCreate(void) {
 }
 
 void mygui_set_ui_fan(MyGUI_dev* mydev, uint8_t flag){
-	mydev->ui_fan_status = flag;
+	mydev->ui.fan_status = flag;
 	WM_HWIN hItem;
 	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
 	if(flag == 1){

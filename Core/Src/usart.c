@@ -268,6 +268,21 @@ int fputc(int ch, FILE* f){
 	USART1->DR = ch;
 	return ch;
 }
-/* USER CODE END 1 */
 
+/* USER CODE END 1 */
+UART_HandleTypeDef* usart_get_uart(uint8_t no){
+	switch(no){
+		case 1:
+			return &huart1;
+			break;
+		case 2:
+			return &huart2;
+			break;
+		case 3:
+			return &huart3;
+			break;
+		default:
+			return NULL;
+	}
+}
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -23,14 +23,11 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "message.h"
-#include "wifi_task.h"
-#include "gui_task.h"
-#include "gui_poll_task.h"
+#include "message_handle.h"
+#include "gui_poll_handle.h"
 #include "myLcd.h"
 #include "touch.h"
 #include "GUI.h"

@@ -123,7 +123,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd_status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -135,7 +135,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 			return;
 		}
-		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
@@ -203,7 +203,7 @@ WM_HWIN mygui_LightCreate(void) {
 }
 
 void mygui_set_ui_lightness(MyGUI_dev* mydev, uint16_t ligtness){
-	mydev->ui_lightness = ligtness;
+	mydev->ui.lightness = ligtness;
 	WM_HWIN hItem;
 	hItem = WM_GetDialogItem(hWin, ID_TEXT_1);
 	uint8_t str[10] = {};

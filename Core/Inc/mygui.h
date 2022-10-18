@@ -1,5 +1,5 @@
 #pragma once
-#include "message.h"
+#include "message_handle.h"
 #include "common_dev.h"
 #include "common_timer.h"
 #include "FreeRTOS.h"
@@ -18,28 +18,30 @@
 #define MYGUI_TIMER_NAME_LEN 20
 
 /*gui界面相关的cmd指令*/
-enum CMD_GUI{
-	CMD_GUI_UI_SHOW_MAIN = 0,
-	CMD_GUI_UI_SHOW_TEMP = 1,
-	CMD_GUI_UI_SET_TEMP = 2,
-	CMD_GUI_UI_SET_LIGHTNESS = 3,
-	CMD_GUI_UI_SET_ALARM = 7,
-	CMD_GUI_UI_SET_LED = 8,
-	CMD_GUI_UI_SET_FAN = 9,
-	CMD_GUI_LCD_OFF = 4,
-	CMD_GUI_LCD_WAKEUP = 5,
-	CMD_GUI_LCD_SET_LIGHTNESS = 6,
-};
+#define CMD_GUI_UI_SHOW_MAIN 			0x00
+#define CMD_GUI_UI_SHOW_TEMP 			0x01
+#define CMD_GUI_UI_SET_TEMP 			0x02
+#define CMD_GUI_UI_SET_LIGHTNESS 	0x03
+#define CMD_GUI_UI_SET_ALARM 			0x04
+#define CMD_GUI_UI_SET_LED 				0x05
+#define CMD_GUI_UI_SET_FAN 				0x06
+#define CMD_GUI_LCD_OFF 					0x07
+#define CMD_GUI_LCD_WAKEUP 				0x08
+#define CMD_GUI_LCD_SET_LIGHTNESS 0x09
+
 	
 typedef struct MyGUI_dev{
-	uint8_t lcd_lightness;
-	uint8_t lcd_status;
-	
-	uint16_t ui_lightness;
-	uint8_t ui_temp;
-	uint8_t ui_led_status;
-	uint8_t ui_fan_status;
-	uint8_t ui_alarm_status;
+	struct lcd{
+		uint8_t lightness;
+		uint8_t status;
+	}lcd;
+	struct ui{
+		uint16_t lightness;
+		uint8_t temp;
+		uint8_t led_status;
+		uint8_t fan_status;
+		uint8_t alarm_status;
+	}ui;
 	Dev dev;
 	Common_Timer timer[MYGUI_DEV_TIMRE_NUM];
 }MyGUI_dev;

@@ -1,6 +1,6 @@
 mylot\mygui.o: ..\Core\Src\mygui.c
 mylot\mygui.o: ../Core/Inc/mygui.h
-mylot\mygui.o: ../Core/Inc/message.h
+mylot\mygui.o: ../Core/Inc/message_handle.h
 mylot\mygui.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\mygui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mygui.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

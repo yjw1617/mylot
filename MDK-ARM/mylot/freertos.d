@@ -49,11 +49,9 @@ mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 mylot\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-mylot\freertos.o: ../Core/Inc/message.h
+mylot\freertos.o: ../Core/Inc/message_handle.h
 mylot\freertos.o: ../Core/Inc/common_dev.h
-mylot\freertos.o: ../Core/Inc/wifi_task.h
-mylot\freertos.o: ../Core/Inc/gui_task.h
-mylot\freertos.o: ../Core/Inc/gui_poll_task.h
+mylot\freertos.o: ../Core/Inc/gui_poll_handle.h
 mylot\freertos.o: ../HARDWARE/inc/myLcd.h
 mylot\freertos.o: ../SYSTEM/inc/mySys.h
 mylot\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
@@ -109,4 +107,5 @@ mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/TREEVIEW.h
 mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
 mylot\freertos.o: ../Core/Inc/mygui.h
 mylot\freertos.o: ../Core/Inc/common_timer.h
+mylot\freertos.o: ../Core/Inc/gui_task.h
 mylot\freertos.o: ../Core/Inc/dev_handle.h

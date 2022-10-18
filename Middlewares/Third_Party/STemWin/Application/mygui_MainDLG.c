@@ -24,7 +24,7 @@
 #include "mygui_api.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "message.h"
+#include "message_handle.h"
 /**********#include "include_dlg.h"***********************************************************
 *
 *       Defines
@@ -95,7 +95,6 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 static void _cbDialog(WM_MESSAGE * pMsg) {
 	//获取mygui的设备句柄
 	Dev* dev = common_dev_find_dev_by_addr(Message_Addr_MY_GUI);
-	LOG("hh dev name %s\r\n",dev->name );
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
   WM_HWIN hItem;
   int     NCode;
@@ -135,7 +134,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd_status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -147,7 +146,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 			return;
 		}
-		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -290,30 +289,16 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 static WM_HWIN hWin;
 WM_HWIN mygui_MainCreate(void);
 WM_HWIN mygui_MainCreate(void) {
-  
-
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
   return hWin;
 }
-
 
 void mygui_show_ui_main(){
 	GUI_EndDialog(hWin, 0);
   mygui_MainCreate();
 }
 
-/*给freertos调用的接口*/
-void mygui_poll_task_handle(){
-	WM_SetCreateFlags(WM_CF_MEMDEV);	
-	GUI_Init();                     //初始化emWin
-	GUI_UC_SetEncodeUTF8();         //使能utf-8编码
-	mygui_MainCreate();
-	while(1){
-		GUI_TOUCH_Exec();	
-		GUI_Delay(10);
-		vTaskDelay(1);
-	}
-}
+
 
 
 // USER START (Optionally insert additional public code)

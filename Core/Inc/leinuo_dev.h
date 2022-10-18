@@ -1,22 +1,10 @@
 #pragma once
-#include "message.h"
+#include "message_handle.h"
 #include "common_dev.h"
 #include "common_timer.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "timers.h"
-
-typedef struct Leinuo_Msg{
-	uint8_t head1;
-	uint8_t head2;
-	uint8_t addr_src;
-	uint8_t addr_dest;
-	uint8_t type;
-	uint8_t cmd;
-	uint16_t len;
-	uint8_t payload[PAYLOAD_MAX_LEN];
-	uint8_t check_num;
-}Leinuo_Msg;
 
 typedef struct LeiNuoWifi_dev{
 	uint8_t status;//wifi状态

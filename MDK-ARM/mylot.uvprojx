@@ -10,6 +10,7 @@
       <TargetName>mylot</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARMCC</pArmCC>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -52,8 +53,8 @@
           <OutputName>mylot</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
-          <DebugInformation>0</DebugInformation>
+          <CreateHexFile>1</CreateHexFile>
+          <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
@@ -313,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -322,13 +323,13 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>1</uGnu>
             <useXO>0</useXO>
-            <v6Lang>5</v6Lang>
+            <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
@@ -617,43 +618,6 @@
         </Group>
         <Group>
           <GroupName>App/communication</GroupName>
-          <Files>
-            <File>
-              <FileName>message.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\message.c</FilePath>
-            </File>
-            <File>
-              <FileName>message.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\message.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>App/task</GroupName>
-          <Files>
-            <File>
-              <FileName>mcu_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\mcu_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\wifi_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\gui_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_poll_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\gui_poll_task.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>App/utils</GroupName>
@@ -702,6 +666,16 @@
               <FileName>leinuo_dev.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\leinuo_dev.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\uart_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_dev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\uart_dev.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -997,6 +971,26 @@
               <FileName>dev_handle.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\dev_handle.h</FilePath>
+            </File>
+            <File>
+              <FileName>gui_poll_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\gui_poll_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_poll_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\gui_poll_handle.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\message_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>message_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\message_handle.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -120,7 +120,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     /**获取句柄**/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
     //给按键绑定图片
-    mydev->ui_alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
+    mydev->ui.alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
     //给按键绑定图片
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
     BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubHome);
@@ -130,7 +130,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd_status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -142,7 +142,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
 			return;
 		}
-		if((mydev->lcd_status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
+		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
 			//发送消息给mugui设备将屏幕唤醒
 			Message_g_gui_t mes = {
 				.addr_src = MESSAGE_Addr_MCU,
@@ -164,9 +164,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-        mydev->ui_alarm_status = !mydev->ui_alarm_status;//  תһ µƵ ״̬
-        mydev->ui_alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
-				mydev->ui_alarm_status ? ALARM_CONTROL(GPIO_PIN_SET) : ALARM_CONTROL(GPIO_PIN_RESET);
+        mydev->ui.alarm_status = !mydev->ui.alarm_status;//  תһ µƵ ״̬
+        mydev->ui.alarm_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubAlarmClose);
+				mydev->ui.alarm_status ? ALARM_CONTROL(GPIO_PIN_SET) : ALARM_CONTROL(GPIO_PIN_RESET);
         // USER END
         break;
       // USER START (Optionally insert additional code for further notification handling)
@@ -223,14 +223,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 static WM_HWIN hWin;
 WM_HWIN mygui_AlarmCreate(void);
 WM_HWIN mygui_AlarmCreate(void) {
-  
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
   return hWin;
 }
 
 
 void mygui_set_ui_alarm(MyGUI_dev* mydev, uint8_t flag){
-	mydev->ui_alarm_status = flag;
+	mydev->ui.alarm_status = flag;
 	WM_HWIN hItem;
 	hItem = WM_GetDialogItem(hWin, ID_BUTTON_0);
 	if(flag == 1){

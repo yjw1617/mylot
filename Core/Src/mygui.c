@@ -1,5 +1,5 @@
 #include "mygui.h"
-#include "message.h"
+#include "message_handle.h"
 #include <string.h>
 #include "dialog.h"//包含window对话框 头文件
 #include <string.h>
@@ -16,75 +16,50 @@ static MyGUI_dev* pg_mydev[MyGui_Max_NUM];
 static void mygui_set_lcd_lightness(MyGUI_dev* mydev, uint8_t falg, uint8_t num){
 	if(num == 0){
 		HAL_TIM_PWM_Stop(&htim12, TIM_CHANNEL_2);
-		mydev->lcd_status = MYGUI_LCD_STATUS_OFF;
+		mydev->lcd.status = MYGUI_LCD_STATUS_OFF;
 		return;
 	}
-	if(num <= 20){//亮度小于=20算暗
-		mydev->lcd_status = MYGUI_LCD_STATUS_DARK;
-	}
 	if(falg){
-		mydev->lcd_lightness = num;
+		mydev->lcd.lightness = num;
 	}	
 	__HAL_TIM_SET_COMPARE(&htim12, TIM_CHANNEL_2, num);
 }
 
 static void mygui_lcd_wakeup(MyGUI_dev* mydev, uint8_t arg){//arg为0代表没有点击到屏幕的元素，为1代表点击到元素
-	LOG("dev name=%s\r\n ", mydev->dev.name);
-	LOG("mygui_lcd_wakeup start\r\n");
 	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_2);
-	
-	__HAL_TIM_SET_COMPARE(&htim12, TIM_CHANNEL_2, mydev->lcd_lightness);
+	LOG("mydev->lcd.lightness = %d\r\n", mydev->lcd.lightness);
+	__HAL_TIM_SET_COMPARE(&htim12, TIM_CHANNEL_2, mydev->lcd.lightness);
 	if(arg){
-		mydev->lcd_status = MYGUI_LCD_STATUS_ON;
+		mydev->lcd.status = MYGUI_LCD_STATUS_ON;
 	}
-	LOG("11\r\n");
 	//定时10s变暗
 	mydev->timer[0].change_period(&mydev->timer[0], MYGUI_SHALLOW_SLEEP_DELAY);
 	mydev->timer[0].set_reloadMode(&mydev->timer[0], 0);
 	mydev->timer[0].start(&mydev->timer[0]);
-	LOG("22\r\n");
 	//定时15s黑屏
 	mydev->timer[1].change_period(&mydev->timer[1], MYGUI_DEEP_SLEEP_DELAY);
 	mydev->timer[1].set_reloadMode(&mydev->timer[1], 0);
 	mydev->timer[1].start(&mydev->timer[1]);
-	LOG("33\r\n");
 }
-
-//static void mygui_refresh(MyGUI_dev* mydev,uint32_t delayms){
-//	vTaskDelay(delayms);
-//	uint8_t str[10] = {0};
-//	/*update temp*/
-//	memset(str, 0, 10);
-//	sprintf((char*)str, "%d", mydev->ui_temp);
-//	mygui_set_ui_temp(str);
-//	
-//	/*update ligtness*/
-//	memset(str, 0, 10);
-//	sprintf((char*)str, "%d", mydev->ui_lightness);
-//	mygui_set_ui_lightness(str);
-//	
-//	/*update alarm*/
-//	memset(str, 0, 10);
-//	sprintf((char*)str, "%d", mydev->ui_alarm_status);
-//	mygui_set_ui_alarm(str);
-//	
-//	/*update alarm*/
-//	memset(str, 0, 10);
-//	sprintf((char*)str, "%d", mydev->ui_alarm_status);
-//	mygui_set_ui_alarm(str);
-//}
 	
 static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
+	if(my_dev == NULL){
+		LOG("msg_parse my_dev is null\r\n");
+		return -1;
+	}
 	MyGUI_dev* mydev = (MyGUI_dev*)my_dev;
 	LOG("msg_parse dev name = %s\r\n", mydev->dev.name);
 	uint8_t* protocol_name = NULL;
 	protocol_name = message_protocol_find_name(buf, len, 0);
 	if(protocol_name == NULL){
+		LOG("not found protocol_name\r\n");
 		return -1;
 	}
-	if(memcpy(protocol_name, "mygui", strlen("mygui"))){//mygui能听懂mygui语言
+	if(!memcmp(protocol_name, "mygui", strlen("mygui"))){//mygui能听懂mygui语言
 		uint8_t cmd = buf[5];
 		uint8_t* payload = &buf[7];
+		uint8_t len = buf[6];
+		message_log((uint8_t*)"mygui mes recv", cmd, payload, len);
 		switch(cmd){
 			case CMD_GUI_UI_SHOW_MAIN:
 				LOG("CMD_GUI_SHOW_MAIN\r\n");
@@ -128,9 +103,59 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 				mygui_set_ui_fan(mydev, payload[0]);
 				break;
 		}
-	}else if(memcpy(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mcu语言
+	}else if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mcu语言
 		uint8_t cmd = buf[5];
 		uint8_t* payload = &buf[7];
+		uint8_t len = buf[6];
+		message_log((uint8_t*)"mcu mes recv", cmd, payload, len);
+		switch(cmd){
+			case CMD_GUI_UI_SHOW_MAIN:
+				LOG("CMD_GUI_SHOW_MAIN\r\n");
+				mygui_show_ui_main();
+				break;
+			case CMD_GUI_UI_SHOW_TEMP:
+				LOG("CMD_GUI_SHOW_TEMP\r\n");
+				mygui_show_ui_temp();
+				break;
+			case CMD_GUI_UI_SET_TEMP:
+				LOG("CMD_GUI_SET_TEMP arg=%d \r\n ", payload[0]);
+				mygui_set_ui_temp(mydev, payload[0]);
+				break;
+			case CMD_GUI_UI_SET_LIGHTNESS:
+				LOG("CMD_GUI_UI_SET_LIGHTNESS arg=%d\r\n ", (payload[0] << 8) + payload[1]);
+				mygui_set_ui_lightness(mydev, (payload[0] << 8) + payload[1]);
+				break;
+			case CMD_GUI_LCD_SET_LIGHTNESS:
+				LOG("CMD_GUI_LCD_SET_LIGHTNESS arg2=%d \r\n ", payload[0]);
+				mygui_set_lcd_lightness(mydev, 1, payload[0]);
+				break;
+			case CMD_GUI_LCD_OFF:
+				LOG("CMD_GUI_OFF\r\n");
+				//(third num = 0) is stop timer
+				mygui_set_lcd_lightness(mydev, 0, 0);
+				break;
+			case CMD_GUI_LCD_WAKEUP:
+				LOG("CMD_GUI_WAKEUP\r\n");
+				mygui_lcd_wakeup(mydev, payload[0]);
+				break;
+			case CMD_GUI_UI_SET_ALARM:
+				LOG("CMD_GUI_UI_SET_ALARM\r\n");
+				mygui_set_ui_alarm(mydev, payload[0]);
+				break;
+			case CMD_GUI_UI_SET_LED:
+				LOG("CMD_GUI_UI_SET_LED\r\n");
+				mygui_set_ui_led(mydev, payload[0]);
+				break;
+			case CMD_GUI_UI_SET_FAN:
+				LOG("CMD_GUI_UI_SET_FAN\r\n");
+				mygui_set_ui_fan(mydev, payload[0]);
+				break;
+		}
+	}else if(!memcmp(protocol_name, "kkk", strlen("kkk"))){
+		uint8_t cmd = buf[3];
+		uint8_t* payload = &buf[5];
+		uint8_t len = buf[4];
+		message_log((uint8_t*)"kkk mes recv", cmd, payload, len);
 		switch(cmd){
 			case CMD_GUI_UI_SHOW_MAIN:
 				LOG("CMD_GUI_SHOW_MAIN\r\n");
@@ -227,8 +252,8 @@ int8_t mygui_init(){
 	/*self property*/
 	memcpy(pg_mydev[0]->dev.name, "mygui1", strlen((char*)"mygui1"));
 	pg_mydev[0]->dev.addr = Message_Addr_MY_GUI;
-	pg_mydev[0]->lcd_status = MYGUI_LCD_STATUS_OFF;
-	pg_mydev[0]->lcd_lightness = 100;
+	pg_mydev[0]->lcd.status = MYGUI_LCD_STATUS_OFF;
+	pg_mydev[0]->lcd.lightness = 100;
 	/*timer*/
 	for(uint8_t i = 0 ; i < MYGUI_DEV_TIMRE_NUM; i++){
 		pg_mydev[0]->timer[i].autoReload = 0;

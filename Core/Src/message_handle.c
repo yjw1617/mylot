@@ -1,5 +1,4 @@
-#include "message.h"
-
+#include "message_handle.h"
 #include "usart.h"
 #include "semphr.h"
 #include <stdio.h>
@@ -107,12 +106,18 @@ static int8_t message_protocol_find_addr(Frame_t* fram){
 				//message head2 ok  
 				if(fram->r_buf[i+1] == g_message_task.message_protocol_controller.protocols[j]->head2){
 					LOG("i = %d, head2 == %.2x\r\n", i, fram->r_buf[i + 1]);
+					if(g_message_task.message_protocol_controller.protocols[j]->dest_addr_index == 0){
+						return -1;
+					}
 					fram->index_useful = i;
 					fram->len = fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more;
 					return fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
 				}
 				//message end ok
 				if(fram->r_buf[fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more] == g_message_task.message_protocol_controller.protocols[j]->end){
+					if(g_message_task.message_protocol_controller.protocols[j]->dest_addr_index == 0){
+						return -1;
+					}
 					fram->index_useful = i;
 					fram->len = fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->len_index] + g_message_task.message_protocol_controller.protocols[j]->len_index_more;
 					return fram->r_buf[i + g_message_task.message_protocol_controller.protocols[j]->dest_addr_index];
@@ -216,11 +221,9 @@ static uint8_t message_get_checknum(uint8_t* start, uint8_t len){
 }
 
 void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type){
-	LOG("message_send_to_dev\r\n");
 	Frame_t frame = {};
 	if(protocol_type == Protocol_Type_G_Gui){
 		Message_g_gui_t* mes = (Message_g_gui_t*)message;
-		LOG("addr = %d\r\n", mes->addr_dest);
 		frame.r_buf[0] = 0xbb,
 		frame.r_buf[1] = 0x44,
 		frame.r_buf[2] = mes->addr_src,
@@ -229,14 +232,30 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		frame.r_buf[5] = mes->cmd,
 		frame.r_buf[6] = mes->len,
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
-		frame.r_buf[7 + mes->len] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
+		frame.r_buf[7 + mes->len] = message_get_checknum(&frame.r_buf[0], mes->len + 8);//检验码是所有数据之和%256
 		frame.len = 8 + mes->len;
+		message_log("gui mes send", mes->cmd, mes->payload, mes->len);
 	}
 	if(protocol_type == Protocol_Type_Mcu){
-		Message_g_gui_t* mes = (Message_g_gui_t*)message;
+		Message_Mcu_t* mes = (Message_Mcu_t*)message;
 		//封包
-		frame.r_buf[0] = 0xbb,
-		frame.r_buf[1] = 0x44,
+		frame.r_buf[0] = 0xff,
+		frame.r_buf[1] = 0x55,
+		frame.r_buf[2] = mes->addr_src,
+		frame.r_buf[3] = mes->addr_dest,
+		frame.r_buf[4] = mes->type,
+		frame.r_buf[5] = mes->cmd,
+		frame.r_buf[6] = mes->len,
+		memcpy(&frame.r_buf[7], mes->payload, mes->len);
+		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);;
+		frame.len = 8 + mes->len;
+		message_log("mcu mes send", mes->cmd, mes->payload, mes->len);
+	}
+	if(protocol_type == Protocol_Type_Leinuo){
+		Message_Leinuo_t* mes = (Message_Leinuo_t*)message;
+		//封包
+		frame.r_buf[0] = 0xaa,
+		frame.r_buf[1] = 0x33,
 		frame.r_buf[2] = mes->addr_src,
 		frame.r_buf[3] = mes->addr_dest,
 		frame.r_buf[4] = mes->type,
@@ -245,6 +264,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
 		frame.r_buf[mes->len + 7] = 0x99;
 		frame.len = 8 + mes->len;
+		message_log("leinuo mes send", mes->cmd, mes->payload, mes->len);
 	}
 	frame.index_useful = 0;
 	if(xQueueSend(dev_dest->Message_Queue, &frame, 0) != pdPASS){
@@ -315,32 +335,61 @@ void message_handle(const void* const handle){
 	});
 	message_protocol_register(message_protocol_mygui);
 	
+	
+	//这是mygui用的协议
+	Message_protocol* message_protocol_kkk = message_protocol_create(sizeof(Message_protocol));
+	message_protocol_copy(message_protocol_kkk, 
+	(Message_protocol){
+		.name = "kkk", 
+		.type = MESSAGE_TYPE_MCU, 
+		.head1=0x33, 
+		.head2=0x66, 
+		.len_index = 4, 
+		.len_index_more = 6, 
+		.dest_addr_index = 0,
+	});
+	message_protocol_register(message_protocol_kkk);
 	Frame_t frame_temp = {};
 	int8_t ret = 0;
 	uint8_t i = 0;
-	uint8_t dest_addr = 0;
+	int16_t dest_addr = 0;
 	uint8_t message_type = 0;
 	Dev* dev = 0;
 	uint8_t index_useful = 0;
 	uint8_t temp_data[FRAME_MAX_LEN] = {};
+	dev_controller* dev_con = NULL;
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
 		if(ret == pdPASS){
-			LOG("frame len = %d\r\n", frame_temp.len);
-			//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中
+			//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中,如果返回值为-1,那么代表着这个类型的消息不支持addr_dest
 			dest_addr = message_protocol_find_addr(&frame_temp);
-			LOG("dest_addr = %d\r\n", dest_addr);
-			//将消息发送给设备的消息队列中等待处理
-			dev = common_dev_find_dev_by_addr(dest_addr);
-			if(dev != NULL){
-				if(dev->Message_Queue != NULL){
-					ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
-					if(ret != pdPASS){
-						LOG("dev->Message_Queue full\r\n");
+			if(dest_addr == -1){
+//				LOG("message_protocol_find_addr = -1\r\n");
+				//由于消息并没有addr_dest，所以将此消息广播给所有设备
+				dev_con = common_dev_get_controller();
+				for(uint8_t i = 0; i < DEV_MAX_NUM; i++){
+					if(dev_con->dev[i] != NULL){
+						if(dev_con->dev[i]->Message_Queue != NULL){
+							ret = xQueueSend(dev_con->dev[i]->Message_Queue, &frame_temp, 0);
+							if(ret != pdPASS){
+								LOG("dev->Message_Queue full\r\n");
+							}
+						}
 					}
 				}
 			}else{
-				LOG("common_dev_find_dev_by_addr error\r\n");
+				//将消息发送给指定设备的消息队列中等待处理
+				dev = common_dev_find_dev_by_addr(dest_addr);
+				if(dev != NULL){
+					if(dev->Message_Queue != NULL){
+						ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
+						if(ret != pdPASS){
+							LOG("dev->Message_Queue full\r\n");
+						}
+					}
+				}else{
+					LOG("common_dev_find_dev_by_addr error\r\n");
+				}
 			}
 			memset(&frame_temp, 0, sizeof(Frame_t)); 
 		}
@@ -363,9 +412,15 @@ void message_info(const Message_t* const mes){
 	printf("\r\nframe.check_num = %.2x\r\n", mes->check_num);
 }
 
-void message_log(Dev* dev){
-	LOG("dev addr = %d\r\n", dev->addr);
-	LOG("dev name = %s\r\n", dev->name);
+void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_len){
+	LOG("\r\n\r\n\r\n\r\n");
+	LOG("------------%s-------------\r\n", name);
+	LOG("mes cmd = %.2x\r\n", cmd);
+	LOG("mes payload: ");
+	for(uint8_t i = 0; i < payload_len; i++){
+		LOG("%.2x ", payload[i]);
+	}
+	LOG("\r\n\r\n\r\n\r\n");
 }
 void message_send(const Message_t* const mes){
 	
