@@ -11,5 +11,4 @@ typedef struct Uart_dev{
 	Dev dev;
 	SemaphoreHandle_t mutex;
 }Uart_dev;
-
 int8_t uart_dev_init();

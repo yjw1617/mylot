@@ -77,8 +77,6 @@ static Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
 }
 
 int8_t message_protocol_find_type(Frame_t* fram){
-	//Determines the length of the received message
-//	assert(frame->len <= FRAME_MAX_LEN);
 	for(uint8_t i = 0; i < fram->len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
 			if(fram->r_buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
@@ -129,8 +127,6 @@ static int8_t message_protocol_find_addr(Frame_t* fram){
 }
 
 uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index){
-	//Determines the length of the received message
-//	assert(frame->len <= FRAME_MAX_LEN);
 	for(uint8_t i = 0; i < len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
 			if(buf[i] == g_message_task.message_protocol_controller.protocols[j]->head1){//message head1 ok
@@ -247,7 +243,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		frame.r_buf[5] = mes->cmd,
 		frame.r_buf[6] = mes->len,
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
-		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);;
+		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
 		frame.len = 8 + mes->len;
 		message_log("mcu mes send", mes->cmd, mes->payload, mes->len);
 	}
@@ -262,7 +258,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		frame.r_buf[5] = mes->cmd,
 		frame.r_buf[6] = mes->len,
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
-		frame.r_buf[mes->len + 7] = 0x99;
+		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
 		frame.len = 8 + mes->len;
 		message_log("leinuo mes send", mes->cmd, mes->payload, mes->len);
 	}

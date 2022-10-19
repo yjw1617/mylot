@@ -22,11 +22,12 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 D:\STM407Project\mylot\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  10/18/2022
+Project File Date:  10/19/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
+compiling usart.c...
 compiling uart_dev.c...
 ../Core/Inc/common_dev.h(45): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
@@ -34,15 +35,15 @@ compiling uart_dev.c...
   void dev_poll_handle();
 ../Core/Inc/message_handle.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
   					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message_handle.h(150): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+../Core/Inc/message_handle.h(149): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message_handle.h(152): warning:  #1295-D: Deprecated declaration message_init - give arg types
+../Core/Inc/message_handle.h(151): warning:  #1295-D: Deprecated declaration message_init - give arg types
   void message_init();
-../Core/Inc/message_handle.h(162): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message_handle.h(161): warning:  #1-D: last line of file ends without a newline
   #endif
 ../Core/Inc/common_timer.h(26): warning:  #1-D: last line of file ends without a newline
   void commom_timer_init(Common_Timer* commom_timer);
-../Core/Inc/uart_dev.h(15): warning:  #1295-D: Deprecated declaration uart_dev_init - give arg types
+../Core/Inc/uart_dev.h(14): warning:  #1295-D: Deprecated declaration uart_dev_init - give arg types
   int8_t uart_dev_init();
 ../Core/Inc/utils.h(4): warning:  #1-D: last line of file ends without a newline
   uint8_t utils_calculate_check_num(uint8_t* msg,uint8_t index_start, uint8_t len);
@@ -54,17 +55,33 @@ compiling uart_dev.c...
   }
 ..\Core\Src\uart_dev.c(19): warning:  #223-D: function "printf" declared implicitly
   	LOG("leinuo timer callback\r\n");
-..\Core\Src\uart_dev.c(30): warning:  #940-D: missing return statement at end of non-void function "msg_parse" 
+..\Core\Src\uart_dev.c(26): warning:  #223-D: function "printf" declared implicitly
+  		LOG("%.2x ", buf[i]);
+..\Core\Src\uart_dev.c(30): warning:  #223-D: function "printf" declared implicitly
+  		LOG("HAL_UART1_Transmit error\r\n");
+..\Core\Src\uart_dev.c(32): warning:  #940-D: missing return statement at end of non-void function "send_mes_to_uart" 
   }
-..\Core\Src\uart_dev.c(41): warning:  #223-D: function "printf" declared implicitly
+..\Core\Src\uart_dev.c(37): warning:  #223-D: function "printf" declared implicitly
+  	LOG("dev name = %s\r\n", mydev->dev.name);
+..\Core\Src\uart_dev.c(39): warning:  #223-D: function "printf" declared implicitly
+  		LOG("uart send_mes error\r\n");
+..\Core\Src\uart_dev.c(41): warning:  #940-D: missing return statement at end of non-void function "msg_parse" 
+  }
+..\Core\Src\uart_dev.c(52): warning:  #223-D: function "printf" declared implicitly
   			LOG("dev_mydev_%d create uart_dev error\r\n", i);
-..\Core\Src\uart_dev.c(49): warning:  #223-D: function "printf" declared implicitly
+..\Core\Src\uart_dev.c(60): warning:  #223-D: function "printf" declared implicitly
   			LOG("xQueueCreate heap is full\r\n");
-..\Core\Src\uart_dev.c(54): warning:  #223-D: function "printf" declared implicitly
+..\Core\Src\uart_dev.c(65): warning:  #223-D: function "printf" declared implicitly
   			LOG("dev %d add err\r\n", i);
-..\Core\Src\uart_dev.c(59): warning:  #223-D: function "printf" declared implicitly
+..\Core\Src\uart_dev.c(70): warning:  #223-D: function "printf" declared implicitly
   			LOG("xSemaphoreCreateMutex %d err\r\n", i);
-..\Core\Src\uart_dev.c(75): warning:  #940-D: missing return statement at end of non-void function "uart_dev_init" 
+..\Core\Src\uart_dev.c(78): warning:  #223-D: function "printf" declared implicitly
+  		LOG("usart_get_uart(1) error\r\n");
+..\Core\Src\uart_dev.c(85): warning:  #223-D: function "printf" declared implicitly
+  		LOG("usart_get_uart(2) error\r\n");
+..\Core\Src\uart_dev.c(91): warning:  #223-D: function "printf" declared implicitly
+  		LOG("usart_get_uart(2) error\r\n");
+..\Core\Src\uart_dev.c(95): warning:  #940-D: missing return statement at end of non-void function "uart_dev_init" 
   }
 ..\Core\Src\uart_dev.c(9): warning:  #177-D: function "on"  was declared but never referenced
   static uint8_t on(void* my_dev){
@@ -74,11 +91,11 @@ compiling uart_dev.c...
   static uint8_t reset(void* my_dev){
 ..\Core\Src\uart_dev.c(18): warning:  #177-D: function "timer_callback"  was declared but never referenced
   static void timer_callback(TimerHandle_t xTimer){
-..\Core\Src\uart_dev.c: 23 warnings, 0 errors
+..\Core\Src\uart_dev.c: 31 warnings, 0 errors
 linking...
-Program Size: Code=124380 RO-data=463064 RW-data=744 ZI-data=22028  
+Program Size: Code=126504 RO-data=463112 RW-data=764 ZI-data=21104  
 FromELF: creating hex file...
-"mylot\mylot.axf" - 0 Error(s), 23 Warning(s).
+"mylot\mylot.axf" - 0 Error(s), 31 Warning(s).
 
 <h2>Software Packages used:</h2>
 

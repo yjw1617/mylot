@@ -44,10 +44,9 @@ enum Message_Addr{
 	Message_Addr_Wifi_LEINUO4 = 0x05,
 	Message_Addr_Wifi_LEINUO5 = 0x06,
 	Message_Addr_MY_GUI = 0x07,
-	Message_Addr_Leinuo = 0x08,
-	Message_Addr_uart1 = 0x09,
-	Message_Addr_uart2 = 0xa0,
-	Message_Addr_uart3 = 0xa1,
+	Message_Addr_uart1 = 0x08,
+	Message_Addr_uart2 = 0x09,
+	Message_Addr_uart3 = 0x0a,
 };
 
 enum Message_Type{

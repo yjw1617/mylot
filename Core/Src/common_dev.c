@@ -50,7 +50,7 @@ Dev* common_dev_find_dev_by_addr(uint16_t addr){
 
 Dev* common_dev_find_dev_by_name(uint8_t* dev_name){
 	for(uint16_t i = 0; i < DEV_MAX_NUM; i++){
-		if(memcmp(dev_name, dev_con.dev[i]->name, strlen((char*)dev_name))){
+		if(memcmp(dev_name, dev_con.dev[i]->name, strlen((char*)dev_name)) == 0){
 			return dev_con.dev[i];
 		}
 	}

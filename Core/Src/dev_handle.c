@@ -3,14 +3,15 @@
 #include "leinuo_dev.h"
 #include "common_dev.h"
 #include "mygui.h"
+#include "uart_dev.h"
 static dev_controller* dev_con;
-//循环遍历各种dev设备的消息队列处理相关事件
 void dev_handle(){
 	leinuo_dev_init();//初始化leinuo设备
 	mygui_init();			//初始化mygui设备
+	uart_dev_init();	//初始化uart设备
 	dev_poll_handle();
 }
-
+//循环遍历各种dev设备的消息队列处理相关事件
 void dev_poll_handle(){
 	//获取dev_con句柄
 	dev_controller* dev_con = common_dev_get_controller();

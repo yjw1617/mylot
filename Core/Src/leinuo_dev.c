@@ -14,16 +14,6 @@ static uint8_t connect(void* my_dev){
 static uint8_t on(void* my_dev){
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
 	xSemaphoreTake(mydev->mutex, portMAX_DELAY);
-	LOG("wifi %s on\r\n", mydev->dev.name);
-	//发送消息给mugui设备将屏幕唤醒
-	Message_g_gui_t mes = {
-		.addr_src = Message_Addr_Leinuo,
-		.addr_dest = Message_Addr_Leinuo,
-		.cmd = 1,
-		.len = 1,
-		.payload = {0},
-	};
-	message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_Leinuo);
 	xSemaphoreGive(mydev->mutex);
 }
 
@@ -53,25 +43,61 @@ static void timer_callback(TimerHandle_t xTimer){
 	LOG("leinuo timer callback\r\n");
 }
 
+static void leinuo_wake_up(void* my_dev){
+	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
+	Dev* p_dev = common_dev_find_dev_by_name("uart1");
+	Message_Leinuo_t leinuo_mes = {
+		.addr_src = Message_Addr_Wifi_LEINUO1,
+		.addr_dest = Message_Addr_Wifi_LEINUO1,
+		.type = 0x01,
+		.cmd = Leinuo_Cmd_Wake,
+		.len = 0,
+	};
+	message_send_to_dev(p_dev, (uint8_t*)&leinuo_mes,Protocol_Type_Leinuo);
+}
 
 /*一个设备可以支持多个类型的消息协议*/
 static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
+	if(my_dev == NULL){
+		LOG("msg_parse my_dev is null\r\n");
+		return -1;
+	}
+	
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-	uint8_t data[len];
-	memcpy(data, buf, len);
-	//将消息解析出来封装成结构体
-	Message_Leinuo_t* mes = (Message_Leinuo_t*)data;
-	if(mes->addr_src == MESSAGE_Addr_MCU){	//发送消息的是mcu,根据mcu说的语言来解析
-		switch(mes->cmd){
+	
+	LOG("msg_parse dev name = %s\r\n", mydev->dev.name);
+	uint8_t* protocol_name = NULL;
+	protocol_name = message_protocol_find_name(buf, len, 0);
+	if(protocol_name == NULL){
+		LOG("not found protocol_name\r\n");
+		return -1;
+	}
+	if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mygui语言
+		uint8_t cmd = buf[5];
+		uint8_t* payload = &buf[7];
+		uint8_t len = buf[6];
+		message_log((uint8_t*)"LeiNuoWifi_dev mes recv", cmd, payload, len);
+		switch(cmd){
 			case Leinuo_Cmd_Wake:
-					
+				leinuo_wake_up(mydev);
+				LOG("Leinuo_Cmd_Wake\r\n");
+				break;
+			case Leinuo_Cmd_Sleep:
+				LOG("Leinuo_Cmd_Sleep\r\n");
+				break;
+			case Leinuo_Cmd_Connect_Net:
+				LOG("Leinuo_Cmd_Connect_Net\r\n ");
+				break;
+			case Leinuo_Cmd_On:
+				LOG("Leinuo_Cmd_On\r\n");
 				break;
 			case Leinuo_Cmd_Off:
-				
+				LOG("Leinuo_Cmd_Off\r\n ");
+				break;
+			case Leinuo_Cmd_Reset:
+				LOG("Leinuo_Cmd_Reset\r\n");
 				break;
 		}
-	}else if(mes->addr_src == Message_Addr_Wifi_LEINUO1){ //发送消息的是Message_Addr_Wifi_LEINUO1,根据Message_Addr_Wifi_LEINUO1说的语言来解析
-
 	}
 }
 
