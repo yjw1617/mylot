@@ -46,3 +46,16 @@ mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\gt9147.o: ../HARDWARE/inc/myLcd.h
 mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+mylot\gt9147.o: ../Core/Inc/message_handle.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\gt9147.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\gt9147.o: ../Core/Inc/common_dev.h

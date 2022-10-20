@@ -41,3 +41,16 @@ mylot\mylcd.o: ../Core/Inc/usart.h
 mylot\mylcd.o: ../Core/Inc/main.h
 mylot\mylcd.o: ../SYSTEM/inc/delay.h
 mylot\mylcd.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+mylot\mylcd.o: ../Core/Inc/message_handle.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\mylcd.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\mylcd.o: ../Core/Inc/common_dev.h

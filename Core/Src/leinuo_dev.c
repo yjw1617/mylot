@@ -38,22 +38,39 @@ static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg, uint16_t len){
 		payload = (uint8_t*)arg;
 	}
 }
-
+static void leinuo_make_mes(Message_Leinuo_t* mes, uint8_t* buf){
+	buf[0] = mes->head1;
+	buf[1] = mes->head2;
+	buf[2] = mes->addr_src;
+	buf[3] = mes->addr_dest;
+	buf[4] = mes->type;
+	buf[5] = mes->cmd;
+	buf[6] = mes->len;
+	memcpy(&buf[7], mes->payload, mes->len);
+	buf[7 + mes->len] = message_get_checknum(buf, mes->len + 8);
+}
+	
 static void timer_callback(TimerHandle_t xTimer){
 	LOG("leinuo timer callback\r\n");
+	
 }
 
-static void leinuo_wake_up(void* my_dev){
+static int8_t leinuo_wake_up(void* my_dev){
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
 	Dev* p_dev = common_dev_find_dev_by_name("uart1");
+	if(p_dev == NULL){
+		LOG("common_dev_find_dev_by_name('uart1') error\r\n");
+		return -1;
+	}
 	Message_Leinuo_t leinuo_mes = {
 		.addr_src = Message_Addr_Wifi_LEINUO1,
 		.addr_dest = Message_Addr_Wifi_LEINUO1,
 		.type = 0x01,
-		.cmd = Leinuo_Cmd_Wake,
-		.len = 0,
+		.cmd = Message_Uart_Send,
+		.payload = {0xaa, 0x33, 0x11, 0x22, 0x33, 0x44},
+		.len = 6,
 	};
-	message_send_to_dev(p_dev, (uint8_t*)&leinuo_mes,Protocol_Type_Leinuo);
+	message_send_to_dev(p_dev, (uint8_t*)&leinuo_mes, Protocol_Type_Mcu);
 }
 
 /*一个设备可以支持多个类型的消息协议*/
@@ -75,8 +92,8 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 	if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mygui语言
 		uint8_t cmd = buf[5];
 		uint8_t* payload = &buf[7];
-		uint8_t len = buf[6];
-		message_log((uint8_t*)"LeiNuoWifi_dev mes recv", cmd, payload, len);
+		uint8_t payload_len = buf[6];
+		message_log((uint8_t*)"LeiNuoWifi_dev mes recv", cmd, payload, payload_len);
 		switch(cmd){
 			case Leinuo_Cmd_Wake:
 				leinuo_wake_up(mydev);

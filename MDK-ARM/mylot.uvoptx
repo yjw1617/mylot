@@ -1095,7 +1095,7 @@
 
   <Group>
     <GroupName>App/hardware</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1199,7 +1199,7 @@
 
   <Group>
     <GroupName>App/mygui</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1608,6 +1608,30 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\Core\Inc\message_handle.h</PathWithFileName>
       <FilenameWithoutPath>message_handle.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>16</GroupNumber>
+      <FileNumber>108</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Core\Src\dev_urgent_handle.c</PathWithFileName>
+      <FilenameWithoutPath>dev_urgent_handle.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>16</GroupNumber>
+      <FileNumber>109</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Core\Inc\dev_urgent_handle.h</PathWithFileName>
+      <FilenameWithoutPath>dev_urgent_handle.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

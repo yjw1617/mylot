@@ -43,3 +43,16 @@ mylot\ft5206.o: ../Core/Inc/usart.h
 mylot\ft5206.o: ../Core/Inc/main.h
 mylot\ft5206.o: ../SYSTEM/inc/delay.h
 mylot\ft5206.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+mylot\ft5206.o: ../Core/Inc/message_handle.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\ft5206.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\ft5206.o: ../Core/Inc/common_dev.h

@@ -59,6 +59,7 @@
 osThreadId MessageHandleHandle;
 osThreadId GuiPollHandleHandle;
 osThreadId DevHandleHandle;
+osThreadId DevUrgentHandleHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -68,6 +69,7 @@ osThreadId DevHandleHandle;
 void MessageHandle_task(void const * argument);
 void GuiPollHandle_task(void const * argument);
 void DevHandle_task(void const * argument);
+void DevUrgentHandle_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -142,6 +144,10 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(DevHandle, DevHandle_task, osPriorityBelowNormal, 0, 256);
   DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
+  /* definition and creation of DevUrgentHandle */
+  osThreadDef(DevUrgentHandle, DevUrgentHandle_task, osPriorityHigh, 0, 128);
+  DevUrgentHandleHandle = osThreadCreate(osThread(DevUrgentHandle), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -203,6 +209,25 @@ void DevHandle_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END DevHandle_task */
+}
+
+/* USER CODE BEGIN Header_DevUrgentHandle_task */
+/**
+* @brief Function implementing the DevUrgentHandle thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_DevUrgentHandle_task */
+void DevUrgentHandle_task(void const * argument)
+{
+  /* USER CODE BEGIN DevUrgentHandle_task */
+	dev_urgent_handle();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END DevUrgentHandle_task */
 }
 
 /* Private application code --------------------------------------------------*/

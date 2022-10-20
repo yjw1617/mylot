@@ -94,6 +94,7 @@
 "mylot\dev_handle.o"
 "mylot\gui_poll_handle.o"
 "mylot\message_handle.o"
+"mylot\dev_urgent_handle.o"
 --library_type=microlib --strict --scatter "mylot\mylot.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

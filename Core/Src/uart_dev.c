@@ -20,24 +20,39 @@ static void timer_callback(TimerHandle_t xTimer){
 }
 
 //发送消息到串口
-static int8_t send_mes_to_uart(Uart_dev* mydev, uint8_t* buf, uint8_t len){
-	
-	for(uint8_t i =0; i < len; i++){
-		LOG("%.2x ", buf[i]);
-	}
+static int8_t uart_send_msg(Uart_dev* mydev, uint8_t* buf, uint8_t len){
 	int8_t ret = HAL_UART_Transmit_DMA(mydev->p_uart, buf, len);
 	if(ret != HAL_OK){
 		LOG("HAL_UART1_Transmit error\r\n");
+		return -1;
 	}
 }
 
 /*一个设备可以支持多个类型的消息协议*/
 static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 	Uart_dev* mydev = (Uart_dev*)my_dev;
-	LOG("dev name = %s\r\n", mydev->dev.name);
-	if(send_mes_to_uart(mydev, buf, len) != HAL_OK){
-		LOG("uart send_mes error\r\n");
+	LOG("msg_parse dev name = %s\r\n", mydev->dev.name);
+	uint8_t* protocol_name = NULL;
+	protocol_name = message_protocol_find_name(buf, len, 0);
+	if(protocol_name == NULL){
+		LOG("not found protocol_name\r\n");
+		return -1;
 	}
+	if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mygui语言
+		uint8_t cmd = buf[5];
+		uint8_t* payload = &buf[7];
+		uint8_t payload_len = buf[6];
+		message_log((uint8_t*)"uart_dev mes recv", cmd, payload, payload_len);
+		switch(cmd){
+			case Message_Uart_Send:
+				LOG("Message_Uart_Send\r\n");
+				uart_send_msg(mydev, payload, payload_len);
+				break;
+		}
+	}
+//	if(send_mes_to_uart(mydev, buf, len) != HAL_OK){
+//		LOG("uart send_mes error\r\n");
+//	}
 }
 
 static operations opts = {

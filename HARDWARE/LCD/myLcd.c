@@ -4,6 +4,7 @@
 #include "usart.h"	 
 #include "delay.h"	 
 #include <stdio.h>
+#include "message_handle.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32开发板
@@ -547,7 +548,7 @@ void LCD_Init(void)
 			} 
 		}
 	}   
-	printf(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID   
+	LOG(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID   
 	if(lcddev.id==0X9341)	//9341初始化
 	{	 
 		LCD_WR_REG(0xCF);  

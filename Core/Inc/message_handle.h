@@ -56,7 +56,9 @@ enum Message_Type{
 	MESSAGE_TYPE_GUI = 0x03,
 };
 
-
+enum Message_Cmd{
+	Message_Uart_Send = 0x00,
+};
 #define Message_Protocol_Max_Num 5	//消息类型的最大数目
 #define Message_Protocol_Name_Len 10
 #define Message_Protocol_Type_Len 10
@@ -85,6 +87,8 @@ enum Message_Protocol_Type{
 	Protocol_Type_G_Gui = 0x03,
 	Protocol_Type_Mcu = 0x04,
 	Protocol_Type_Leinuo = 0x05,
+	Protocol_Type_Urgency = 0x06,
+	Protocol_Type_Standard = 0x07,
 };
 
 typedef struct Message_Leinuo_t{
@@ -155,7 +159,10 @@ void message_send(const Message_t* const mes);
 //消息协议管理函数
 uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index);
 int8_t message_protocol_find_type(Frame_t* fram);
+int8_t message_protocol_find_addr(Frame_t* fram);
 void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type);
 void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_len);
+
+uint8_t message_get_checknum(uint8_t* start, uint8_t len);
 //end
 #endif

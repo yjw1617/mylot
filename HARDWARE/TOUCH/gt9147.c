@@ -6,6 +6,7 @@
 #include "string.h" 
 #include "myLcd.h" 
 #include <stdio.h>
+#include "message_handle.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板
@@ -144,7 +145,7 @@ u8 GT9147_Init(void)
 	delay_ms(100);  
 	GT9147_RD_Reg(GT_PID_REG,temp,4);//读取产品ID
 	temp[4]=0;
-	printf("CTP ID:%s\r\n",temp);	//打印ID
+	LOG("CTP ID:%s\r\n",temp);	//打印ID
 	if(strcmp((char*)temp,"9147")==0)//ID==9147
 	{
 		temp[0]=0X02;			
@@ -152,7 +153,7 @@ u8 GT9147_Init(void)
 		GT9147_RD_Reg(GT_CFGS_REG,temp,1);//读取GT_CFGS_REG寄存器
 		if(temp[0]<0X60)//默认版本比较低,需要更新flash配置
 		{
-			printf("Default Ver:%d\r\n",temp[0]);
+			LOG("Default Ver:%d\r\n",temp[0]);
 			GT9147_Send_Cfg(1);//更新并保存配置
 		}
 		delay_ms(10);
