@@ -24,7 +24,7 @@
 #include "mygui_api.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "message_handle.h"
+#include "message.h"
 /**********#include "include_dlg.h"***********************************************************
 *
 *       Defines

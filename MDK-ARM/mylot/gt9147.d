@@ -46,7 +46,7 @@ mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\gt9147.o: ../HARDWARE/inc/myLcd.h
 mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 mylot\gt9147.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-mylot\gt9147.o: ../Core/Inc/message_handle.h
+mylot\gt9147.o: ../Core/Inc/message.h
 mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\gt9147.o: ../Core/Inc/FreeRTOSConfig.h
 mylot\gt9147.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

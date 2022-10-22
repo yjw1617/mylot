@@ -1,5 +1,5 @@
 #include "mygui.h"
-#include "message_handle.h"
+#include "message.h"
 #include <string.h>
 #include "dialog.h"//包含window对话框 头文件
 #include <string.h>

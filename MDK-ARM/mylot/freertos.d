@@ -49,7 +49,7 @@ mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 mylot\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-mylot\freertos.o: ../Core/Inc/message_handle.h
+mylot\freertos.o: ../Core/Inc/message.h
 mylot\freertos.o: ../Core/Inc/common_dev.h
 mylot\freertos.o: ../Core/Inc/gui_poll_handle.h
 mylot\freertos.o: ../HARDWARE/inc/myLcd.h

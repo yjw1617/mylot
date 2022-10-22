@@ -6,7 +6,7 @@
 #include "string.h" 
 #include "myLcd.h" 
 #include <stdio.h>
-#include "message_handle.h"
+#include "message.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板

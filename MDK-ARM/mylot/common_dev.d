@@ -14,4 +14,4 @@ mylot\common_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\common_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\common_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\common_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-mylot\common_dev.o: ../Core/Inc/message_handle.h
+mylot\common_dev.o: ../Core/Inc/message.h

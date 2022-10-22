@@ -1,6 +1,6 @@
 mylot\uart_dev.o: ..\Core\Src\uart_dev.c
 mylot\uart_dev.o: ../Core/Inc/uart_dev.h
-mylot\uart_dev.o: ../Core/Inc/message_handle.h
+mylot\uart_dev.o: ../Core/Inc/message.h
 mylot\uart_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\uart_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\uart_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

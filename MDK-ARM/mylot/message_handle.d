@@ -1,5 +1,6 @@
 mylot\message_handle.o: ..\Core\Src\message_handle.c
 mylot\message_handle.o: ../Core/Inc/message_handle.h
+mylot\message_handle.o: ../Core/Inc/message.h
 mylot\message_handle.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\message_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\message_handle.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
@@ -54,3 +55,4 @@ mylot\message_handle.o: ../Core/Inc/mcu_task.h
 mylot\message_handle.o: ../Core/Inc/wifi_task.h
 mylot\message_handle.o: ../Core/Inc/gui_task.h
 mylot\message_handle.o: ../Core/Inc/common_task.h
+mylot\message_handle.o: ../Core/Inc/dev_urgent_handle.h

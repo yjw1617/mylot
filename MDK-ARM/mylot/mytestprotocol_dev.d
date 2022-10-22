@@ -1,6 +1,6 @@
 mylot\mytestprotocol_dev.o: ..\Core\Src\mytestprotocol_dev.c
 mylot\mytestprotocol_dev.o: ../Core/Inc/mytestprotocol_dev.h
-mylot\mytestprotocol_dev.o: ../Core/Inc/message_handle.h
+mylot\mytestprotocol_dev.o: ../Core/Inc/message.h
 mylot\mytestprotocol_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\mytestprotocol_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mytestprotocol_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

@@ -29,7 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "message_handle.h"
+#include "message.h"
 #define RXLENGHT 128
 /* USER CODE END Includes */
 

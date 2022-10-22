@@ -43,7 +43,7 @@ mylot\ft5206.o: ../Core/Inc/usart.h
 mylot\ft5206.o: ../Core/Inc/main.h
 mylot\ft5206.o: ../SYSTEM/inc/delay.h
 mylot\ft5206.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-mylot\ft5206.o: ../Core/Inc/message_handle.h
+mylot\ft5206.o: ../Core/Inc/message.h
 mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\ft5206.o: ../Core/Inc/FreeRTOSConfig.h
 mylot\ft5206.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

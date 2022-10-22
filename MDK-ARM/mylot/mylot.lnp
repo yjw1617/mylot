@@ -41,6 +41,7 @@
 "mylot\cmsis_os.o"
 "mylot\heap_4.o"
 "mylot\port.o"
+"mylot\message.o"
 "mylot\utils.o"
 "mylot\mygui.o"
 "mylot\mytestprotocol_dev.o"

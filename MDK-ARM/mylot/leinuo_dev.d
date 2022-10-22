@@ -1,6 +1,6 @@
 mylot\leinuo_dev.o: ..\Core\Src\leinuo_dev.c
 mylot\leinuo_dev.o: ../Core/Inc/leinuo_dev.h
-mylot\leinuo_dev.o: ../Core/Inc/message_handle.h
+mylot\leinuo_dev.o: ../Core/Inc/message.h
 mylot\leinuo_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\leinuo_dev.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\leinuo_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
@@ -53,3 +53,4 @@ mylot\leinuo_dev.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 mylot\leinuo_dev.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 mylot\leinuo_dev.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 mylot\leinuo_dev.o: ../Core/Inc/utils.h
+mylot\leinuo_dev.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

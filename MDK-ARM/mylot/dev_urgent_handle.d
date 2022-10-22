@@ -13,7 +13,7 @@ mylot\dev_urgent_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/ta
 mylot\dev_urgent_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\dev_urgent_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\dev_urgent_handle.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-mylot\dev_urgent_handle.o: ../Core/Inc/message_handle.h
+mylot\dev_urgent_handle.o: ../Core/Inc/message.h
 mylot\dev_urgent_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\dev_urgent_handle.o: ../Core/Inc/common_dev.h
 mylot\dev_urgent_handle.o: ../Core/Inc/usart.h

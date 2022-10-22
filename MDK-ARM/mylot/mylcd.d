@@ -41,7 +41,7 @@ mylot\mylcd.o: ../Core/Inc/usart.h
 mylot\mylcd.o: ../Core/Inc/main.h
 mylot\mylcd.o: ../SYSTEM/inc/delay.h
 mylot\mylcd.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-mylot\mylcd.o: ../Core/Inc/message_handle.h
+mylot\mylcd.o: ../Core/Inc/message.h
 mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mylcd.o: ../Core/Inc/FreeRTOSConfig.h
 mylot\mylcd.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

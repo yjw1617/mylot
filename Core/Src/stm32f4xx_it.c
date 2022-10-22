@@ -24,7 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "message_handle.h"
+#include "message.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

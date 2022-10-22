@@ -27,7 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "message_handle.h"
+#include "message.h"
 #include "gui_poll_handle.h"
 #include "myLcd.h"
 #include "touch.h"
