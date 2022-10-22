@@ -35,6 +35,8 @@ enum Message_Head2{
 	Message_Head2_leinuo = 0x33,
 };
 
+
+
 enum Message_Addr{
 	MESSAGE_Addr_MCU = 0x00,
 	MESSAGE_Addr_WIFI_TEST = 0x01,
@@ -48,6 +50,7 @@ enum Message_Addr{
 	Message_Addr_uart2 = 0x09,
 	Message_Addr_uart3 = 0x0a,
 };
+
 
 enum Message_Type{
 	MESSAGE_TYPE_MCU  = 0x00,
@@ -161,8 +164,12 @@ uint8_t* message_protocol_find_name(uint8_t* buf, uint8_t len, uint8_t* index);
 int8_t message_protocol_find_type(Frame_t* fram);
 int8_t message_protocol_find_addr(Frame_t* fram);
 void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type);
-void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_len);
+void message_log(uint8_t type, uint8_t* addr_src_name, uint8_t* addr_dest_name, uint8_t* mes_protocol_name, uint8_t cmd, uint8_t* payload, uint8_t payload_len);
 
 uint8_t message_get_checknum(uint8_t* start, uint8_t len);
+
+uint8_t* message_get_name_by_index(uint8_t id);
+
+void message_log_buf(uint8_t* index_start, uint8_t len);
 //end
 #endif

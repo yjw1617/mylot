@@ -42,7 +42,9 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 		uint8_t cmd = buf[5];
 		uint8_t* payload = &buf[7];
 		uint8_t payload_len = buf[6];
-		message_log((uint8_t*)"uart_dev mes recv", cmd, payload, payload_len);
+		uint8_t addr_dest = buf[3];
+		uint8_t addr_src = buf[2];
+		message_log(0, message_get_name_by_index(addr_dest), message_get_name_by_index(addr_src), "mcutype", cmd, payload, len);
 		switch(cmd){
 			case Message_Uart_Send:
 				LOG("Message_Uart_Send\r\n");

@@ -7,8 +7,22 @@
 #include "wifi_task.h"
 #include "gui_task.h"
 #include "common_task.h"
-
+#include "dev_urgent_handle.h"
 extern DMA_HandleTypeDef hdma_usart1_rx;
+
+static uint8_t* Message_addr_name_arry[] = {
+	"mcu",
+	"wifi_test",
+	"wifi_leinuo1",
+	"wifi_leinuo2",
+	"wifi_leinuo3",
+	"wifi_leinuo4",
+	"wifi_leinuo5",
+	"my_gui",
+	"uart1",
+	"uart2",
+	"uart3",
+};
 
 typedef struct Message_task{
 	Common_Task common_task;
@@ -157,6 +171,14 @@ static void message_protocol_copy(Message_protocol* protocol_src, Message_protoc
 	protocol_src->end = protocol_dest.end;
 	
 }
+
+static uint8_t* message_find_protocolname_by_protocoltype(uint8_t type){
+	for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
+		if(g_message_task.message_protocol_controller.protocols[j]->type == type){
+			return g_message_task.message_protocol_controller.protocols[j]->name;
+		}
+	}
+}
 //end
 
 void message_init(){
@@ -230,7 +252,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
 		frame.r_buf[7 + mes->len] = message_get_checknum(&frame.r_buf[0], mes->len + 8);//检验码是所有数据之和%256
 		frame.len = 8 + mes->len;
-		message_log("gui mes send", mes->cmd, mes->payload, mes->len);
+		message_log(1, message_get_name_by_index(mes->addr_src), message_get_name_by_index(mes->addr_dest), message_find_protocolname_by_protocoltype(protocol_type), mes->cmd, mes->payload, mes->len);
 	}
 	if(protocol_type == Protocol_Type_Mcu){
 		Message_Mcu_t* mes = (Message_Mcu_t*)message;
@@ -245,7 +267,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
 		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
 		frame.len = 8 + mes->len;
-		message_log("mcu mes send", mes->cmd, mes->payload, mes->len);
+		message_log(1, message_get_name_by_index(mes->addr_src), message_get_name_by_index(mes->addr_dest), message_find_protocolname_by_protocoltype(protocol_type), mes->cmd, mes->payload, mes->len);
 	}
 	if(protocol_type == Protocol_Type_Leinuo){
 		Message_Leinuo_t* mes = (Message_Leinuo_t*)message;
@@ -260,7 +282,7 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 		memcpy(&frame.r_buf[7], mes->payload, mes->len);
 		frame.r_buf[mes->len + 7] = message_get_checknum(&frame.r_buf[0], mes->len + 8);
 		frame.len = 8 + mes->len;
-		message_log("leinuo mes send", mes->cmd, mes->payload, mes->len);
+		message_log(1, message_get_name_by_index(mes->addr_src), message_get_name_by_index(mes->addr_dest), message_find_protocolname_by_protocoltype(protocol_type), mes->cmd, mes->payload, mes->len);
 	}
 	frame.index_useful = 0;
 	if(xQueueSend(dev_dest->Message_Queue, &frame, 0) != pdPASS){
@@ -355,16 +377,26 @@ void message_handle(const void* const handle){
 	uint8_t index_useful = 0;
 	uint8_t temp_data[FRAME_MAX_LEN] = {};
 	dev_controller* dev_con = NULL;
-	
+	QueueHandle_t urgent_handle_get_task_queue = NULL;
 	uint8_t mes_type = 0;
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
+		
 		if(ret == pdPASS){
 			//解析一下消息的类型是属于紧急消息还是普通消息，如果紧急加入紧急任务中处理
 			mes_type = message_protocol_find_type(&frame_temp);
+			
 			if(mes_type == Protocol_Type_Urgency){
-				//将消息插入紧急任务中处理
-				
+				urgent_handle_get_task_queue = dev_urgent_handle_get_task_queue();
+				if(urgent_handle_get_task_queue!= NULL){
+					//将消息插入紧急任务中处理
+					ret = xQueueSend(urgent_handle_get_task_queue, &frame_temp, 0);
+					if(ret != pdPASS){
+						LOG("xQueueSend(urgent_handle_get_task_queue, &frame_temp, 0) error\r\n");
+					}
+				}else{
+					LOG("urgent_handle_get_task_queue\r\n");
+				}
 			}else{
 				//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中,如果返回值为-1,那么代表着这个类型的消息不支持addr_dest
 				dest_addr = message_protocol_find_addr(&frame_temp);
@@ -401,9 +433,13 @@ void message_handle(const void* const handle){
   }
 }
 
-void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_len){
+void message_log(uint8_t type, uint8_t* addr_src_name, uint8_t* addr_dest_name, uint8_t* mes_protocol_name, uint8_t cmd, uint8_t* payload, uint8_t payload_len){
 	LOG("\r\n\r\n\r\n\r\n");
-	LOG("------------%s-------------\r\n", name);
+	if(type == 0){
+		LOG("------------%s recv %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+	}else if(type == 1){
+		LOG("------------%s send to %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+	}
 	LOG("mes cmd = %.2x\r\n", cmd);
 	LOG("mes payload: ");
 	for(uint8_t i = 0; i < payload_len; i++){
@@ -413,4 +449,13 @@ void message_log(uint8_t* name, uint8_t cmd, uint8_t* payload, uint8_t payload_l
 }
 void message_send(const Message_t* const mes){
 	
+}
+uint8_t* message_get_name_by_index(uint8_t id){
+	return Message_addr_name_arry[id];
+}
+
+void message_log_buf(uint8_t* index_start, uint8_t len){
+	for(uint8_t i = 0 ; i < len; i++){
+		LOG("%.2x ", index_start[i]);
+	}
 }

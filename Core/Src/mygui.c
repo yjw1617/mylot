@@ -57,9 +57,14 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 	}
 	if(!memcmp(protocol_name, "mygui", strlen("mygui"))){//mygui能听懂mygui语言
 		uint8_t cmd = buf[5];
-		uint8_t* payload = &buf[7];
+		uint8_t* payload = NULL;
 		uint8_t len = buf[6];
-		message_log((uint8_t*)"mygui mes recv", cmd, payload, len);
+		if(len > 0){
+			payload = &buf[7];
+		}
+		uint8_t addr_dest = buf[3];
+		uint8_t addr_src = buf[2];
+		message_log(0, message_get_name_by_index(addr_dest), message_get_name_by_index(addr_src), "myguitype", cmd, payload, len);
 		switch(cmd){
 			case CMD_GUI_UI_SHOW_MAIN:
 				LOG("CMD_GUI_SHOW_MAIN\r\n");
@@ -105,9 +110,14 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 		}
 	}else if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mcu语言
 		uint8_t cmd = buf[5];
-		uint8_t* payload = &buf[7];
+		uint8_t* payload = NULL;
 		uint8_t len = buf[6];
-		message_log((uint8_t*)"mcu mes recv", cmd, payload, len);
+		if(len > 0){
+			payload = &buf[7];
+		}
+		uint8_t addr_dest = buf[3];
+		uint8_t addr_src = buf[2];
+		message_log(0, message_get_name_by_index(addr_dest), message_get_name_by_index(addr_src), "mcutype", cmd, payload, len);
 		switch(cmd){
 			case CMD_GUI_UI_SHOW_MAIN:
 				LOG("CMD_GUI_SHOW_MAIN\r\n");
@@ -153,9 +163,13 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 		}
 	}else if(!memcmp(protocol_name, "kkk", strlen("kkk"))){
 		uint8_t cmd = buf[3];
-		uint8_t* payload = &buf[5];
+		uint8_t* payload = NULL;
 		uint8_t len = buf[4];
-		message_log((uint8_t*)"kkk mes recv", cmd, payload, len);
+		if(len > 0){
+			payload = &buf[5];
+		}
+		
+		message_log(0, "mygui", " ", "kkktype", cmd, payload, len);
 		switch(cmd){
 			case CMD_GUI_UI_SHOW_MAIN:
 				LOG("CMD_GUI_SHOW_MAIN\r\n");

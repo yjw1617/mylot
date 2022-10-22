@@ -3,6 +3,7 @@
 #include "string.h"
 #include "usart.h"
 #include "utils.h"
+#include <stdio.h>
 #define LeiNuoWifi_Dev_Max_NUM 3
 static LeiNuoWifi_dev* pg_mydev[LeiNuoWifi_Dev_Max_NUM];
 
@@ -74,7 +75,7 @@ static int8_t leinuo_wake_up(void* my_dev){
 }
 
 /*一个设备可以支持多个类型的消息协议*/
-static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
+static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t frame_len){
 	if(my_dev == NULL){
 		LOG("msg_parse my_dev is null\r\n");
 		return -1;
@@ -84,16 +85,24 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 	
 	LOG("msg_parse dev name = %s\r\n", mydev->dev.name);
 	uint8_t* protocol_name = NULL;
-	protocol_name = message_protocol_find_name(buf, len, 0);
+	protocol_name = message_protocol_find_name(buf, frame_len, 0);
 	if(protocol_name == NULL){
 		LOG("not found protocol_name\r\n");
 		return -1;
 	}
 	if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mygui语言
 		uint8_t cmd = buf[5];
-		uint8_t* payload = &buf[7];
+		uint8_t* payload = NULL;
 		uint8_t payload_len = buf[6];
-		message_log((uint8_t*)"LeiNuoWifi_dev mes recv", cmd, payload, payload_len);
+		uint8_t addr_src = buf[2];
+		uint8_t addr_dest = buf[3];
+		uint8_t len = buf[6];
+		if(len > 0){
+			payload = &buf[7];
+		}
+		uint8_t data[20] = {0};
+		
+		message_log(0, message_get_name_by_index(addr_dest), message_get_name_by_index(addr_src), "mcutype", cmd, payload, len);
 		switch(cmd){
 			case Leinuo_Cmd_Wake:
 				leinuo_wake_up(mydev);
