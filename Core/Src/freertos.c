@@ -35,6 +35,8 @@
 #include <stdint.h>
 #include "mygui_api.h"
 #include "dev_handle.h"
+#include "wifi_app.h"
+#include "message_handle.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,7 +114,7 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-	
+
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -141,7 +143,7 @@ void MX_FREERTOS_Init(void) {
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* definition and creation of DevHandle */
-  osThreadDef(DevHandle, DevHandle_task, osPriorityBelowNormal, 0, 256);
+  osThreadDef(DevHandle, DevHandle_task, osPriorityBelowNormal, 0, 512);
   DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
   /* definition and creation of DevUrgentHandle */
@@ -183,7 +185,7 @@ void MessageHandle_task(void const * argument)
 void GuiPollHandle_task(void const * argument)
 {
   /* USER CODE BEGIN GuiPollHandle_task */
-	gui_poll_handle(GuiPollHandleHandle);
+//	gui_poll_handle(GuiPollHandleHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -221,7 +223,8 @@ void DevHandle_task(void const * argument)
 void DevUrgentHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevUrgentHandle_task */
-	dev_urgent_handle();
+	vTaskDelay(2000);
+	app_main();
   /* Infinite loop */
   for(;;)
   {

@@ -25,11 +25,12 @@ static BaseType_t stop(Common_Timer* commom_timer){
 }
 
 static void set_reloadMode(Common_Timer* commom_timer, const UBaseType_t uxAutoReload ){
+	(uxAutoReload == 1)? (commom_timer->autoReload = 1) : (commom_timer->autoReload = 0);
 	vTimerSetReloadMode(commom_timer->handle, uxAutoReload);
 }
 
-static void* get_timer_id(Common_Timer* commom_timer){
-	return pvTimerGetTimerID(commom_timer->handle);
+static uint32_t get_timer_id(Common_Timer* commom_timer){
+	return *(uint32_t*)pvTimerGetTimerID(commom_timer->handle);
 }
 void commom_timer_init(Common_Timer* commom_timer){
 	commom_timer->start = start;

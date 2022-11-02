@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;                              ../Drivers/STM32F4xx_HAL_Driver/Inc;                              ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                              ../Middlewares/Third_Party/FreeRTOS/Source/include;                              ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                              ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                              ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                              ../Drivers/CMSIS/Include;                              ../Middlewares/Third_Party/STemWin/src;                              ../Middlewares/Third_Party/STemWin/inc;                              ../Middlewares/Third_Party/STemWin/OS;                              ../Middlewares/Third_Party/STemWin/Config;                              ../HARDWARE/inc;                              ../SYSTEM/inc</IncludePath>
+              <IncludePath>../Core/Inc;                               ../Drivers/STM32F4xx_HAL_Driver/Inc;                               ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                               ../Middlewares/Third_Party/FreeRTOS/Source/include;                               ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;                               ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;                               ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                               ../Drivers/CMSIS/Include;                               ../Middlewares/Third_Party/STemWin/src;                               ../Middlewares/Third_Party/STemWin/inc;                               ../Middlewares/Third_Party/STemWin/OS;                               ../Middlewares/Third_Party/STemWin/Config;                               ../HARDWARE/inc;                               ../SYSTEM/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -647,47 +647,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>App/dev</GroupName>
+          <GroupName>App/dev/driver</GroupName>
           <Files>
             <File>
-              <FileName>mygui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\mygui.c</FilePath>
-            </File>
-            <File>
-              <FileName>mygui.h</FileName>
+              <FileName>leinuo_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\mygui.h</FilePath>
+              <FilePath>..\Core\Inc\leinuo_driver.h</FilePath>
             </File>
             <File>
-              <FileName>mytestprotocol_dev.c</FileName>
+              <FileName>leinuo_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\mytestprotocol_dev.c</FilePath>
+              <FilePath>..\Core\Src\leinuo_driver.c</FilePath>
             </File>
             <File>
-              <FileName>mytestprotocol_dev.h</FileName>
+              <FileName>mygui_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\mytestprotocol_dev.h</FilePath>
+              <FilePath>..\Core\Inc\mygui_driver.h</FilePath>
             </File>
             <File>
-              <FileName>leinuo_dev.c</FileName>
+              <FileName>mygui_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\leinuo_dev.c</FilePath>
+              <FilePath>..\Core\Src\mygui_driver.c</FilePath>
             </File>
             <File>
-              <FileName>leinuo_dev.h</FileName>
+              <FileName>mytestprotocol_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\leinuo_dev.h</FilePath>
+              <FilePath>..\Core\Inc\mytestprotocol_driver.h</FilePath>
             </File>
             <File>
-              <FileName>uart_dev.c</FileName>
+              <FileName>mytestprotocol_diver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\uart_dev.c</FilePath>
+              <FilePath>..\Core\Src\mytestprotocol_diver.c</FilePath>
             </File>
             <File>
-              <FileName>uart_dev.h</FileName>
+              <FileName>uart_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\uart_dev.h</FilePath>
+              <FilePath>..\Core\Inc\uart_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\uart_driver.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -695,19 +695,14 @@
           <GroupName>App/common</GroupName>
           <Files>
             <File>
-              <FileName>common_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\common_task.c</FilePath>
-            </File>
-            <File>
               <FileName>common_task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\common_task.h</FilePath>
             </File>
             <File>
-              <FileName>common_dev.c</FileName>
+              <FileName>common_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\common_dev.c</FilePath>
+              <FilePath>..\Core\Src\common_task.c</FilePath>
             </File>
             <File>
               <FileName>common_dev.h</FileName>
@@ -715,14 +710,29 @@
               <FilePath>..\Core\Inc\common_dev.h</FilePath>
             </File>
             <File>
-              <FileName>common_timer.c</FileName>
+              <FileName>common_dev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\common_timer.c</FilePath>
+              <FilePath>..\Core\Src\common_dev.c</FilePath>
             </File>
             <File>
               <FileName>common_timer.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\common_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>common_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\common_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>common_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\common_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>common_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\common_event.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1013,6 +1023,21 @@
               <FileName>dev_urgent_handle.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\dev_urgent_handle.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\wifi_app.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\wifi_app.c</FilePath>
             </File>
           </Files>
         </Group>

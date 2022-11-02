@@ -57,7 +57,7 @@ mylot\gui_poll_handle.o: ../Middlewares/Third_Party/STemWin/inc/SWIPELIST.h
 mylot\gui_poll_handle.o: ../Middlewares/Third_Party/STemWin/inc/TEXT.h
 mylot\gui_poll_handle.o: ../Middlewares/Third_Party/STemWin/inc/TREEVIEW.h
 mylot\gui_poll_handle.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
-mylot\gui_poll_handle.o: ../Core/Inc/mygui.h
+mylot\gui_poll_handle.o: ../Core/Inc/mygui_driver.h
 mylot\gui_poll_handle.o: ../Core/Inc/message.h
 mylot\gui_poll_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\gui_poll_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h

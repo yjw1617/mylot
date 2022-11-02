@@ -56,3 +56,6 @@ mylot\message_handle.o: ../Core/Inc/wifi_task.h
 mylot\message_handle.o: ../Core/Inc/gui_task.h
 mylot\message_handle.o: ../Core/Inc/common_task.h
 mylot\message_handle.o: ../Core/Inc/dev_urgent_handle.h
+mylot\message_handle.o: ../Core/Inc/leinuo_driver.h
+mylot\message_handle.o: ../Core/Inc/common_timer.h
+mylot\message_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h

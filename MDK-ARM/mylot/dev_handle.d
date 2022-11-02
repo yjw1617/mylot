@@ -14,12 +14,12 @@ mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-mylot\dev_handle.o: ../Core/Inc/leinuo_dev.h
+mylot\dev_handle.o: ../Core/Inc/leinuo_driver.h
 mylot\dev_handle.o: ../Core/Inc/message.h
 mylot\dev_handle.o: ../Core/Inc/common_timer.h
 mylot\dev_handle.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
-mylot\dev_handle.o: ../Core/Inc/mygui.h
-mylot\dev_handle.o: ../Core/Inc/uart_dev.h
+mylot\dev_handle.o: ../Core/Inc/mygui_driver.h
+mylot\dev_handle.o: ../Core/Inc/uart_driver.h
 mylot\dev_handle.o: ../Core/Inc/usart.h
 mylot\dev_handle.o: ../Core/Inc/main.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
@@ -54,3 +54,5 @@ mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+mylot\dev_handle.o: ../Core/Inc/common_event.h
+mylot\dev_handle.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

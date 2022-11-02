@@ -1,4 +1,4 @@
-#include "mytestprotocol_dev.h"
+#include "mytestprotocol_driver.h"
 #include "message.h"
 #include <string.h>
 static uint8_t on(void* my_dev){
@@ -25,7 +25,7 @@ static operations opts = {
 void mytestwifi_init(TestWifi_dev* const mydev, uint16_t dev_addr, const uint8_t* const dev_name, const uint8_t* const timer_name){
 	/*初始化传入参数*/
 	mydev->dev.mydev = mydev;
-	mydev->dev.addr = dev_addr;
+	mydev->dev.id = dev_addr;
 	memcpy(mydev->dev.name, dev_name, strlen((char*)dev_name));
 	/*初始化内部参数*/
 	mydev->dev.ops = &opts;

@@ -18,7 +18,14 @@ static volatile uint8_t log_flag = 1;
 #else
 #define LOG 
 #endif
-							
+
+#define  Error_Check(x,y) do {\
+	if((x) == (y)){						\
+		LOG("\r\n--Error_Check(%s, %s) error!!--\r\n", #x, #y);			\
+	}													\
+}while(0)
+
+				
 #define PAYLOAD_MAX_LEN 40
 #define FRAME_MAX_LEN 40
 #define MES_TYPE_INDEX 4

@@ -47,7 +47,7 @@ mylot\mygui_api.o: ../Middlewares/Third_Party/STemWin/inc/TEXT.h
 mylot\mygui_api.o: ../Middlewares/Third_Party/STemWin/inc/TREEVIEW.h
 mylot\mygui_api.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
 mylot\mygui_api.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-mylot\mygui_api.o: ../Core/Inc/mygui.h
+mylot\mygui_api.o: ../Core/Inc/mygui_driver.h
 mylot\mygui_api.o: ../Core/Inc/message.h
 mylot\mygui_api.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 mylot\mygui_api.o: ../Core/Inc/FreeRTOSConfig.h

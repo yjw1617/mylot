@@ -7,9 +7,11 @@
 #include "timers.h"
 
 typedef struct LeiNuoWifi_dev{
-	uint8_t status;//wifi状态
 	Dev dev;
+	uint8_t status;//wifi状态
+	
 	SemaphoreHandle_t mutex;
+	
 	Common_Timer timer;
 }LeiNuoWifi_dev;
 

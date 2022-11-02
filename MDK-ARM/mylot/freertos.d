@@ -105,7 +105,9 @@ mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/SWIPELIST.h
 mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/TEXT.h
 mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/TREEVIEW.h
 mylot\freertos.o: ../Middlewares/Third_Party/STemWin/inc/KNOB.h
-mylot\freertos.o: ../Core/Inc/mygui.h
+mylot\freertos.o: ../Core/Inc/mygui_driver.h
 mylot\freertos.o: ../Core/Inc/common_timer.h
 mylot\freertos.o: ../Core/Inc/gui_task.h
 mylot\freertos.o: ../Core/Inc/dev_handle.h
+mylot\freertos.o: ../Core/Inc/wifi_app.h
+mylot\freertos.o: ../Core/Inc/message_handle.h

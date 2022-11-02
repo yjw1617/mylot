@@ -1,7 +1,7 @@
 #pragma once
 #include "DIALOG.h"
 #include <stdint.h>
-#include "mygui.h"
+#include "mygui_driver.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"

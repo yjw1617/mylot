@@ -1,4 +1,4 @@
-#include "uart_dev.h"
+#include "uart_driver.h"
 #include "message.h"
 #include "string.h"
 #include "usart.h"
@@ -58,7 +58,7 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 }
 
 static operations opts = {
-	.msg_parse = msg_parse,
+//	.msg_parse = msg_parse,
 };
 
 int8_t uart_dev_init(){
@@ -89,26 +89,26 @@ int8_t uart_dev_init(){
 		}
 	}
 
-	pg_mydev[0]->dev.addr = Message_Addr_uart1;//Message_Addr_Wifi_LEINUO1设备的地址
-	pg_mydev[0]->p_uart = usart_get_uart(1);
-	if(pg_mydev[0]->p_uart == NULL){
-		LOG("usart_get_uart(1) error\r\n");
-	}
-	memcpy(pg_mydev[0]->dev.name, "uart1", strlen((char*)"uart1"));
-	
-	pg_mydev[1]->dev.addr = Message_Addr_uart2;//Message_Addr_Wifi_LEINUO2设备的地址
-	pg_mydev[1]->p_uart = usart_get_uart(2);
-	if(pg_mydev[1]->p_uart == NULL){
-		LOG("usart_get_uart(2) error\r\n");
-	}
-	memcpy(pg_mydev[1]->dev.name, "uart2", strlen((char*)"uart2"));
-	
-	pg_mydev[2]->dev.addr = Message_Addr_uart3;//Message_Addr_Wifi_LEINUO3设备的地址
-	if(pg_mydev[2]->p_uart == NULL){
-		LOG("usart_get_uart(2) error\r\n");
-	}
-	pg_mydev[2]->p_uart = usart_get_uart(3);
-	memcpy(pg_mydev[2]->dev.name, "uart3", strlen((char*)"uart3"));
+//	pg_mydev[0]->dev.id = Message_Addr_uart1;//Message_Addr_Wifi_LEINUO1设备的地址
+//	pg_mydev[0]->p_uart = usart_get_uart(1);
+//	if(pg_mydev[0]->p_uart == NULL){
+//		LOG("usart_get_uart(1) error\r\n");
+//	}
+//	memcpy(pg_mydev[0]->dev.name, "uart1", strlen((char*)"uart1"));
+//	
+//	pg_mydev[1]->dev.id = Message_Addr_uart2;//Message_Addr_Wifi_LEINUO2设备的地址
+//	pg_mydev[1]->p_uart = usart_get_uart(2);
+//	if(pg_mydev[1]->p_uart == NULL){
+//		LOG("usart_get_uart(2) error\r\n");
+//	}
+//	memcpy(pg_mydev[1]->dev.name, "uart2", strlen((char*)"uart2"));
+//	
+//	pg_mydev[2]->dev.id = Message_Addr_uart3;//Message_Addr_Wifi_LEINUO3设备的地址
+//	if(pg_mydev[2]->p_uart == NULL){
+//		LOG("usart_get_uart(2) error\r\n");
+//	}
+//	pg_mydev[2]->p_uart = usart_get_uart(3);
+//	memcpy(pg_mydev[2]->dev.name, "uart3", strlen((char*)"uart3"));
 }
 
 

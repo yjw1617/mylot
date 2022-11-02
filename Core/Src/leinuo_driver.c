@@ -1,12 +1,14 @@
-#include "leinuo_dev.h"
+#include "leinuo_driver.h"
 #include "message.h"
 #include "string.h"
 #include "usart.h"
 #include "utils.h"
 #include <stdio.h>
+#include "common_event.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 #define LeiNuoWifi_Dev_Max_NUM 3
 static LeiNuoWifi_dev* pg_mydev[LeiNuoWifi_Dev_Max_NUM];
-
 
 static uint8_t connect(void* my_dev){
 	LOG("wifi connect\r\n");
@@ -53,7 +55,6 @@ static void leinuo_make_mes(Message_Leinuo_t* mes, uint8_t* buf){
 	
 static void timer_callback(TimerHandle_t xTimer){
 	LOG("leinuo timer callback\r\n");
-	
 }
 
 static int8_t leinuo_wake_up(void* my_dev){
@@ -75,60 +76,57 @@ static int8_t leinuo_wake_up(void* my_dev){
 }
 
 /*一个设备可以支持多个类型的消息协议*/
-static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t frame_len){
+static uint8_t leinuo_uart_msg_recv(void* my_dev, uint8_t* buf, uint8_t len){
 	if(my_dev == NULL){
 		LOG("msg_parse my_dev is null\r\n");
 		return -1;
 	}
-	
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-	
-	LOG("msg_parse dev name = %s\r\n", mydev->dev.name);
-	uint8_t* protocol_name = NULL;
-	protocol_name = message_protocol_find_name(buf, frame_len, 0);
-	if(protocol_name == NULL){
-		LOG("not found protocol_name\r\n");
-		return -1;
-	}
-	if(!memcmp(protocol_name, "mcu", strlen("mcu"))){//mygui能听懂mygui语言
-		uint8_t cmd = buf[5];
-		uint8_t* payload = NULL;
-		uint8_t payload_len = buf[6];
-		uint8_t addr_src = buf[2];
-		uint8_t addr_dest = buf[3];
-		uint8_t len = buf[6];
-		if(len > 0){
-			payload = &buf[7];
-		}
-		uint8_t data[20] = {0};
-		
-		message_log(0, message_get_name_by_index(addr_dest), message_get_name_by_index(addr_src), "mcutype", cmd, payload, len);
-		switch(cmd){
-			case Leinuo_Cmd_Wake:
-				leinuo_wake_up(mydev);
-				LOG("Leinuo_Cmd_Wake\r\n");
-				break;
-			case Leinuo_Cmd_Sleep:
-				LOG("Leinuo_Cmd_Sleep\r\n");
-				break;
-			case Leinuo_Cmd_Connect_Net:
-				LOG("Leinuo_Cmd_Connect_Net\r\n ");
-				break;
-			case Leinuo_Cmd_On:
-				LOG("Leinuo_Cmd_On\r\n");
-				break;
-			case Leinuo_Cmd_Off:
-				LOG("Leinuo_Cmd_Off\r\n ");
-				break;
-			case Leinuo_Cmd_Reset:
-				LOG("Leinuo_Cmd_Reset\r\n");
-				break;
+	if(strncmp(buf, "leinuo1 connect suc", len) == 0){
+		if(strncmp(mydev->dev.name, "LeiNuoWifi1", strlen("LeiNuoWifi1")) == 0){
+			common_event_post(Event_Type_Wifi, Event_Id_Connect_Suc, "connect suc", strlen("connect suc"), 1, 1);
 		}
 	}
 }
 
+static int8_t leinuo_connct(){
+	LOG("leinuo1 connect\r\n");
+//	common_event_post(Event_Type_Wifi, Event_Id_Connect_Failed, NULL, 0, 8000, 0);
+}
+	
+static int8_t write(void* my_dev, void* data, uint32_t len){
+	if(my_dev == NULL){
+		LOG("msg_parse my_dev is null\r\n");
+		return -1;
+	}
+	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
+	LOG("%s write\r\n", mydev->dev.name);
+	//解析数据
+	Common_Event* event = (Common_Event*)data;
+	int8_t ret = -1;
+	switch(event->type){
+		case Event_Type_Wifi:
+			switch(event->id){
+				case Event_Id_Connect:
+					Error_Check(-1, leinuo_connct());
+					break;
+				case Event_Id_Wakeup:
+					break;
+				case Event_Id_Reset:
+					break;
+			}
+			break;
+		default:
+			LOG("illegal event\r\n");
+			break;
+	}
+	
+}
+
 static operations opts = {
-	.msg_parse = msg_parse,
+//	.msg_parse = msg_parse,
+	.write = write,
+	.uart_msg_recv = leinuo_uart_msg_recv,
 };
 
 
@@ -176,13 +174,14 @@ int8_t leinuo_dev_init(){
 		leinuo_timer_init(pg_mydev[i]);//定时器初始化
 	}
 	//给不同的雷诺设备命名和设置地址
-	pg_mydev[0]->dev.addr = Message_Addr_Wifi_LEINUO1;//Message_Addr_Wifi_LEINUO1设备的地址
+	pg_mydev[0]->dev.id = Message_Addr_Wifi_LEINUO1;//Message_Addr_Wifi_LEINUO1设备的地址
+
 	memcpy(pg_mydev[0]->dev.name, "LeiNuoWifi1", strlen((char*)"LeiNuoWifi1"));
 	
-	pg_mydev[1]->dev.addr = Message_Addr_Wifi_LEINUO2;//Message_Addr_Wifi_LEINUO2设备的地址
+	pg_mydev[1]->dev.id = Message_Addr_Wifi_LEINUO2;//Message_Addr_Wifi_LEINUO2设备的地址
 	memcpy(pg_mydev[1]->dev.name, "LeiNuoWifi2", strlen((char*)"LeiNuoWifi2"));
 	
-	pg_mydev[2]->dev.addr = Message_Addr_Wifi_LEINUO3;//Message_Addr_Wifi_LEINUO3设备的地址
+	pg_mydev[2]->dev.id = Message_Addr_Wifi_LEINUO3;//Message_Addr_Wifi_LEINUO3设备的地址
 	memcpy(pg_mydev[2]->dev.name, "LeiNuoWifi3", strlen((char*)"LeiNuoWifi3"));
 }
 

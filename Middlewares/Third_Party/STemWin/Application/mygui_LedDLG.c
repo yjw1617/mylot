@@ -89,7 +89,7 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_Fontfont;
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
 //获取mygui的设备句柄
-	Dev* dev = common_dev_find_dev_by_addr(Message_Addr_MY_GUI);
+	Dev* dev = common_dev_find_dev_by_id(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
   WM_HWIN hItem;
   int     NCode;

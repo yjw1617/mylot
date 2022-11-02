@@ -1,4 +1,4 @@
-#include "mygui.h"
+#include "mygui_driver.h"
 #include "message.h"
 #include <string.h>
 #include "dialog.h"//包含window对话框 头文件
@@ -218,7 +218,7 @@ static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
 
 static void timer_callback(TimerHandle_t xTimer){
 	//得到mydev的句柄
-	Dev* dev = common_dev_find_dev_by_addr(Message_Addr_MY_GUI);
+	Dev* dev = common_dev_find_dev_by_id(Message_Addr_MY_GUI);
 	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
 	LOG("pvTimerGetTimerID = %d\r\n", *((uint32_t*)pvTimerGetTimerID(xTimer)));
 	if(*((uint32_t*)pvTimerGetTimerID(xTimer)) == 0){//10s定时到达
@@ -233,7 +233,7 @@ static void timer_callback(TimerHandle_t xTimer){
 }
 
 static operations opts = {
-	.msg_parse = msg_parse,
+//	.msg_parse = msg_parse,
 };
 
 operations* mygui_get_mydev_p(){
@@ -265,7 +265,7 @@ int8_t mygui_init(){
 	}
 	/*self property*/
 	memcpy(pg_mydev[0]->dev.name, "mygui1", strlen((char*)"mygui1"));
-	pg_mydev[0]->dev.addr = Message_Addr_MY_GUI;
+	pg_mydev[0]->dev.id = Message_Addr_MY_GUI;
 	pg_mydev[0]->lcd.status = MYGUI_LCD_STATUS_OFF;
 	pg_mydev[0]->lcd.lightness = 100;
 	/*timer*/

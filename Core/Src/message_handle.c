@@ -9,6 +9,7 @@
 #include "gui_task.h"
 #include "common_task.h"
 #include "dev_urgent_handle.h"
+#include "leinuo_driver.h"
 extern DMA_HandleTypeDef hdma_usart1_rx;
 
 typedef struct Message_task{
@@ -140,50 +141,14 @@ void message_handle(const void* const handle){
 	uint8_t mes_type = 0;
 	for(;;){
 		ret = xQueueReceive(g_message_task.Message_Queue, &frame_temp ,portMAX_DELAY);
-		
 		if(ret == pdPASS){
-			//解析一下消息的类型是属于紧急消息还是普通消息，如果紧急加入紧急任务中处理
-			mes_type = message_protocol_find_type(&frame_temp);
-			
-			if(mes_type == Protocol_Type_Urgency){
-				urgent_handle_get_task_queue = dev_urgent_handle_get_task_queue();
-				if(urgent_handle_get_task_queue!= NULL){
-					//将消息插入紧急任务中处理
-					ret = xQueueSend(urgent_handle_get_task_queue, &frame_temp, 0);
-					if(ret != pdPASS){
-						LOG("xQueueSend(urgent_handle_get_task_queue, &frame_temp, 0) error\r\n");
-					}
-				}else{
-					LOG("urgent_handle_get_task_queue\r\n");
-				}
-			}else{
-				//解析出各个消息的目标地址,根据目标地址发送到设备的消息队列中,如果返回值为-1,那么代表着这个类型的消息不支持addr_dest
-				dest_addr = message_protocol_find_addr(&frame_temp);
-				//如果不紧急就加入各个设备的queue中等待处理
-				if(dest_addr == -1){//由于消息并没有addr_dest，所以将此消息广播给所有设备
-					dev_con = common_dev_get_controller();
-					for(uint8_t i = 0; i < DEV_MAX_NUM; i++){
-						if(dev_con->dev[i] != NULL){
-							if(dev_con->dev[i]->Message_Queue != NULL){
-								ret = xQueueSend(dev_con->dev[i]->Message_Queue, &frame_temp, 0);
-								if(ret != pdPASS){
-									LOG("dev->Message_Queue full\r\n");
-								}
-							}
-						}
-					}
-				}else{
-					//将消息发送给指定设备的消息队列中等待处理
-					dev = common_dev_find_dev_by_addr(dest_addr);
-					if(dev != NULL){
-						if(dev->Message_Queue != NULL){
-							ret = xQueueSend(dev->Message_Queue, &frame_temp, 0);
-							if(ret != pdPASS){
-								LOG("dev->Message_Queue full\r\n");
-							}
-						}
-					}else{
-						LOG("common_dev_find_dev_by_addr error\r\n");
+			dev_con = common_dev_get_controller();
+			dest_addr = message_protocol_find_addr(&frame_temp);
+			//寻找支持uart接口函数的设备
+			for(uint8_t i = 0; i < DEV_MAX_NUM; i++){
+				if(dev_con->dev[i] != NULL){
+					if(dev_con->dev[i]->ops->uart_msg_recv != NULL){
+						dev_con->dev[i]->ops->uart_msg_recv(dev_con->dev[i]->mydev, &frame_temp.r_buf[frame_temp.index_useful], frame_temp.len);
 					}
 				}
 			}
