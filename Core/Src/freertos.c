@@ -36,6 +36,7 @@
 #include "mygui_api.h"
 #include "dev_handle.h"
 #include "wifi_app.h"
+#include "gui_app.h"
 #include "message_handle.h"
 /* USER CODE END Includes */
 
@@ -185,7 +186,7 @@ void MessageHandle_task(void const * argument)
 void GuiPollHandle_task(void const * argument)
 {
   /* USER CODE BEGIN GuiPollHandle_task */
-//	gui_poll_handle(GuiPollHandleHandle);
+	gui_poll_handle(GuiPollHandleHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -204,7 +205,8 @@ void GuiPollHandle_task(void const * argument)
 void DevHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevHandle_task */
-  dev_handle();
+  dev_handle();//驱动层初始化
+	gui_app_main();
   /* Infinite loop */
   for(;;)
   {
@@ -224,7 +226,7 @@ void DevUrgentHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevUrgentHandle_task */
 	vTaskDelay(2000);
-	app_main();
+	wifi_app_main();
   /* Infinite loop */
   for(;;)
   {

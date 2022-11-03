@@ -1,2 +1,2 @@
 #pragma once
-int wifi_app_start();
+int wifi_app_main();

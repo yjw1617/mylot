@@ -7,12 +7,13 @@
 #include "common_event.h"
 #include <stdio.h>
 static dev_controller* dev_con;
+//驱动初始化函数
 void dev_handle(){
 	common_event_init();
 	leinuo_dev_init();//初始化leinuo设备
-//	mygui_init();			//初始化mygui设备
-//	uart_dev_init();	//初始化uart设备
-	dev_poll_handle();
+	mygui_init();			//初始化mygui设备
+	uart_dev_init();	//初始化uart设备
+//	dev_poll_handle();
 }
 //循环遍历各种dev设备的消息队列处理相关事件
 void dev_poll_handle(){
@@ -26,7 +27,7 @@ void dev_poll_handle(){
 		ret = xQueueReceive(event_queue, &event ,portMAX_DELAY);
 		if(ret == pdPASS){
 			if(event.handle != NULL){
-				event.handle(event.handle_args, event.type, event.id, event.data, event.data_size);
+				event.handle(event.handle_args, event.type, event.id, event.data, event.data_len);
 			}else{
 				LOG("event.handle == NULL\r\n");
 			}

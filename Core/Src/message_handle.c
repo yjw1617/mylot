@@ -57,76 +57,76 @@ void message_handle(const void* const handle){
 	message_init();
 //	LOG("err = %s\r\n", strerror(errno)); 
 	//创建并添加雷诺消息模型
-	Message_protocol* message_protocol_leinuo = message_protocol_create(sizeof(Message_protocol));
-	//下面为一个协议支持两个类型的设备
-	message_protocol_copy(message_protocol_leinuo, 
-	(Message_protocol){
-		.name = "leinuo", 
-		.type = Protocol_Type_G_Gui , 
-		.head1=0xaa, 
-		.head2=0x33, 
-		.len_index = 6, 
-		.len_index_more = 8, 
-		.end = 0x66
-	});
-	message_protocol_register(message_protocol_leinuo);
-	
-	//创建并添加yy消息模型
-	Message_protocol* message_protocol_yy = message_protocol_create(sizeof(Message_protocol));
-	message_protocol_copy(message_protocol_yy, 
-	(Message_protocol){
-		.name = "yy", 
-		.type = Protocol_Type_Wifi, 
-		.head1=0xaa, 
-		.head2=0x55, 
-		.len_index = 6, 
-		.len_index_more = 8, 
-		.end = 0x55
-	});
-	message_protocol_register(message_protocol_yy);
-	
-	//这是自己mcu内部用的协议
-	Message_protocol* message_protocol_mcu = message_protocol_create(sizeof(Message_protocol));
-	message_protocol_copy(message_protocol_mcu, 
-	(Message_protocol){
-		.name = "mcu", 
-		.type = MESSAGE_TYPE_MCU, 
-		.head1=0xff, 
-		.head2=0x55, 
-		.len_index = 6, 
-		.len_index_more = 8, 
-		.dest_addr_index = 3,
-	});
-	message_protocol_register(message_protocol_mcu);
-	
-	//这是mygui用的协议
-	Message_protocol* message_protocol_mygui = message_protocol_create(sizeof(Message_protocol));
-	message_protocol_copy(message_protocol_mygui, 
-	(Message_protocol){
-		.name = "mygui", 
-		.type = MESSAGE_TYPE_MCU, 
-		.head1=0xbb, 
-		.head2=0x44, 
-		.len_index = 6, 
-		.len_index_more = 8, 
-		.dest_addr_index = 3,
-	});
-	message_protocol_register(message_protocol_mygui);
-	
-	
-	//这是mygui用的协议
-	Message_protocol* message_protocol_kkk = message_protocol_create(sizeof(Message_protocol));
-	message_protocol_copy(message_protocol_kkk, 
-	(Message_protocol){
-		.name = "kkk", 
-		.type = MESSAGE_TYPE_MCU, 
-		.head1=0x33, 
-		.head2=0x66, 
-		.len_index = 4, 
-		.len_index_more = 6, 
-		.dest_addr_index = 0,
-	});
-	message_protocol_register(message_protocol_kkk);
+//	Message_protocol* message_protocol_leinuo = message_protocol_create(sizeof(Message_protocol));
+//	//下面为一个协议支持两个类型的设备
+//	message_protocol_copy(message_protocol_leinuo, 
+//	(Message_protocol){
+//		.name = "leinuo", 
+//		.type = Protocol_Type_G_Gui , 
+//		.head1=0xaa, 
+//		.head2=0x33, 
+//		.len_index = 6, 
+//		.len_index_more = 8, 
+//		.end = 0x66
+//	});
+//	message_protocol_register(message_protocol_leinuo);
+//	
+//	//创建并添加yy消息模型
+//	Message_protocol* message_protocol_yy = message_protocol_create(sizeof(Message_protocol));
+//	message_protocol_copy(message_protocol_yy, 
+//	(Message_protocol){
+//		.name = "yy", 
+//		.type = Protocol_Type_Wifi, 
+//		.head1=0xaa, 
+//		.head2=0x55, 
+//		.len_index = 6, 
+//		.len_index_more = 8, 
+//		.end = 0x55
+//	});
+//	message_protocol_register(message_protocol_yy);
+//	
+//	//这是自己mcu内部用的协议
+//	Message_protocol* message_protocol_mcu = message_protocol_create(sizeof(Message_protocol));
+//	message_protocol_copy(message_protocol_mcu, 
+//	(Message_protocol){
+//		.name = "mcu", 
+//		.type = MESSAGE_TYPE_MCU, 
+//		.head1=0xff, 
+//		.head2=0x55, 
+//		.len_index = 6, 
+//		.len_index_more = 8, 
+//		.dest_addr_index = 3,
+//	});
+//	message_protocol_register(message_protocol_mcu);
+//	
+//	//这是mygui用的协议
+//	Message_protocol* message_protocol_mygui = message_protocol_create(sizeof(Message_protocol));
+//	message_protocol_copy(message_protocol_mygui, 
+//	(Message_protocol){
+//		.name = "mygui", 
+//		.type = MESSAGE_TYPE_MCU, 
+//		.head1=0xbb, 
+//		.head2=0x44, 
+//		.len_index = 6, 
+//		.len_index_more = 8, 
+//		.dest_addr_index = 3,
+//	});
+//	message_protocol_register(message_protocol_mygui);
+//	
+//	
+//	//这是mygui用的协议
+//	Message_protocol* message_protocol_kkk = message_protocol_create(sizeof(Message_protocol));
+//	message_protocol_copy(message_protocol_kkk, 
+//	(Message_protocol){
+//		.name = "kkk", 
+//		.type = MESSAGE_TYPE_MCU, 
+//		.head1=0x33, 
+//		.head2=0x66, 
+//		.len_index = 4, 
+//		.len_index_more = 6, 
+//		.dest_addr_index = 0,
+//	});
+//	message_protocol_register(message_protocol_kkk);
 	
 	Frame_t frame_temp = {};
 	int8_t ret = 0;

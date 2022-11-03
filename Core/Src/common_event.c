@@ -53,13 +53,13 @@ static void timer_callback(TimerHandle_t xTimer){
 	LOG("\r\n---leinuo timer callback---\r\n");
 	Timer_temp_event* temp_event = common_find_temp_event_by_timerId(xTimer);
 	if(temp_event != NULL){
-		event_con.post_total_num--;
 		LOG("pop post_total_num = %d\r\n", event_con.post_total_num);
 	}
 	Error_Check(NULL, temp_event);
 	//运行回调函数
-	temp_event->events.handle(temp_event->events.handle_args, temp_event->events.type, temp_event->events.id, temp_event->events.data, temp_event->events.data_size);
+	temp_event->events.handle(temp_event->events.handle_args, temp_event->events.type, temp_event->events.id, temp_event->events.data, temp_event->events.data_len);
 	if(temp_event->reload_mode == 0){//有限次数
+		event_con.post_total_num--;
 		temp_event->timer_id = -1;//必须给-1表示这个timer可用
 		memset(&temp_event->events, 0, sizeof(Common_Event));//将存储事件清空
 		memset(&temp_event->timer_temp_events_data, 0, Common_Timer_Temp_Events_Data_Len);
@@ -96,14 +96,14 @@ static Common_Timer* common_get_available_timer(){
 }
 
 static int8_t common_save_temp_event(int16_t timer_id, uint32_t timer_ticks_delay, uint8_t reload_mode, Common_Event* event){
-	Error_Check(1, (event->data_size > Common_Timer_Temp_Events_Data_Len));
+	Error_Check(1, (event->data_len > Common_Timer_Temp_Events_Data_Len));
 	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
 		if(event_con.timer_temp_events[i].timer_id == -1){
 			event_con.timer_temp_events[i].timer_id = timer_id;
 			event_con.timer_temp_events[i].timer_ticks_delay = timer_ticks_delay;
 			event_con.timer_temp_events[i].reload_mode = reload_mode;
 			memcpy(&event_con.timer_temp_events[i].events, event, sizeof(Common_Event));
-			memcpy((void*)event_con.timer_temp_events[i].timer_temp_events_data, event->data, event->data_size);
+			memcpy((void*)event_con.timer_temp_events[i].timer_temp_events_data, event->data, event->data_len);
 			return 0;
 		}
 	}
@@ -135,7 +135,7 @@ int8_t common_event_handler_register(uint16_t event_type, uint32_t event_id, eve
 }
 
 
-int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_data, uint16_t event_data_sizes, uint32_t ticks_to_wait, uint8_t reload_mode){
+int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_data, uint16_t event_data_lens, uint32_t ticks_to_wait, uint8_t reload_mode){
 	//将事件加入事件队列
 	int8_t ret = 0;
 	uint32_t timer_ticks_delay = 0;
@@ -145,10 +145,10 @@ int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_dat
 		if(event_con.events[i] != NULL){
 			if(event_con.events[i]->type == event_type && event_con.events[i]->id == event_id){
 				event_con.events[i]->data = event_data;
-				event_con.events[i]->data_size = event_data_sizes;
+				event_con.events[i]->data_len = event_data_lens;
 				if(event_con.events[i]->handle != NULL){
 					if(ticks_to_wait == 0){
-						event_con.events[i]->handle(event_con.events[i]->handle_args, event_con.events[i]->type, event_con.events[i]->id, event_con.events[i]->data, event_con.events[i]->data_size);
+						event_con.events[i]->handle(event_con.events[i]->handle_args, event_con.events[i]->type, event_con.events[i]->id, event_con.events[i]->data, event_con.events[i]->data_len);
 						return 0;
 					}
 					//由定时器去处理事件

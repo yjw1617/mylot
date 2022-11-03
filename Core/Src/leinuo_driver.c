@@ -84,7 +84,7 @@ static uint8_t leinuo_uart_msg_recv(void* my_dev, uint8_t* buf, uint8_t len){
 	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
 	if(strncmp(buf, "leinuo1 connect suc", len) == 0){
 		if(strncmp(mydev->dev.name, "LeiNuoWifi1", strlen("LeiNuoWifi1")) == 0){
-			common_event_post(Event_Type_Wifi, Event_Id_Connect_Suc, "connect suc", strlen("connect suc"), 1, 1);
+			common_event_post(Event_Type_Wifi, Event_Id_Connect_Suc, "connect suc", strlen("connect suc"), 1000, 0);
 		}
 	}
 }
