@@ -16,3 +16,5 @@ mylot\gui_app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mylot\gui_app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\gui_app.o: ../Core/Inc/common_event.h
 mylot\gui_app.o: ../Core/Inc/message.h
+mylot\gui_app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+mylot\gui_app.o: ../Core/Inc/wifi_app.h

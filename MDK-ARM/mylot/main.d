@@ -50,7 +50,6 @@ mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mylot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 mylot\main.o: ../Core/Inc/crc.h
 mylot\main.o: ../Core/Inc/dma.h
-mylot\main.o: ../Core/Inc/tim.h
 mylot\main.o: ../Core/Inc/usart.h
 mylot\main.o: ../Core/Inc/gpio.h
 mylot\main.o: ../Core/Inc/fsmc.h

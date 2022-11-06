@@ -144,11 +144,11 @@ void MX_FREERTOS_Init(void) {
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* definition and creation of DevHandle */
-  osThreadDef(DevHandle, DevHandle_task, osPriorityBelowNormal, 0, 512);
+  osThreadDef(DevHandle, DevHandle_task, osPriorityIdle, 0, 256);
   DevHandleHandle = osThreadCreate(osThread(DevHandle), NULL);
 
   /* definition and creation of DevUrgentHandle */
-  osThreadDef(DevUrgentHandle, DevUrgentHandle_task, osPriorityHigh, 0, 128);
+  osThreadDef(DevUrgentHandle, DevUrgentHandle_task, osPriorityIdle, 0, 256);
   DevUrgentHandleHandle = osThreadCreate(osThread(DevUrgentHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -225,7 +225,6 @@ void DevHandle_task(void const * argument)
 void DevUrgentHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevUrgentHandle_task */
-	vTaskDelay(2000);
 	wifi_app_main();
   /* Infinite loop */
   for(;;)
@@ -234,7 +233,6 @@ void DevUrgentHandle_task(void const * argument)
   }
   /* USER CODE END DevUrgentHandle_task */
 }
-
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 

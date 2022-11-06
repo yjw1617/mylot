@@ -88,9 +88,6 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_Fontfont;
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-//获取mygui的设备句柄
-	Dev* dev = common_dev_find_dev_by_id(Message_Addr_MY_GUI);
-	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
   WM_HWIN hItem;
   int     NCode;
   int     Id;
@@ -115,7 +112,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // USER START (Optionally insert additional code for further widget initialization)
     /**  ͼƬ    ť  **/
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-    mydev->ui.led_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
 
     hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
     BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubHome);
@@ -124,30 +120,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {1},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
-			return;
-		}
-		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {1},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
-		}
     switch(Id) {
     case ID_BUTTON_0: // Notifications sent by 'Button'
       switch(NCode) {
@@ -157,14 +129,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         break;
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
-        mydev->ui.led_status = !mydev->ui.led_status;
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-				mydev->ui.led_status ? BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedOpen) : BUTTON_SetBitmap(hItem, BUTTON_BI_UNPRESSED, &bmSubLedClose);
-        if(mydev->ui.led_status){
-					LED_CONTROL(GPIO_PIN_RESET);
-				}else{
-					LED_CONTROL(GPIO_PIN_SET);
-				}
         // USER END
         break;
       // USER START (Optionally insert additional code for further notification handling)
@@ -195,15 +160,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER END
   default:
     WM_DefaultProc(pMsg);
-		//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {0},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
     break;
   }
 }

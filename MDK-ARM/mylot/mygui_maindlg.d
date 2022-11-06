@@ -64,3 +64,4 @@ mylot\mygui_maindlg.o: ../Core/Inc/common_dev.h
 mylot\mygui_maindlg.o: ../Core/Inc/common_timer.h
 mylot\mygui_maindlg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 mylot\mygui_maindlg.o: ../Core/Inc/gui_task.h
+mylot\mygui_maindlg.o: ../Core/Inc/common_event.h

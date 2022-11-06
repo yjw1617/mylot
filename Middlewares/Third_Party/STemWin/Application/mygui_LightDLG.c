@@ -77,9 +77,6 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-//获取mygui的设备句柄
-	Dev* dev = common_dev_find_dev_by_id(Message_Addr_MY_GUI);
-	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
   const void * pData;
   WM_HWIN      hItem;
   U32          FileSize;
@@ -123,30 +120,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
-		if((mydev->lcd.status != MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕不是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {1},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
-			return;
-		}
-		if((mydev->lcd.status == MYGUI_LCD_STATUS_ON) && (NCode == WM_NOTIFICATION_RELEASED)){//如果屏幕是正常亮的，那将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {1},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
-		}
     switch(Id) {
     case ID_BUTTON_0: // Notifications sent by ''
       switch(NCode) {
@@ -172,15 +145,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER END
   default:
     WM_DefaultProc(pMsg);
-		//发送消息给mugui设备将屏幕唤醒
-			Message_g_gui_t mes = {
-				.addr_src = MESSAGE_Addr_MCU,
-				.addr_dest = Message_Addr_MY_GUI,
-				.cmd = CMD_GUI_LCD_WAKEUP,
-				.len = 1,
-				.payload = {0},
-			};
-			message_send_to_dev(&mydev->dev, (uint8_t*)&mes, Protocol_Type_G_Gui);
     break;
   }
 }

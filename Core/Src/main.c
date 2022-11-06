@@ -22,7 +22,6 @@
 #include "cmsis_os.h"
 #include "crc.h"
 #include "dma.h"
-#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
@@ -99,7 +98,6 @@ int main(void)
   MX_CRC_Init();
   MX_FSMC_Init();
   MX_USART2_UART_Init();
-  MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
 	
   /* USER CODE END 2 */

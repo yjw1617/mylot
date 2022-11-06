@@ -6,7 +6,6 @@
 "mylot\crc.o"
 "mylot\dma.o"
 "mylot\fsmc.o"
-"mylot\tim.o"
 "mylot\usart.o"
 "mylot\stm32f4xx_it.o"
 "mylot\stm32f4xx_hal_msp.o"

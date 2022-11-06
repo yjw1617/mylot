@@ -22,15 +22,15 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 D:\STM407Project\mylot\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  11/03/2022
+Project File Date:  11/05/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
 compiling gui_app.c...
-../Core/Inc/gui_app.h(2): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/gui_app.h(4): warning:  #1-D: last line of file ends without a newline
   int gui_app_main();
-../Core/Inc/gui_app.h(2): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
+../Core/Inc/gui_app.h(4): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
   int gui_app_main();
 ../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
@@ -40,37 +40,33 @@ compiling gui_app.c...
   					while(!log_flag){vTaskDelay(1);}	\	
 ../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/common_event.h(31): warning:  #1295-D: Deprecated declaration common_get_event_queue - give arg types
-  QueueHandle_t common_get_event_queue();
-../Core/Inc/common_event.h(33): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+../Core/Inc/common_event.h(34): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
   void common_event_init();
-..\Core\Src\gui_app.c(10): warning:  #1-D: last line of file ends without a newline
-  }
-..\Core\Src\gui_app.c: 9 warnings, 0 errors
-compiling wifi_app.c...
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
-  dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
-  void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/common_event.h(31): warning:  #1295-D: Deprecated declaration common_get_event_queue - give arg types
-  QueueHandle_t common_get_event_queue();
-../Core/Inc/common_event.h(33): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
-  void common_event_init();
-../Core/Inc/wifi_app.h(2): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/wifi_app.h(4): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
   int wifi_app_main();
-../Core/Inc/wifi_app.h(2): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
-  int wifi_app_main();
-..\Core\Src\wifi_app.c(56): warning:  #223-D: function "strncmp" declared implicitly
-  				if(strncmp(buf, "wifi connect net suc", strlen("wifi connect net suc")) == 0){
-..\Core\Src\wifi_app.c(56): warning:  #223-D: function "strlen" declared implicitly
-  				if(strncmp(buf, "wifi connect net suc", strlen("wifi connect net suc")) == 0){
-..\Core\Src\wifi_app.c(61): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/wifi_app.h(5): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/wifi_app.h(5): warning:  #1295-D: Deprecated declaration app_get_wifiApp_queue - give arg types
+  QueueHandle_t app_get_wifiApp_queue();
+..\Core\Src\gui_app.c(21): warning:  #223-D: function "printf" declared implicitly
+  		Error_Check(errQUEUE_FULL, xQueueSend( gui_app.queue, "event_gui_touch_wifi_connect", portMAX_DELAY));
+..\Core\Src\gui_app.c(31): warning:  #223-D: function "printf" declared implicitly
+  	Error_Check(-1, common_write(fd, &event1, sizeof(event1)));
+..\Core\Src\gui_app.c(37): warning:  #223-D: function "printf" declared implicitly
+  	Error_Check(-1, common_event_handler_register(Event_Type_Gui, Event_Id_Gui_Touch_Wifi_Connect, event_handler, NULL));
+..\Core\Src\gui_app.c(39): warning:  #223-D: function "printf" declared implicitly
+  	LOG("common_open fd = %d\r\n", gui.fd);
+..\Core\Src\gui_app.c(40): warning:  #223-D: function "printf" declared implicitly
+  	Error_Check(-1, gui.fd);
+..\Core\Src\gui_app.c(50): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  				if(strncmp(buf, "event_gui_touch_wifi_connect", strlen("event_gui_touch_wifi_connect")) == 0){
+..\Core\Src\gui_app.c(54): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  				if(strncmp(buf, "event_gui_touch_net_connect", strlen("event_gui_touch_net_connect")) == 0){
+..\Core\Src\gui_app.c(59): warning:  #1-D: last line of file ends without a newline
   }
-..\Core\Src\wifi_app.c: 11 warnings, 0 errors
+..\Core\Src\gui_app.c(24): warning:  #177-D: function "write_fd_event"  was declared but never referenced
+  static int8_t write_fd_event(int8_t fd, uint16_t event_type, uint16_t event_id, uint8_t* buf, uint16_t buf_len){
+..\Core\Src\gui_app.c: 19 warnings, 0 errors
 compiling common_event.c...
 ../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
@@ -80,127 +76,19 @@ compiling common_event.c...
   					while(!log_flag){vTaskDelay(1);}	\	
 ../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/common_event.h(31): warning:  #1295-D: Deprecated declaration common_get_event_queue - give arg types
-  QueueHandle_t common_get_event_queue();
-../Core/Inc/common_event.h(33): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+../Core/Inc/common_event.h(34): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
   void common_event_init();
 ../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
   void commom_timer_init(Common_Timer* commom_timer);
-..\Core\Src\common_event.c(140): warning:  #177-D: variable "ret"  was declared but never referenced
+..\Core\Src\common_event.c(138): warning:  #177-D: variable "ret"  was declared but never referenced
   	int8_t ret = 0;
-..\Core\Src\common_event.c(141): warning:  #177-D: variable "timer_ticks_delay"  was declared but never referenced
+..\Core\Src\common_event.c(139): warning:  #177-D: variable "timer_ticks_delay"  was declared but never referenced
   	uint32_t timer_ticks_delay = 0;
-..\Core\Src\common_event.c(142): warning:  #177-D: variable "loop_num_tmp"  was declared but never referenced
+..\Core\Src\common_event.c(140): warning:  #177-D: variable "loop_num_tmp"  was declared but never referenced
   	int8_t loop_num_tmp = 0;
-..\Core\Src\common_event.c(30): warning:  #177-D: function "common_find_event_by_timer_id"  was declared but never referenced
+..\Core\Src\common_event.c(29): warning:  #177-D: function "common_find_event_by_timer_id"  was declared but never referenced
   static Common_Event* common_find_event_by_timer_id(int16_t timer_id){
-..\Core\Src\common_event.c: 11 warnings, 0 errors
-compiling leinuo_driver.c...
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
-  dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
-  void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
-  void commom_timer_init(Common_Timer* commom_timer);
-../Core/Inc/leinuo_driver.h(26): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
-  int8_t leinuo_dev_init();
-../Core/Inc/leinuo_driver.h(28): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
-  operations* leinuo_get_mydev_p();
-../Core/Inc/utils.h(4): warning:  #1-D: last line of file ends without a newline
-  uint8_t utils_calculate_check_num(uint8_t* msg,uint8_t index_start, uint8_t len);
-../Core/Inc/common_event.h(31): warning:  #1295-D: Deprecated declaration common_get_event_queue - give arg types
-  QueueHandle_t common_get_event_queue();
-../Core/Inc/common_event.h(33): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
-  void common_event_init();
-..\Core\Src\leinuo_driver.c(15): warning:  #940-D: missing return statement at end of non-void function "connect" 
-  }
-..\Core\Src\leinuo_driver.c(21): warning:  #940-D: missing return statement at end of non-void function "on" 
-  }
-..\Core\Src\leinuo_driver.c(28): warning:  #940-D: missing return statement at end of non-void function "off" 
-  }
-..\Core\Src\leinuo_driver.c(35): warning:  #940-D: missing return statement at end of non-void function "reset" 
-  }
-..\Core\Src\leinuo_driver.c(43): warning:  #940-D: missing return statement at end of non-void function "ioctl" 
-  }
-..\Core\Src\leinuo_driver.c(38): warning:  #177-D: variable "mydev"  was declared but never referenced
-  	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-..\Core\Src\leinuo_driver.c(39): warning:  #550-D: variable "payload"  was set but never used
-  	uint8_t* payload = 0;
-..\Core\Src\leinuo_driver.c(76): warning:  #940-D: missing return statement at end of non-void function "leinuo_wake_up" 
-  }
-..\Core\Src\leinuo_driver.c(61): warning:  #177-D: variable "mydev"  was declared but never referenced
-  	LeiNuoWifi_dev* mydev = (LeiNuoWifi_dev*)my_dev;
-..\Core\Src\leinuo_driver.c(82): warning:  #68-D: integer conversion resulted in a change of sign
-  		return -1;
-..\Core\Src\leinuo_driver.c(85): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-  	if(strncmp(buf, "leinuo1 connect suc", len) == 0){
-..\Core\Src\leinuo_driver.c(86): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-  		if(strncmp(mydev->dev.name, "LeiNuoWifi1", strlen("LeiNuoWifi1")) == 0){
-..\Core\Src\leinuo_driver.c(90): warning:  #940-D: missing return statement at end of non-void function "leinuo_uart_msg_recv" 
-  }
-..\Core\Src\leinuo_driver.c(95): warning:  #940-D: missing return statement at end of non-void function "leinuo_connct" 
-  }
-..\Core\Src\leinuo_driver.c(124): warning:  #940-D: missing return statement at end of non-void function "write" 
-  }
-..\Core\Src\leinuo_driver.c(106): warning:  #177-D: variable "ret"  was declared but never referenced
-  	int8_t ret = -1;
-..\Core\Src\leinuo_driver.c(186): warning:  #940-D: missing return statement at end of non-void function "leinuo_dev_init" 
-  }
-..\Core\Src\leinuo_driver.c(13): warning:  #177-D: function "connect"  was declared but never referenced
-  static uint8_t connect(void* my_dev){
-..\Core\Src\leinuo_driver.c(17): warning:  #177-D: function "on"  was declared but never referenced
-  static uint8_t on(void* my_dev){
-..\Core\Src\leinuo_driver.c(23): warning:  #177-D: function "off"  was declared but never referenced
-  static uint8_t off(void* my_dev){
-..\Core\Src\leinuo_driver.c(30): warning:  #177-D: function "reset"  was declared but never referenced
-  static uint8_t reset(void* my_dev){
-..\Core\Src\leinuo_driver.c(37): warning:  #177-D: function "ioctl"  was declared but never referenced
-  static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg, uint16_t len){
-..\Core\Src\leinuo_driver.c(44): warning:  #177-D: function "leinuo_make_mes"  was declared but never referenced
-  static void leinuo_make_mes(Message_Leinuo_t* mes, uint8_t* buf){
-..\Core\Src\leinuo_driver.c(60): warning:  #177-D: function "leinuo_wake_up"  was declared but never referenced
-  static int8_t leinuo_wake_up(void* my_dev){
-..\Core\Src\leinuo_driver.c: 34 warnings, 0 errors
-compiling dev_handle.c...
-../Core/Inc/dev_handle.h(2): warning:  #1-D: last line of file ends without a newline
-  void dev_handle();
-../Core/Inc/dev_handle.h(2): warning:  #1295-D: Deprecated declaration dev_handle - give arg types
-  void dev_handle();
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
-  dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
-  void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
-  void commom_timer_init(Common_Timer* commom_timer);
-../Core/Inc/leinuo_driver.h(26): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
-  int8_t leinuo_dev_init();
-../Core/Inc/leinuo_driver.h(28): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
-  operations* leinuo_get_mydev_p();
-../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
-  int8_t mygui_init();
-../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
-  operations* mygui_get_mydev_p();
-../Core/Inc/uart_driver.h(14): warning:  #1295-D: Deprecated declaration uart_dev_init - give arg types
-  int8_t uart_dev_init();
-../Core/Inc/common_event.h(31): warning:  #1295-D: Deprecated declaration common_get_event_queue - give arg types
-  QueueHandle_t common_get_event_queue();
-../Core/Inc/common_event.h(33): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
-  void common_event_init();
-..\Core\Src\dev_handle.c(36): warning:  #1-D: last line of file ends without a newline
-  }
-..\Core\Src\dev_handle.c(23): warning:  #177-D: variable "frame_temp"  was declared but never referenced
-  	Frame_t frame_temp = {};
-..\Core\Src\dev_handle.c(9): warning:  #177-D: variable "dev_con"  was declared but never referenced
-  static dev_controller* dev_con;
-..\Core\Src\dev_handle.c: 17 warnings, 0 errors
+..\Core\Src\common_event.c: 10 warnings, 0 errors
 compiling freertos.c...
 ../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
@@ -230,23 +118,25 @@ compiling freertos.c...
   void dev_handle();
 ../Core/Inc/dev_handle.h(2): warning:  #1295-D: Deprecated declaration dev_handle - give arg types
   void dev_handle();
-../Core/Inc/wifi_app.h(2): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/wifi_app.h(4): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
   int wifi_app_main();
-../Core/Inc/wifi_app.h(2): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
-  int wifi_app_main();
-../Core/Inc/gui_app.h(2): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/wifi_app.h(5): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/wifi_app.h(5): warning:  #1295-D: Deprecated declaration app_get_wifiApp_queue - give arg types
+  QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/gui_app.h(4): warning:  #1-D: last line of file ends without a newline
   int gui_app_main();
-../Core/Inc/gui_app.h(2): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
+../Core/Inc/gui_app.h(4): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
   int gui_app_main();
 ../Core/Inc/message_handle.h(2): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
 ../Core/Inc/message_handle.h(3): warning:  #1-D: last line of file ends without a newline
   void message_handle(const void* const handle);
-../Core/Src/freertos.c: 20 warnings, 0 errors
+../Core/Src/freertos.c: 21 warnings, 0 errors
 linking...
-Program Size: Code=125508 RO-data=463652 RW-data=792 ZI-data=52580  
+Program Size: Code=121948 RO-data=266228 RW-data=804 ZI-data=44592  
 FromELF: creating hex file...
-"mylot\mylot.axf" - 0 Error(s), 102 Warning(s).
+"mylot\mylot.axf" - 0 Error(s), 50 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -270,7 +160,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

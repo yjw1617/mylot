@@ -16,21 +16,21 @@ void dev_handle(){
 //	dev_poll_handle();
 }
 //循环遍历各种dev设备的消息队列处理相关事件
-void dev_poll_handle(){
-	//获取dev_con句柄
-	dev_controller* dev_con = common_dev_get_controller();
-	BaseType_t ret = 0;
-	Frame_t frame_temp = {};
-	QueueHandle_t event_queue= common_get_event_queue();
-	Common_Event event = {0};
-	for(;;){
-		ret = xQueueReceive(event_queue, &event ,portMAX_DELAY);
-		if(ret == pdPASS){
-			if(event.handle != NULL){
-				event.handle(event.handle_args, event.type, event.id, event.data, event.data_len);
-			}else{
-				LOG("event.handle == NULL\r\n");
-			}
-		}
-	}
-}
+//void dev_poll_handle(){
+//	//获取dev_con句柄
+//	dev_controller* dev_con = common_dev_get_controller();
+//	BaseType_t ret = 0;
+//	Frame_t frame_temp = {};
+//	QueueHandle_t event_queue= common_get_event_queue();
+//	Common_Event event = {0};
+//	for(;;){
+//		ret = xQueueReceive(event_queue, &event ,portMAX_DELAY);
+//		if(ret == pdPASS){
+//			if(event.handle != NULL){
+//				event.handle(event.handle_args, event.type, event.id, event.data, event.data_len);
+//			}else{
+//				LOG("event.handle == NULL\r\n");
+//			}
+//		}
+//	}
+//}

@@ -2,7 +2,7 @@
 #include "common_timer.h"
 #include <stdio.h>
 #include <string.h>
-#define Common_Event_Max_Num 100
+#define Common_Event_Max_Num 30
 #define Common_Timer_Temp_Events_Data_Len 20
 typedef struct Timer_temp_event{
 	uint32_t timer_ticks_delay;
@@ -26,7 +26,6 @@ typedef struct Common_Events_Control{
 
 static Common_Events_Control event_con = {};
 	
-
 static Common_Event* common_find_event_by_timer_id(int16_t timer_id){
 	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
 		if(event_con.timer_temp_events[i].timer_id == timer_id){
@@ -67,8 +66,6 @@ static void timer_callback(TimerHandle_t xTimer){
 }
 	
 void common_event_init(){
-	event_con.Common_Event_Queue = xQueueCreate(Common_Event_Max_Num, sizeof(Common_Event));
-	Error_Check(NULL, event_con.Common_Event_Queue);
 	event_con.mutex = xSemaphoreCreateMutex();
 	Error_Check(NULL, event_con.mutex);
 	
@@ -80,7 +77,8 @@ void common_event_init(){
 		event_con.timer[i].ticksToWait = 1000;
 		commom_timer_init(&event_con.timer[i]);
 		event_con.timer[i].create(&event_con.timer[i]);
-		
+	}
+	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
 		event_con.timer_temp_events[i].timer_id = -1;
 	}
 }
@@ -154,16 +152,9 @@ int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_dat
 					//由定时器去处理事件
 					timer = common_get_available_timer();
 					Error_Check(NULL, timer);
-					while(timer == NULL){
-						timer = common_get_available_timer();
-						vTaskDelay(1);
-					}
 					timer->set_reloadMode(timer, reload_mode);
 					timer->change_period(timer, ticks_to_wait);
-					//将事件暂存在一个事件
-					while(common_save_temp_event(timer->get_timer_id(timer), ticks_to_wait, reload_mode, event_con.events[i]) == -1){
-						vTaskDelay(1);
-					}
+					Error_Check(-1, common_save_temp_event(timer->get_timer_id(timer), ticks_to_wait, reload_mode, event_con.events[i]));
 					event_con.post_total_num++;
 					LOG("post event_con.post_total_num = %d\r\n", event_con.post_total_num);
 					timer->start(timer);
@@ -178,9 +169,6 @@ int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_dat
 	return -1;
 }
 
-QueueHandle_t common_get_event_queue(){
-	return event_con.Common_Event_Queue;
-}
 
 
 
