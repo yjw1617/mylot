@@ -15,14 +15,6 @@ typedef struct LeiNuoWifi_dev{
 	Common_Timer timer;
 }LeiNuoWifi_dev;
 
-enum Leinuo_Cmd{
-	Leinuo_Cmd_Wake = 0x00,
-	Leinuo_Cmd_Sleep = 0x01,
-	Leinuo_Cmd_Connect_Net = 0x02,
-	Leinuo_Cmd_On = 0x03,
-	Leinuo_Cmd_Off = 0x04,
-	Leinuo_Cmd_Reset = 0x05,
-};
 int8_t leinuo_dev_init();
 
 operations* leinuo_get_mydev_p();

@@ -36,6 +36,7 @@
 #include "mygui_api.h"
 #include "dev_handle.h"
 #include "wifi_app.h"
+#include "fingerprint_app.h"
 #include "gui_app.h"
 #include "message_handle.h"
 /* USER CODE END Includes */
@@ -63,6 +64,7 @@ osThreadId MessageHandleHandle;
 osThreadId GuiPollHandleHandle;
 osThreadId DevHandleHandle;
 osThreadId DevUrgentHandleHandle;
+osThreadId FpHandleHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -73,6 +75,7 @@ void MessageHandle_task(void const * argument);
 void GuiPollHandle_task(void const * argument);
 void DevHandle_task(void const * argument);
 void DevUrgentHandle_task(void const * argument);
+void FpHandle_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -140,7 +143,7 @@ void MX_FREERTOS_Init(void) {
   MessageHandleHandle = osThreadCreate(osThread(MessageHandle), NULL);
 
   /* definition and creation of GuiPollHandle */
-  osThreadDef(GuiPollHandle, GuiPollHandle_task, osPriorityIdle, 0, 2048);
+  osThreadDef(GuiPollHandle, GuiPollHandle_task, osPriorityNormal, 0, 2048);
   GuiPollHandleHandle = osThreadCreate(osThread(GuiPollHandle), NULL);
 
   /* definition and creation of DevHandle */
@@ -150,6 +153,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of DevUrgentHandle */
   osThreadDef(DevUrgentHandle, DevUrgentHandle_task, osPriorityIdle, 0, 256);
   DevUrgentHandleHandle = osThreadCreate(osThread(DevUrgentHandle), NULL);
+
+  /* definition and creation of FpHandle */
+  osThreadDef(FpHandle, FpHandle_task, osPriorityIdle, 0, 256);
+  FpHandleHandle = osThreadCreate(osThread(FpHandle), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -206,6 +213,7 @@ void DevHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevHandle_task */
   dev_handle();//驱动层初始化
+	vTaskDelay(1000);
 	gui_app_main();
   /* Infinite loop */
   for(;;)
@@ -225,6 +233,7 @@ void DevHandle_task(void const * argument)
 void DevUrgentHandle_task(void const * argument)
 {
   /* USER CODE BEGIN DevUrgentHandle_task */
+	vTaskDelay(1000);
 	wifi_app_main();
   /* Infinite loop */
   for(;;)
@@ -233,6 +242,27 @@ void DevUrgentHandle_task(void const * argument)
   }
   /* USER CODE END DevUrgentHandle_task */
 }
+
+/* USER CODE BEGIN Header_FpHandle_task */
+/**
+* @brief Function implementing the FpHandle thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_FpHandle_task */
+void FpHandle_task(void const * argument)
+{
+  /* USER CODE BEGIN FpHandle_task */
+	vTaskDelay(1000);
+	fingerprint_app_main();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END FpHandle_task */
+}
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 

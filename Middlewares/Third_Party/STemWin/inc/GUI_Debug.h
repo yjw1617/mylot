@@ -45,7 +45,7 @@ Purpose     : Debug macros
 ----------------------------------------------------------------------
    Debug macros for logging
 
- In the GUI Simulation, all output is transferred into the log window.
+ In the GUI Simulation, all output is transferred into the A_Log window.
 */
 
 #ifndef GUI_DEBUG_H
@@ -64,7 +64,7 @@ Purpose     : Debug macros
 
 #ifndef GUI_DEBUG_LEVEL
   #ifdef WIN32
-    #define GUI_DEBUG_LEVEL GUI_DEBUG_LEVEL_LOG_WARNINGS  /* Simulation should log all warnings */
+    #define GUI_DEBUG_LEVEL GUI_DEBUG_LEVEL_LOG_WARNINGS  /* Simulation should A_Log all warnings */
   #else
     #define GUI_DEBUG_LEVEL GUI_DEBUG_LEVEL_NOCHECK       /* For most targets, min. size is important */
   #endif

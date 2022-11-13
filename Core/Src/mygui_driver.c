@@ -28,7 +28,7 @@ static MyGUI_dev* pg_mydev[MyGui_Max_NUM];
 
 //static void mygui_lcd_wakeup(MyGUI_dev* mydev, uint8_t arg){//arg为0代表没有点击到屏幕的元素，为1代表点击到元素
 //	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_2);
-//	LOG("mydev->lcd.lightness = %d\r\n", mydev->lcd.lightness);
+//	A_Log("mydev->lcd.lightness = %d\r\n", mydev->lcd.lightness);
 //	__HAL_TIM_SET_COMPARE(&htim12, TIM_CHANNEL_2, mydev->lcd.lightness);
 //	if(arg){
 //		mydev->lcd.status = MYGUI_LCD_STATUS_ON;
@@ -54,16 +54,16 @@ static operations opts = {
 //	//得到mydev的句柄
 //	Dev* dev = common_dev_find_dev_by_id(Message_Addr_MY_GUI);
 //	MyGUI_dev* mydev = (MyGUI_dev*)(dev->mydev);
-//	LOG("pvTimerGetTimerID = %d\r\n", *((uint32_t*)pvTimerGetTimerID(xTimer)));
+//	A_Log("pvTimerGetTimerID = %d\r\n", *((uint32_t*)pvTimerGetTimerID(xTimer)));
 //	if(*((uint32_t*)pvTimerGetTimerID(xTimer)) == 0){//10s定时到达
-//		LOG("10s arrive\r\n");
+//		A_Log("10s arrive\r\n");
 //		mygui_set_lcd_lightness(mydev, 0, MYGUI_SHALLOW_SLLEP_LIGHTNESS);
 //	}
 //	if(*((uint32_t*)pvTimerGetTimerID(xTimer)) == 1){//15s定时到达
-//		LOG("15s arrive\r\n");
+//		A_Log("15s arrive\r\n");
 //		mygui_set_lcd_lightness(mydev, 0, 0);
 //	}
-//	LOG("gui timer callback\r\n");
+//	A_Log("gui timer callback\r\n");
 //}
 
 //static operations opts = {
@@ -80,7 +80,7 @@ int8_t mygui_init(){
 	for(uint8_t i = 0; i < MyGui_Max_NUM; i++){
 		pg_mydev[i]= common_mydev_create(sizeof(MyGUI_dev));//创建雷诺结构体
 		if(pg_mydev[i] == NULL){
-			LOG("dev_mydev_%d create LeiNuoWifi_dev error\r\n", i);
+			A_Log("dev_mydev_%d create LeiNuoWifi_dev error\r\n", i);
 			return -1;
 		}
 		memset(pg_mydev[i], 0, sizeof(MyGUI_dev));			//初始化leino结构体为0
@@ -88,12 +88,12 @@ int8_t mygui_init(){
 		pg_mydev[i]->dev.mydev = pg_mydev[i];						//将自己的mydev指针指向子类
 		pg_mydev[i]->dev.Message_Queue = xQueueCreate(MYGui_Dev_Queue_Len , sizeof(Frame_t));
 		if(pg_mydev[i]->dev.Message_Queue == NULL){
-			LOG("xQueueCreate heap is full\r\n");
+			A_Log("xQueueCreate heap is full\r\n");
 			return -1;
 		}
 		ret = common_dev_register(&pg_mydev[i]->dev);//add dev to linux kernel
 		if(ret == -1){
-			LOG("dev %d add err\r\n", i);
+			A_Log("dev %d add err\r\n", i);
 			return -1;
 		}
 	}

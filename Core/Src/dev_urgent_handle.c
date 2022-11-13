@@ -24,7 +24,7 @@ QueueHandle_t dev_urgent_handle_get_task_queue(){
 static void dev_urgent_handle_init(){
 	g_message_task.Message_Queue = xQueueCreate(MES_QUEUE_LEN, sizeof(Frame_t));
 	if(g_message_task.Message_Queue == NULL){
-		LOG("dev_urgent_handle_queue create error\r\n");
+		A_Log("dev_urgent_handle_queue create error\r\n");
 	}
 }
 
@@ -48,10 +48,10 @@ static void dev_urgent_handle_init(){
 //					}
 //				}
 //			}else{
-//				LOG("addr_dest != -1\r\n");
+//				A_Log("addr_dest != -1\r\n");
 //			}
 //		}else{
-//			LOG("dev_urgent_handle_recv_mes_error\r\n");
+//			A_Log("dev_urgent_handle_recv_mes_error\r\n");
 //		}
 //		memset(&frame_temp, 0, sizeof(Frame_t)); 
 //	}

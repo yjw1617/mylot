@@ -4,8 +4,9 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
-#define DEV_MAX_NUM 10 //设备库的最大设备数目
+#define DEV_MAX_NUM 10 			//设备库的最大设备数目
 #define DEV_NAME_MAX_LEN 20 //设备名最大长度
+
 typedef struct operations{
 	int8_t (*write)(void* mydev, void* data, uint32_t len);
 	int8_t (*open)(void* mydev);
@@ -23,6 +24,7 @@ typedef struct Dev {
 	uint8_t name[DEV_NAME_MAX_LEN];
 	QueueHandle_t Message_Queue;
 	void* mydev;//指向自己的子对象
+	uint8_t uart_enable;
 	struct operations *ops;
 }Dev ;
 

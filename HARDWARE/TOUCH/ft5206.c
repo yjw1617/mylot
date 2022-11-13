@@ -101,7 +101,7 @@ u8 FT5206_Init(void)
 	FT5206_RD_Reg(FT_ID_G_LIB_VERSION,&temp[0],2);  
 	if(temp[0]==0X30&&temp[1]==0X03)//°æ±¾:0X3003
 	{
-		LOG("CTP ID:%x\r\n",((u16)temp[0]<<8)+temp[1]);
+		A_Log("CTP ID:%x\r\n",((u16)temp[0]<<8)+temp[1]);
 		return 0;
 	} 
 	return 1;

@@ -110,5 +110,6 @@ mylot\freertos.o: ../Core/Inc/common_timer.h
 mylot\freertos.o: ../Core/Inc/gui_task.h
 mylot\freertos.o: ../Core/Inc/dev_handle.h
 mylot\freertos.o: ../Core/Inc/wifi_app.h
+mylot\freertos.o: ../Core/Inc/fingerprint_app.h
 mylot\freertos.o: ../Core/Inc/gui_app.h
 mylot\freertos.o: ../Core/Inc/message_handle.h

@@ -18,3 +18,5 @@ mylot\gui_app.o: ../Core/Inc/common_event.h
 mylot\gui_app.o: ../Core/Inc/message.h
 mylot\gui_app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 mylot\gui_app.o: ../Core/Inc/wifi_app.h
+mylot\gui_app.o: ../Core/Inc/fingerprint_app.h
+mylot\gui_app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

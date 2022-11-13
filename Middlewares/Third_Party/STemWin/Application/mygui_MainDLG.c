@@ -143,6 +143,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         // USER START (Optionally insert code for reacting on notification message)
         GUI_EndDialog(pMsg->hWin, 0);//     Ի  
 				//发送wifi连接事件
+//				A_Log("jijijiji\r\n");
 				common_event_post(Event_Type_Gui, Event_Id_Gui_Touch_Wifi_Connect, NULL, 0, 0, 0);
         mygui_AlarmCreate();// 򿪾    Ի   
         // USER END

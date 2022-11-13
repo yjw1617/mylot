@@ -55,4 +55,5 @@ mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 mylot\dev_handle.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 mylot\dev_handle.o: ../Core/Inc/common_event.h
+mylot\dev_handle.o: ../Core/Inc/fingerprint_driver.h
 mylot\dev_handle.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

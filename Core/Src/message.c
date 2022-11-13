@@ -33,11 +33,11 @@ int8_t message_protocol_register(Message_protocol* protocol){
 		if(message_protocol_controller.protocols[i] == 0){
 			message_protocol_controller.protocols[i] = protocol;
 			message_protocol_controller.num++;
-			LOG("message_protocol_register success\r\n");
+			A_Log("message_protocol_register success\r\n");
 			return pdTRUE;
 		}
 	}
-	LOG("protocol_register buf full\r\n");
+	A_Log("protocol_register buf full\r\n");
 	return pdFALSE;
 }
 
@@ -59,7 +59,7 @@ Message_protocol* message_find_protocol_by_name(uint8_t* protocol_name){
 			return message_protocol_controller.protocols[i];
 		}
 	}
-	LOG("protocol_find_dev_by_name\r\n");
+	A_Log("protocol_find_dev_by_name\r\n");
 	return NULL;
 }
 
@@ -85,10 +85,8 @@ int8_t message_protocol_find_addr(Frame_t* fram){
 	for(uint8_t i = 0; i < fram->len; i++){
 		for(uint8_t j = 0; j < Message_Protocol_Max_Num; j++){
 			if(fram->r_buf[i] == message_protocol_controller.protocols[j]->head1){//message head1 ok
-				LOG("i = %d, head1 == %.2x\r\n", i, fram->r_buf[i]);
 				//message head2 ok  
 				if(fram->r_buf[i+1] == message_protocol_controller.protocols[j]->head2){
-					LOG("i = %d, head2 == %.2x\r\n", i, fram->r_buf[i + 1]);
 					if(message_protocol_controller.protocols[j]->dest_addr_index == 0){
 						return -1;
 					}
@@ -216,27 +214,27 @@ void message_send_to_dev(Dev* dev_dest, uint8_t* message, uint8_t protocol_type)
 	}
 	frame.index_useful = 0;
 	if(xQueueSend(dev_dest->Message_Queue, &frame, 0) != pdPASS){
-		LOG("xQueueSend(gui_get_gui_Queue(), &message_tmp, 0 error\r\n");
+		A_Log("xQueueSend(gui_get_gui_Queue(), &message_tmp, 0 error\r\n");
 	}
 }
 
 void message_log(uint8_t type, uint8_t* addr_src_name, uint8_t* addr_dest_name, uint8_t* mes_protocol_name, uint8_t cmd, uint8_t* payload, uint8_t payload_len){
-	LOG("\r\n\r\n\r\n\r\n");
+	A_Log("\r\n\r\n\r\n\r\n");
 	if(type == 0){
-		LOG("------------%s recv %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+		A_Log("------------%s recv %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
 	}else if(type == 1){
-		LOG("------------%s send to %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+		A_Log("------------%s send to %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
 	}
-	LOG("mes cmd = %.2x\r\n", cmd);
-	LOG("mes payload: ");
+	A_Log("mes cmd = %.2x\r\n", cmd);
+	A_Log("mes payload: ");
 	for(uint8_t i = 0; i < payload_len; i++){
-		LOG("%.2x ", payload[i]);
+		A_Log("%.2x ", payload[i]);
 	}
-	LOG("\r\n\r\n\r\n\r\n");
+	A_Log("\r\n\r\n\r\n\r\n");
 }
 
 void message_log_buf(uint8_t* index_start, uint8_t len){
 	for(uint8_t i = 0 ; i < len; i++){
-		LOG("%.2x ", index_start[i]);
+		A_Log("%.2x ", index_start[i]);
 	}
 }

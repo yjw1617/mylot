@@ -2,3 +2,17 @@ mylot\utils.o: ..\Core\Src\utils.c
 mylot\utils.o: ../Core/Inc/utils.h
 mylot\utils.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 mylot\utils.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+mylot\utils.o: ../Core/Inc/message.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+mylot\utils.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+mylot\utils.o: ../Core/Inc/FreeRTOSConfig.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mylot\utils.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mylot\utils.o: ../Core/Inc/common_dev.h

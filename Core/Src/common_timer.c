@@ -7,7 +7,7 @@ static BaseType_t start(Common_Timer* commom_timer){
 static BaseType_t create(Common_Timer* commom_timer){
 	commom_timer->handle = xTimerCreate((char*)commom_timer->name, commom_timer->period, commom_timer->autoReload, &commom_timer->id, commom_timer->callback_function);
 	if(!commom_timer->handle){
-		LOG("\r\n xTimerCreate fail !!!\r\n");
+		A_Log("\r\n xTimerCreate fail !!!\r\n");
 	}
 }
 

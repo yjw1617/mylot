@@ -128,7 +128,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         break;
       case WM_NOTIFICATION_RELEASED:
         // USER START (Optionally insert code for reacting on notification message)
-				LOG("show main\r\n");
+				A_Log("show main\r\n");
         GUI_EndDialog(pMsg->hWin, 0);
 				mygui_MainCreate();
         // USER END

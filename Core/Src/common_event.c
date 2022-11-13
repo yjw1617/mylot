@@ -2,107 +2,81 @@
 #include "common_timer.h"
 #include <stdio.h>
 #include <string.h>
-#define Common_Event_Max_Num 30
+#define Common_Event_Max_Num 100
 #define Common_Timer_Temp_Events_Data_Len 20
+#define Common_Timer_Create(...) xTimerCreate(__VA_ARGS__)
+#define Common_Timer_Start(...)	xTimerStart(__VA_ARGS__)
 typedef struct Timer_temp_event{
-	uint32_t timer_ticks_delay;
-	int16_t timer_id;
-	uint16_t loop_num;
 	uint8_t reload_mode;
 	Common_Event events;
 	uint8_t timer_temp_events_data[Common_Timer_Temp_Events_Data_Len];
+	TimerHandle_t timer;//按需创建
 }Timer_temp_event;
 
 typedef struct Common_Events_Control{
 	uint16_t register_total_num;
 	uint16_t post_total_num;
-	QueueHandle_t Common_Event_Queue;
 	Common_Event* events[Common_Event_Max_Num];
-	
-	Timer_temp_event timer_temp_events[Common_Event_Max_Num];
+	Timer_temp_event* timer_temp_events[Common_Event_Max_Num];//按需创建
 	SemaphoreHandle_t mutex;
-	Common_Timer timer[Common_Event_Max_Num];
 }Common_Events_Control;
 
 static Common_Events_Control event_con = {};
 	
-static Common_Event* common_find_event_by_timer_id(int16_t timer_id){
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		if(event_con.timer_temp_events[i].timer_id == timer_id){
-			//返回event
-			return &event_con.timer_temp_events[i].events;
-		}
-	}
-	return NULL;
-}
 //通过timerid找到与之对应的Timer_temp_event
-static Timer_temp_event* common_find_temp_event_by_timerId(TimerHandle_t xTimer){
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		if(event_con.timer_temp_events[i].timer_id == *(uint32_t*)pvTimerGetTimerID(xTimer)){
-			Error_Check(NULL, event_con.timer_temp_events[i].events.handle);
-			if(event_con.timer_temp_events[i].events.handle != NULL){
-				return &event_con.timer_temp_events[i];
+static int16_t common_find_temp_event_id_by_TimerHandle(TimerHandle_t xTimer){
+	for(uint16_t i = 0 ; i < Common_Event_Max_Num; i++){
+		if(event_con.timer_temp_events[i]->timer == xTimer){
+			Error_Check(NULL, event_con.timer_temp_events[i]->events.handle);
+			if(event_con.timer_temp_events[i]->events.handle != NULL){
+				return i;
 			}
 		}
 	}
-	return NULL;
+	return -1;
 }
 
 static void timer_callback(TimerHandle_t xTimer){
-	LOG("\r\n---leinuo timer callback---\r\n");
-	Timer_temp_event* temp_event = common_find_temp_event_by_timerId(xTimer);
-	if(temp_event != NULL){
-		LOG("pop post_total_num = %d\r\n", event_con.post_total_num);
-	}
-	Error_Check(NULL, temp_event);
-	//运行回调函数
-	temp_event->events.handle(temp_event->events.handle_args, temp_event->events.type, temp_event->events.id, temp_event->events.data, temp_event->events.data_len);
-	if(temp_event->reload_mode == 0){//有限次数
-		event_con.post_total_num--;
-		temp_event->timer_id = -1;//必须给-1表示这个timer可用
-		memset(&temp_event->events, 0, sizeof(Common_Event));//将存储事件清空
-		memset(&temp_event->timer_temp_events_data, 0, Common_Timer_Temp_Events_Data_Len);
+	K_Log("event timer callback");
+	int16_t temp_event_id = common_find_temp_event_id_by_TimerHandle(xTimer);
+	K_Log("take temp_event_id = %d", temp_event_id);
+	K_Log("type = %d   id = %d   data = %s", event_con.timer_temp_events[temp_event_id]->events.type, event_con.timer_temp_events[temp_event_id]->events.id, event_con.timer_temp_events[temp_event_id]->events.data);
+	Error_Check(-1, temp_event_id);
+	event_con.timer_temp_events[temp_event_id]->events.handle(event_con.timer_temp_events[temp_event_id]->events.handle_args, event_con.timer_temp_events[temp_event_id]->events.type, event_con.timer_temp_events[temp_event_id]->events.id, event_con.timer_temp_events[temp_event_id]->events.data, event_con.timer_temp_events[temp_event_id]->events.data_len);
+	if(event_con.timer_temp_events[temp_event_id]->reload_mode == 0){//1次
+		//将timer和Timer_temp_event删除
+		Error_Check(pdFAIL, xTimerDelete(xTimer, portMAX_DELAY));
+		if(event_con.timer_temp_events[temp_event_id] != NULL){
+			K_Log("timer_callback del event_type = %d , event_id = %d---", event_con.timer_temp_events[temp_event_id]->events.type, event_con.timer_temp_events[temp_event_id]->events.id);
+			vPortFree(event_con.timer_temp_events[temp_event_id]);
+			event_con.timer_temp_events[temp_event_id] = NULL;
+			event_con.post_total_num--;
+		}
 	}
 }
 	
 void common_event_init(){
 	event_con.mutex = xSemaphoreCreateMutex();
 	Error_Check(NULL, event_con.mutex);
-	
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		event_con.timer[i].autoReload = 0;
-		event_con.timer[i].id = i;
-		event_con.timer[i].period = 10000;
-		event_con.timer[i].callback_function = timer_callback;
-		event_con.timer[i].ticksToWait = 1000;
-		commom_timer_init(&event_con.timer[i]);
-		event_con.timer[i].create(&event_con.timer[i]);
-	}
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		event_con.timer_temp_events[i].timer_id = -1;
-	}
 }
 
-//获得可用的定时器
-static Common_Timer* common_get_available_timer(){
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		if(pdFALSE == xTimerIsTimerActive(event_con.timer[i].handle)){//The timer is not running.
-			return &event_con.timer[i];
-		}
-	}
-	return NULL;
-}
-
-static int8_t common_save_temp_event(int16_t timer_id, uint32_t timer_ticks_delay, uint8_t reload_mode, Common_Event* event){
+//将post过来的event事件暂存到暂存事件库中用定时器处理
+static int16_t common_add_temp_event(Common_Event* event, uint8_t reload_mode, uint32_t timer_ticks_delay, TimerCallbackFunction_t call_back){
 	Error_Check(1, (event->data_len > Common_Timer_Temp_Events_Data_Len));
-	for(uint8_t i = 0 ; i < Common_Event_Max_Num; i++){
-		if(event_con.timer_temp_events[i].timer_id == -1){
-			event_con.timer_temp_events[i].timer_id = timer_id;
-			event_con.timer_temp_events[i].timer_ticks_delay = timer_ticks_delay;
-			event_con.timer_temp_events[i].reload_mode = reload_mode;
-			memcpy(&event_con.timer_temp_events[i].events, event, sizeof(Common_Event));
-			memcpy((void*)event_con.timer_temp_events[i].timer_temp_events_data, event->data, event->data_len);
-			return 0;
+	for(uint16_t i = 0 ; i < Common_Event_Max_Num; i++){
+		if(event_con.timer_temp_events[i] == NULL){
+			K_Log("create temp_event_id = %d", i);
+			//创建一个事件
+			event_con.timer_temp_events[i] = pvPortMalloc(sizeof(Timer_temp_event));
+			Error_Check(NULL, event_con.timer_temp_events[i]);
+			K_Log("pvPortMalloc(sizeof(Timer_temp_event)) suc");
+			memcpy(&event_con.timer_temp_events[i]->events, event, sizeof(Common_Event));
+			memcpy((void*)event_con.timer_temp_events[i]->timer_temp_events_data, event->data, event->data_len);
+			event_con.timer_temp_events[i]->reload_mode = reload_mode;
+			//创建一个定时器
+			event_con.timer_temp_events[i]->timer = Common_Timer_Create(NULL, timer_ticks_delay, reload_mode, &i, call_back);
+			Error_Check(NULL, event_con.timer_temp_events[i]->timer);
+			return i;
 		}
 	}
 	return -1;
@@ -115,7 +89,7 @@ int8_t common_event_handler_register(uint16_t event_type, uint32_t event_id, eve
 			//创建一个event
 			Common_Event* event = (Common_Event*)pvPortMalloc(sizeof(Common_Event));
 			if(event == NULL){
-				LOG("event_register success error---");
+				K_Log("event_register success error");
 				return -1;
 			}
 			event_con.events[i] = event;
@@ -124,11 +98,11 @@ int8_t common_event_handler_register(uint16_t event_type, uint32_t event_id, eve
 			event_con.events[i]->handle = handle;
 			event_con.events[i]->handle_args = event_handler_arg;
 			event_con.register_total_num++;
-			LOG("event_register success\r\n");
+			K_Log("event_register success");
 			return pdTRUE;
 		}
 	}
-	LOG("event_register success error");
+	K_Log("event_register success error");
 	return -1;
 }
 
@@ -138,7 +112,6 @@ int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_dat
 	int8_t ret = 0;
 	uint32_t timer_ticks_delay = 0;
 	int8_t loop_num_tmp = 0;
-	Common_Timer* timer = NULL;
 	for(uint16_t i = 0; i < Common_Event_Max_Num; i++){
 		if(event_con.events[i] != NULL){
 			if(event_con.events[i]->type == event_type && event_con.events[i]->id == event_id){
@@ -149,27 +122,58 @@ int8_t common_event_post(uint16_t event_type, uint32_t event_id, void* event_dat
 						event_con.events[i]->handle(event_con.events[i]->handle_args, event_con.events[i]->type, event_con.events[i]->id, event_con.events[i]->data, event_con.events[i]->data_len);
 						return 0;
 					}
-					//由定时器去处理事件
-					timer = common_get_available_timer();
-					Error_Check(NULL, timer);
-					timer->set_reloadMode(timer, reload_mode);
-					timer->change_period(timer, ticks_to_wait);
-					Error_Check(-1, common_save_temp_event(timer->get_timer_id(timer), ticks_to_wait, reload_mode, event_con.events[i]));
+					//将event_con.events[i]存到event_con.timer_temp_events中
+					int16_t temp_event_id = common_add_temp_event(event_con.events[i], reload_mode, ticks_to_wait, timer_callback);
+					Error_Check(-1, temp_event_id);
 					event_con.post_total_num++;
-					LOG("post event_con.post_total_num = %d\r\n", event_con.post_total_num);
-					timer->start(timer);
-					return 0;
+					K_Log("post event_con.post_total_num = %d", event_con.post_total_num);
+					Common_Timer_Start(event_con.timer_temp_events[temp_event_id]->timer, portMAX_DELAY);
+					return temp_event_id;
 				}
-				LOG("event_con.events[i]->handle error\r\n");
+				K_Log("event_con.events[i]->handle error");
 				return -1;
 			}
 		}
 	}
-	LOG("event_con.events[i] is not found\r\n");
+	K_Log("event_con.events[i] is not found");
 	return -1;
 }
 
+//将所有匹配的事件全部删除
+int8_t common_del_temp_event_by_eventType_and_eventId(uint16_t event_type, uint32_t event_id){
+	for(uint16_t i = 0; i < Common_Event_Max_Num; i++){
+		if(event_con.timer_temp_events[i] != NULL){
+			if(event_con.timer_temp_events[i]->events.type == event_type && event_con.timer_temp_events[i]->events.id == event_id){
+				if(event_con.timer_temp_events[i]->timer != NULL){
+					//将改temp_events资源删除
+					Error_Check(pdFAIL, xTimerDelete(event_con.timer_temp_events[i]->timer, portMAX_DELAY));
+				}
+				K_Log("common_del del event_type = %d , event_id = %d", event_con.timer_temp_events[i]->events.type, event_con.timer_temp_events[i]->events.id);
+				vPortFree(event_con.timer_temp_events[i]);
+				event_con.timer_temp_events[i] = NULL;
+				event_con.post_total_num--;
+			}
+		}
+	}
+	return 0;
+}
 
+int8_t common_event_destroy(Common_Event* event){
+	vPortFree(event->data);
+}
+
+int8_t common_write_queue_event(QueueHandle_t queue, uint16_t event_type, uint16_t event_id, uint8_t* buf, uint16_t buf_len){
+	//拷贝buf内容
+	uint8_t* r_buf = pvPortMalloc(buf_len);
+	memcpy(r_buf, buf, buf_len);
+	Common_Event event = {
+			.type = event_type,
+			.id = event_id,
+			.data = r_buf,
+			.data_len = buf_len,
+	};
+	return xQueueSend(queue, &event, portMAX_DELAY);
+}
 
 
 

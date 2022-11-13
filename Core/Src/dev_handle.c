@@ -5,6 +5,7 @@
 #include "mygui_driver.h"
 #include "uart_driver.h"
 #include "common_event.h"
+#include "fingerprint_driver.h"
 #include <stdio.h>
 static dev_controller* dev_con;
 //驱动初始化函数
@@ -12,7 +13,8 @@ void dev_handle(){
 	common_event_init();
 	leinuo_dev_init();//初始化leinuo设备
 	mygui_init();			//初始化mygui设备
-	uart_dev_init();	//初始化uart设备
+	fingerprint_dev_init();
+//	uart_dev_init();	//初始化uart设备
 //	dev_poll_handle();
 }
 //循环遍历各种dev设备的消息队列处理相关事件
@@ -29,7 +31,7 @@ void dev_handle(){
 //			if(event.handle != NULL){
 //				event.handle(event.handle_args, event.type, event.id, event.data, event.data_len);
 //			}else{
-//				LOG("event.handle == NULL\r\n");
+//				A_Log("event.handle == NULL\r\n");
 //			}
 //		}
 //	}

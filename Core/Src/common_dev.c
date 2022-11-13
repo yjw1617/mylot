@@ -3,6 +3,7 @@
 #include "task.h"
 #include <string.h>
 #include "message.h"
+#include <stdio.h>
 static dev_controller dev_con = {0};
 void* common_mydev_create(uint16_t size){
 	return pvPortMalloc(size);
@@ -13,12 +14,12 @@ int8_t common_dev_register(Dev* dev){
 		if(dev_con.dev[i] == 0){
 			dev_con.dev[i] = dev;
 			dev_con.num++;
-			LOG("dev_register success\r\n");
-			LOG("addr = %d\r\n", dev->id);
+			A_Log("dev_register success\r\n");
+			A_Log("addr = %d\r\n", dev->id);
 			return pdTRUE;
 		}
 	}
-	LOG("dev_register buf full\r\n");
+	A_Log("dev_register buf full\r\n");
 	return pdFALSE;
 }
 
@@ -43,7 +44,7 @@ Dev* common_dev_find_dev_by_id(uint16_t addr){
 			}
 		}
 	}
-	LOG("common_dev_find_dev_by_id fail\r\n");
+	A_Log("common_dev_find_dev_by_id fail\r\n");
 	return NULL;
 }
 
@@ -56,7 +57,7 @@ Dev* common_dev_find_dev_by_name(uint8_t* dev_name){
 			}
 		}
 	}
-	LOG("common_dev_find_dev_by_name\r\n");
+	A_Log("common_dev_find_dev_by_name\r\n");
 	return NULL;
 }
 
@@ -92,7 +93,6 @@ int8_t common_write(uint16_t dev_id, void* buf, uint32_t len){
 		if(dev_con.dev[i] != NULL){
 			if(dev_con.dev[i]->id == dev_id){
 				if(dev_con.dev[i]->ops->write != NULL){
-					LOG("dev_con.dev\r\n");
 					return dev_con.dev[i]->ops->write(dev_con.dev[i]->mydev, buf, len);
 				}
 			}

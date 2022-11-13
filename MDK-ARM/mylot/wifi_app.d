@@ -17,3 +17,4 @@ mylot\wifi_app.o: ../Core/Inc/common_event.h
 mylot\wifi_app.o: ../Core/Inc/message.h
 mylot\wifi_app.o: ../Core/Inc/wifi_app.h
 mylot\wifi_app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+mylot\wifi_app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

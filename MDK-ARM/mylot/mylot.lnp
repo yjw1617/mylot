@@ -46,6 +46,7 @@
 "mylot\mygui_driver.o"
 "mylot\mytestprotocol_diver.o"
 "mylot\uart_driver.o"
+"mylot\fingerprint_driver.o"
 "mylot\common_task.o"
 "mylot\common_dev.o"
 "mylot\common_timer.o"
@@ -98,6 +99,7 @@
 "mylot\dev_urgent_handle.o"
 "mylot\wifi_app.o"
 "mylot\gui_app.o"
+"mylot\fingerprint_app.o"
 --library_type=microlib --strict --scatter "mylot\mylot.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -2,19 +2,19 @@
 #include "message.h"
 #include <string.h>
 static uint8_t on(void* my_dev){
-	LOG("test wifi on\r\n");
+	A_Log("test wifi on\r\n");
 }
 static uint8_t off(void* my_dev){
-	LOG("test wifi off\r\n");
+	A_Log("test wifi off\r\n");
 }
 static uint8_t reset(void* my_dev){
-	LOG("test wifi reset\r\n");
+	A_Log("test wifi reset\r\n");
 }
 static uint8_t connect(void* my_dev){
-	LOG("test wifi connect\r\n");
+	A_Log("test wifi connect\r\n");
 }
 static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg){
-	LOG("test wifi ioctl\r\n");
+	A_Log("test wifi ioctl\r\n");
 }
 static operations opts = {
 	.on = on,

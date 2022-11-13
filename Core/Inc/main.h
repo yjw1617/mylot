@@ -59,6 +59,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define finger_int_Pin GPIO_PIN_4
+#define finger_int_GPIO_Port GPIOA
+#define finger_vcc_d1_Pin GPIO_PIN_5
+#define finger_vcc_d1_GPIO_Port GPIOA
+#define finger_vcc_d2_Pin GPIO_PIN_6
+#define finger_vcc_d2_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

@@ -6,23 +6,61 @@
 #include "queue.h"
 #include "semphr.h"
 #include "common_dev.h"
-#define SUPPORT_LOG
-#ifdef SUPPORT_LOG
-static volatile uint8_t log_flag = 1;
-#define LOG(...) do{																																					\
-					while(!log_flag){vTaskDelay(1);}	\	
-					log_flag = 0;						\
-					printf(__VA_ARGS__);	 			\
-					log_flag = 1;						\
+#define Support_App_Log		 							 1	//app A_Log
+#define Support_Driver_Log							 1	//driver A_Log
+#define Support_Normal_Log							 1	//normal Log
+#define Support_Kernel_Log							 1	//kernel Log
+
+#if Support_Normal_Log
+	#define N_Log(...) do{										\
+					taskENTER_CRITICAL();							\
+					printf(__VA_ARGS__);	 						\
+					taskEXIT_CRITICAL();							\
 				}while(0)																																	
 #else
-#define LOG 
+	#define N_Log 
+#endif
+				
+#if Support_App_Log
+	#define A_Log(...) do{										\
+					taskENTER_CRITICAL();							\
+					printf("\r\n--App:");							\
+					printf(__VA_ARGS__);	 						\
+					printf("\r\n");										\
+					taskEXIT_CRITICAL();							\
+				}while(0)																																	
+#else
+	#define A_Log 
+#endif			
+
+#if Support_Driver_Log
+	#define D_Log(...) do{										\
+					taskENTER_CRITICAL();							\
+					printf("\r\n##Driver:");					\
+					printf(__VA_ARGS__);	 						\
+					printf("\r\n");										\
+					taskEXIT_CRITICAL();							\
+				}while(0)																																	
+#else
+	#define D_Log
 #endif
 
-#define  Error_Check(x,y) do {\
-	if((x) == (y)){						\
-		LOG("\r\n--Error_Check(%s, %s) error!!--\r\n", #x, #y);			\
-	}													\
+#if Support_Kernel_Log
+	#define K_Log(...) do{										\
+					taskENTER_CRITICAL();							\
+					printf("\r\n**Kernel:");					\
+					printf(__VA_ARGS__);	 						\
+					printf("\r\n");										\
+					taskEXIT_CRITICAL();							\
+				}while(0)																																	
+#else
+	#define K_Log
+#endif
+				
+#define  Error_Check(x,y) do {																		\
+	if((x) == (y)){																									\
+		A_Log("\r\n--Error_Check(%s, %s) error!!--\r\n", #x, #y);			\
+	}																																\
 }while(0)
 
 				
@@ -43,17 +81,18 @@ enum Message_Head2{
 
 
 enum Message_Addr{
-	MESSAGE_Addr_MCU = 0x00,
-	MESSAGE_Addr_WIFI_TEST = 0x01,
-	Message_Addr_Wifi_LEINUO1 = 0x02,
-	Message_Addr_Wifi_LEINUO2 = 0x03,
-	Message_Addr_Wifi_LEINUO3 = 0x04,
-	Message_Addr_Wifi_LEINUO4 = 0x05,
-	Message_Addr_Wifi_LEINUO5 = 0x06,
-	Message_Addr_MY_GUI = 0x07,
-	Message_Addr_uart1 = 0x08,
-	Message_Addr_uart2 = 0x09,
-	Message_Addr_uart3 = 0x0a,
+	Message_Addr_MCU,
+	Message_Addr_WIFI_TEST,
+	Message_Addr_Wifi_LEINUO1,
+	Message_Addr_Wifi_LEINUO2,
+	Message_Addr_Wifi_LEINUO3,
+	Message_Addr_Wifi_LEINUO4,
+	Message_Addr_Wifi_LEINUO5,
+	Message_Addr_MY_GUI,
+	Message_Addr_uart1,
+	Message_Addr_uart2,
+	Message_Addr_uart3,
+	Dev_id_fingerprint1,
 };
 
 

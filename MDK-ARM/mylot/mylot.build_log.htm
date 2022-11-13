@@ -22,25 +22,379 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 D:\STM407Project\mylot\mylot\MDK-ARM\mylot.uvprojx
-Project File Date:  11/05/2022
+Project File Date:  11/13/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'mylot'
-compiling gui_app.c...
-../Core/Inc/gui_app.h(4): warning:  #1-D: last line of file ends without a newline
-  int gui_app_main();
-../Core/Inc/gui_app.h(4): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
-  int gui_app_main();
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+compiling utils.c...
+../Core/Inc/utils.h(5): warning:  #1-D: last line of file ends without a newline
+  uint16_t utils_calculate_check_num_uint16_t(uint8_t* msg,uint8_t index_start, uint8_t len);
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
   void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/common_event.h(34): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+..\Core\Src\utils.c(28): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\utils.c: 5 warnings, 0 errors
+compiling message.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\message.c(36): warning:  #223-D: function "printf" declared implicitly
+  			A_Log("message_protocol_register success\r\n");
+..\Core\Src\message.c(40): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("protocol_register buf full\r\n");
+..\Core\Src\message.c(50): warning:  #940-D: missing return statement at end of non-void function "message_protocol_unregister" 
+  }
+..\Core\Src\message.c(54): warning:  #940-D: missing return statement at end of non-void function "message_protocol_del" 
+  }
+..\Core\Src\message.c(62): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("protocol_find_dev_by_name\r\n");
+..\Core\Src\message.c(149): warning:  #940-D: missing return statement at end of non-void function "message_find_protocolname_by_protocoltype" 
+  }
+..\Core\Src\message.c(217): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("xQueueSend(gui_get_gui_Queue(), &message_tmp, 0 error\r\n");
+..\Core\Src\message.c(222): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("\r\n\r\n\r\n\r\n");
+..\Core\Src\message.c(224): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("------------%s recv %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+..\Core\Src\message.c(226): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("------------%s send to %s %s msg-------------\r\n", addr_src_name, addr_dest_name, mes_protocol_name);
+..\Core\Src\message.c(228): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("mes cmd = %.2x\r\n", cmd);
+..\Core\Src\message.c(229): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("mes payload: ");
+..\Core\Src\message.c(231): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("%.2x ", payload[i]);
+..\Core\Src\message.c(233): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("\r\n\r\n\r\n\r\n");
+..\Core\Src\message.c(238): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("%.2x ", index_start[i]);
+..\Core\Src\message.c(240): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\message.c(156): warning:  #177-D: function "message_check"  was declared but never referenced
+  static char message_check(const Message_t* const mes){
+..\Core\Src\message.c: 20 warnings, 0 errors
+compiling mytestprotocol_diver.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/mytestprotocol_driver.h(11): warning:  #1-D: last line of file ends without a newline
+  void mytestwifi_init(TestWifi_dev* const mydev, uint16_t dev_addr, const uint8_t* const dev_name, const uint8_t* const timer_name);
+..\Core\Src\mytestprotocol_diver.c(5): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("test wifi on\r\n");
+..\Core\Src\mytestprotocol_diver.c(6): warning:  #940-D: missing return statement at end of non-void function "on" 
+  }
+..\Core\Src\mytestprotocol_diver.c(8): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("test wifi off\r\n");
+..\Core\Src\mytestprotocol_diver.c(9): warning:  #940-D: missing return statement at end of non-void function "off" 
+  }
+..\Core\Src\mytestprotocol_diver.c(11): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("test wifi reset\r\n");
+..\Core\Src\mytestprotocol_diver.c(12): warning:  #940-D: missing return statement at end of non-void function "reset" 
+  }
+..\Core\Src\mytestprotocol_diver.c(14): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("test wifi connect\r\n");
+..\Core\Src\mytestprotocol_diver.c(15): warning:  #940-D: missing return statement at end of non-void function "connect" 
+  }
+..\Core\Src\mytestprotocol_diver.c(17): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("test wifi ioctl\r\n");
+..\Core\Src\mytestprotocol_diver.c(18): warning:  #940-D: missing return statement at end of non-void function "ioctl" 
+  }
+..\Core\Src\mytestprotocol_diver.c(20): warning:  #144-D: a value of type "uint8_t (*)(void *)" cannot be used to initialize an entity of type "int8_t (*)(void *)"
+  	.on = on,
+..\Core\Src\mytestprotocol_diver.c(21): warning:  #144-D: a value of type "uint8_t (*)(void *)" cannot be used to initialize an entity of type "int8_t (*)(void *)"
+  	.off = off,
+..\Core\Src\mytestprotocol_diver.c(22): warning:  #144-D: a value of type "uint8_t (*)(void *)" cannot be used to initialize an entity of type "int8_t (*)(void *)"
+  	.reset = reset,
+..\Core\Src\mytestprotocol_diver.c(23): warning:  #144-D: a value of type "uint8_t (*)(void *)" cannot be used to initialize an entity of type "int8_t (*)(void *)"
+  	.connect = connect,
+..\Core\Src\mytestprotocol_diver.c(32): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\mytestprotocol_diver.c(16): warning:  #177-D: function "ioctl"  was declared but never referenced
+  static uint8_t ioctl(void* my_dev, uint16_t cmd, uint32_t arg){
+..\Core\Src\mytestprotocol_diver.c: 20 warnings, 0 errors
+compiling common_dev.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\common_dev.c(32): warning:  #940-D: missing return statement at end of non-void function "common_dev_unregister" 
+  }
+..\Core\Src\common_dev.c(36): warning:  #940-D: missing return statement at end of non-void function "common_dev_del" 
+  }
+..\Core\Src\common_dev.c: 5 warnings, 0 errors
+compiling common_timer.c...
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\common_timer.c(5): warning:  #940-D: missing return statement at end of non-void function "start" 
+  }
+..\Core\Src\common_timer.c(10): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("\r\n xTimerCreate fail !!!\r\n");
+..\Core\Src\common_timer.c(12): warning:  #940-D: missing return statement at end of non-void function "create" 
+  }
+..\Core\Src\common_timer.c(17): warning:  #940-D: missing return statement at end of non-void function "change_period" 
+  }
+..\Core\Src\common_timer.c(21): warning:  #940-D: missing return statement at end of non-void function "Delete" 
+  }
+..\Core\Src\common_timer.c(25): warning:  #940-D: missing return statement at end of non-void function "stop" 
+  }
+..\Core\Src\common_timer.c(44): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\common_timer.c: 11 warnings, 0 errors
+compiling common_event.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+..\Core\Src\common_event.c(43): warning:  #181-D: argument is incompatible with corresponding format string conversion
+  	K_Log("type = %d   id = %d   data = %s", event_con.timer_temp_events[temp_event_id]->events.type, event_con.timer_temp_events[temp_event_id]->events.id, event_con.timer_temp_events[temp_event_id]->events.data);
+..\Core\Src\common_event.c(112): warning:  #177-D: variable "ret"  was declared but never referenced
+  	int8_t ret = 0;
+..\Core\Src\common_event.c(113): warning:  #177-D: variable "timer_ticks_delay"  was declared but never referenced
+  	uint32_t timer_ticks_delay = 0;
+..\Core\Src\common_event.c(114): warning:  #177-D: variable "loop_num_tmp"  was declared but never referenced
+  	int8_t loop_num_tmp = 0;
+..\Core\Src\common_event.c(163): warning:  #940-D: missing return statement at end of non-void function "common_event_destroy" 
+  }
+..\Core\Src\common_event.c: 10 warnings, 0 errors
+compiling mygui_driver.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/utils.h(5): warning:  #1-D: last line of file ends without a newline
+  uint16_t utils_calculate_check_num_uint16_t(uint8_t* msg,uint8_t index_start, uint8_t len);
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+..\Core\Src\mygui_driver.c(115): warning:  #940-D: missing return statement at end of non-void function "mygui_init" 
+  }
+..\Core\Src\mygui_driver.c: 13 warnings, 0 errors
+compiling mygui_api.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Core\Src\mygui_api.c: 10 warnings, 0 errors
+compiling mygui_FanDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_FanDLG.c(59): warning:  #177-D: variable "status"  was declared but never referenced
+  static char status = 0;//0Ϊ ر ״̬  1Ϊ    ״̬
+..\Middlewares\Third_Party\STemWin\Application\mygui_FanDLG.c: 11 warnings, 0 errors
+compiling mygui_HumDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_HumDLG.c(77): warning:  #177-D: variable "pData"  was declared but never referenced
+    const void * pData;
+..\Middlewares\Third_Party\STemWin\Application\mygui_HumDLG.c(79): warning:  #177-D: variable "FileSize"  was declared but never referenced
+    U32          FileSize;
+..\Middlewares\Third_Party\STemWin\Application\mygui_HumDLG.c: 12 warnings, 0 errors
+compiling mygui_LightDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_LightDLG.c(80): warning:  #177-D: variable "pData"  was declared but never referenced
+    const void * pData;
+..\Middlewares\Third_Party\STemWin\Application\mygui_LightDLG.c(82): warning:  #177-D: variable "FileSize"  was declared but never referenced
+    U32          FileSize;
+..\Middlewares\Third_Party\STemWin\Application\mygui_LightDLG.c: 12 warnings, 0 errors
+compiling mygui_MainDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+..\Middlewares\Third_Party\STemWin\Application\mygui_MainDLG.c: 11 warnings, 0 errors
+compiling mygui_TempDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c(77): warning:  #177-D: variable "pData"  was declared but never referenced
+    const void * pData;
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c(79): warning:  #177-D: variable "FileSize"  was declared but never referenced
+    U32          FileSize;
+..\Middlewares\Third_Party\STemWin\Application\mygui_TempDLG.c: 12 warnings, 0 errors
+compiling gui_poll_handle.c...
+../Core/Inc/gui_poll_handle.h(4): warning:  #1-D: last line of file ends without a newline
+  void gui_poll_handle(TaskHandle_t handle);
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Core\Src\gui_poll_handle.c(13): warning:  #167-D: argument of type "volatile Common_Task *" is incompatible with parameter of type "Common_Task *"
+  	common_task_init(&g_gui_poll_task.common_task, handle);
+..\Core\Src\gui_poll_handle.c(26): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\gui_poll_handle.c(11): warning:  #177-D: function "gui_poll_task_init"  was declared but never referenced
+  static void gui_poll_task_init(TaskHandle_t handle){
+..\Core\Src\gui_poll_handle.c: 14 warnings, 0 errors
+compiling wifi_app.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
   void common_event_init();
 ../Core/Inc/wifi_app.h(4): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
   int wifi_app_main();
@@ -48,55 +402,405 @@ compiling gui_app.c...
   QueueHandle_t app_get_wifiApp_queue();
 ../Core/Inc/wifi_app.h(5): warning:  #1295-D: Deprecated declaration app_get_wifiApp_queue - give arg types
   QueueHandle_t app_get_wifiApp_queue();
-..\Core\Src\gui_app.c(21): warning:  #223-D: function "printf" declared implicitly
-  		Error_Check(errQUEUE_FULL, xQueueSend( gui_app.queue, "event_gui_touch_wifi_connect", portMAX_DELAY));
-..\Core\Src\gui_app.c(31): warning:  #223-D: function "printf" declared implicitly
-  	Error_Check(-1, common_write(fd, &event1, sizeof(event1)));
-..\Core\Src\gui_app.c(37): warning:  #223-D: function "printf" declared implicitly
-  	Error_Check(-1, common_event_handler_register(Event_Type_Gui, Event_Id_Gui_Touch_Wifi_Connect, event_handler, NULL));
-..\Core\Src\gui_app.c(39): warning:  #223-D: function "printf" declared implicitly
-  	LOG("common_open fd = %d\r\n", gui.fd);
-..\Core\Src\gui_app.c(40): warning:  #223-D: function "printf" declared implicitly
-  	Error_Check(-1, gui.fd);
-..\Core\Src\gui_app.c(50): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-  				if(strncmp(buf, "event_gui_touch_wifi_connect", strlen("event_gui_touch_wifi_connect")) == 0){
-..\Core\Src\gui_app.c(54): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-  				if(strncmp(buf, "event_gui_touch_net_connect", strlen("event_gui_touch_net_connect")) == 0){
-..\Core\Src\gui_app.c(59): warning:  #1-D: last line of file ends without a newline
+..\Core\Src\wifi_app.c(106): warning:  #1-D: last line of file ends without a newline
   }
-..\Core\Src\gui_app.c(24): warning:  #177-D: function "write_fd_event"  was declared but never referenced
-  static int8_t write_fd_event(int8_t fd, uint16_t event_type, uint16_t event_id, uint8_t* buf, uint16_t buf_len){
-..\Core\Src\gui_app.c: 19 warnings, 0 errors
-compiling common_event.c...
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+..\Core\Src\wifi_app.c(70): warning:  #177-D: variable "buf"  was declared but never referenced
+  		uint8_t buf[25] = {0};
+..\Core\Src\wifi_app.c: 9 warnings, 0 errors
+compiling gui_app.c...
+../Core/Inc/gui_app.h(4): warning:  #1-D: last line of file ends without a newline
+  int gui_app_main();
+../Core/Inc/gui_app.h(4): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
+  int gui_app_main();
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
   void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/common_event.h(34): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
   void common_event_init();
+../Core/Inc/wifi_app.h(4): warning:  #1295-D: Deprecated declaration wifi_app_main - give arg types
+  int wifi_app_main();
+../Core/Inc/wifi_app.h(5): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/wifi_app.h(5): warning:  #1295-D: Deprecated declaration app_get_wifiApp_queue - give arg types
+  QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/fingerprint_app.h(5): warning:  #1295-D: Deprecated declaration fingerprint_app_main - give arg types
+  int fingerprint_app_main();
+../Core/Inc/fingerprint_app.h(6): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_fingerprintApp_queue();
+../Core/Inc/fingerprint_app.h(6): warning:  #1295-D: Deprecated declaration app_get_fingerprintApp_queue - give arg types
+  QueueHandle_t app_get_fingerprintApp_queue();
+..\Core\Src\gui_app.c(69): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\gui_app.c(23): warning:  #177-D: function "write_fd_event"  was declared but never referenced
+  static int8_t write_fd_event(int8_t fd, uint16_t event_type, uint16_t event_id, uint8_t* buf, uint16_t buf_len){
+..\Core\Src\gui_app.c: 14 warnings, 0 errors
+compiling fingerprint_app.c...
+../Core/Inc/fingerprint_app.h(5): warning:  #1295-D: Deprecated declaration fingerprint_app_main - give arg types
+  int fingerprint_app_main();
+../Core/Inc/fingerprint_app.h(6): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_fingerprintApp_queue();
+../Core/Inc/fingerprint_app.h(6): warning:  #1295-D: Deprecated declaration app_get_fingerprintApp_queue - give arg types
+  QueueHandle_t app_get_fingerprintApp_queue();
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+..\Core\Src\fingerprint_app.c(119): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\fingerprint_app.c(84): warning:  #177-D: variable "buf"  was declared but never referenced
+  		uint8_t buf[25] = {0};
+..\Core\Src\fingerprint_app.c: 9 warnings, 0 errors
+compiling message_handle.c...
+../Core/Inc/message_handle.h(2): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
+  void uart1_interrupt_handle();
+../Core/Inc/message_handle.h(3): warning:  #1295-D: Deprecated declaration uart2_interrupt_handle - give arg types
+  void uart2_interrupt_handle();
+../Core/Inc/message_handle.h(4): warning:  #1-D: last line of file ends without a newline
+  void message_handle(const void* const handle);
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/wifi_task.h(12): warning:  #1295-D: Deprecated declaration wifi_get_Wifi_Queue - give arg types
+  QueueHandle_t wifi_get_Wifi_Queue();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/dev_urgent_handle.h(5): warning:  #1295-D: Deprecated declaration dev_urgent_handle - give arg types
+  void dev_urgent_handle();
+../Core/Inc/dev_urgent_handle.h(6): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t dev_urgent_handle_get_task_queue();
+../Core/Inc/dev_urgent_handle.h(6): warning:  #1295-D: Deprecated declaration dev_urgent_handle_get_task_queue - give arg types
+  QueueHandle_t dev_urgent_handle_get_task_queue();
 ../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
   void commom_timer_init(Common_Timer* commom_timer);
-..\Core\Src\common_event.c(138): warning:  #177-D: variable "ret"  was declared but never referenced
-  	int8_t ret = 0;
-..\Core\Src\common_event.c(139): warning:  #177-D: variable "timer_ticks_delay"  was declared but never referenced
-  	uint32_t timer_ticks_delay = 0;
-..\Core\Src\common_event.c(140): warning:  #177-D: variable "loop_num_tmp"  was declared but never referenced
-  	int8_t loop_num_tmp = 0;
-..\Core\Src\common_event.c(29): warning:  #177-D: function "common_find_event_by_timer_id"  was declared but never referenced
-  static Common_Event* common_find_event_by_timer_id(int16_t timer_id){
-..\Core\Src\common_event.c: 10 warnings, 0 errors
-compiling freertos.c...
-../Core/Inc/common_dev.h(47): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+../Core/Inc/leinuo_driver.h(18): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
+  int8_t leinuo_dev_init();
+../Core/Inc/leinuo_driver.h(20): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
+  operations* leinuo_get_mydev_p();
+..\Core\Src\message_handle.c(81): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t i = 0;
+..\Core\Src\message_handle.c(82): warning:  #177-D: variable "dest_addr"  was declared but never referenced
+  	int16_t dest_addr = 0;
+..\Core\Src\message_handle.c(83): warning:  #177-D: variable "message_type"  was declared but never referenced
+  	uint8_t message_type = 0;
+..\Core\Src\message_handle.c(84): warning:  #177-D: variable "dev"  was declared but never referenced
+  	Dev* dev = 0;
+..\Core\Src\message_handle.c(85): warning:  #177-D: variable "index_useful"  was declared but never referenced
+  	uint8_t index_useful = 0;
+..\Core\Src\message_handle.c(86): warning:  #177-D: variable "temp_data"  was declared but never referenced
+  	uint8_t temp_data[FRAME_MAX_LEN] = {};
+..\Core\Src\message_handle.c(88): warning:  #177-D: variable "urgent_handle_get_task_queue"  was declared but never referenced
+  	QueueHandle_t urgent_handle_get_task_queue = NULL;
+..\Core\Src\message_handle.c(89): warning:  #177-D: variable "mes_type"  was declared but never referenced
+  	uint8_t mes_type = 0;
+..\Core\Src\message_handle.c: 22 warnings, 0 errors
+compiling uart_driver.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
   dev_controller* common_dev_get_controller();
-../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
   void dev_poll_handle();
-../Core/Inc/message.h(13): warning:  #1565-D: white space between backslash and newline in line splice ignored
-  					while(!log_flag){vTaskDelay(1);}	\	
-../Core/Inc/message.h(184): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/uart_driver.h(14): warning:  #1295-D: Deprecated declaration uart_dev_init - give arg types
+  int8_t uart_dev_init();
+../Core/Inc/utils.h(5): warning:  #1-D: last line of file ends without a newline
+  uint16_t utils_calculate_check_num_uint16_t(uint8_t* msg,uint8_t index_start, uint8_t len);
+..\Core\Src\uart_driver.c(10): warning:  #940-D: missing return statement at end of non-void function "on" 
+  }
+..\Core\Src\uart_driver.c(13): warning:  #940-D: missing return statement at end of non-void function "off" 
+  }
+..\Core\Src\uart_driver.c(16): warning:  #940-D: missing return statement at end of non-void function "reset" 
+  }
+..\Core\Src\uart_driver.c(19): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("leinuo timer callback\r\n");
+..\Core\Src\uart_driver.c(26): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("HAL_UART1_Transmit error\r\n");
+..\Core\Src\uart_driver.c(29): warning:  #940-D: missing return statement at end of non-void function "uart_send_msg" 
+  }
+..\Core\Src\uart_driver.c(34): warning:  #223-D: function "printf" declared implicitly
+  	A_Log("msg_parse dev name = %s\r\n", mydev->dev.name);
+..\Core\Src\uart_driver.c(38): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("not found protocol_name\r\n");
+..\Core\Src\uart_driver.c(39): warning:  #68-D: integer conversion resulted in a change of sign
+  		return -1;
+..\Core\Src\uart_driver.c(50): warning:  #223-D: function "printf" declared implicitly
+  				A_Log("Message_Uart_Send\r\n");
+..\Core\Src\uart_driver.c(58): warning:  #940-D: missing return statement at end of non-void function "msg_parse" 
+  }
+..\Core\Src\uart_driver.c(69): warning:  #223-D: function "printf" declared implicitly
+  			A_Log("dev_mydev_%d create uart_dev error\r\n", i);
+..\Core\Src\uart_driver.c(77): warning:  #223-D: function "printf" declared implicitly
+  			A_Log("xQueueCreate heap is full\r\n");
+..\Core\Src\uart_driver.c(82): warning:  #223-D: function "printf" declared implicitly
+  			A_Log("dev %d add err\r\n", i);
+..\Core\Src\uart_driver.c(87): warning:  #223-D: function "printf" declared implicitly
+  			A_Log("xSemaphoreCreateMutex %d err\r\n", i);
+..\Core\Src\uart_driver.c(112): warning:  #940-D: missing return statement at end of non-void function "uart_dev_init" 
+  }
+..\Core\Src\uart_driver.c(9): warning:  #177-D: function "on"  was declared but never referenced
+  static uint8_t on(void* my_dev){
+..\Core\Src\uart_driver.c(12): warning:  #177-D: function "off"  was declared but never referenced
+  static uint8_t off(void* my_dev){
+..\Core\Src\uart_driver.c(15): warning:  #177-D: function "reset"  was declared but never referenced
+  static uint8_t reset(void* my_dev){
+..\Core\Src\uart_driver.c(18): warning:  #177-D: function "timer_callback"  was declared but never referenced
+  static void timer_callback(TimerHandle_t xTimer){
+..\Core\Src\uart_driver.c(32): warning:  #177-D: function "msg_parse"  was declared but never referenced
+  static uint8_t msg_parse(void* my_dev, uint8_t* buf, uint8_t len){
+..\Core\Src\uart_driver.c: 27 warnings, 0 errors
+compiling main.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 3 warnings, 0 errors
+compiling dev_handle.c...
+../Core/Inc/dev_handle.h(2): warning:  #1-D: last line of file ends without a newline
+  void dev_handle();
+../Core/Inc/dev_handle.h(2): warning:  #1295-D: Deprecated declaration dev_handle - give arg types
+  void dev_handle();
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/leinuo_driver.h(18): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
+  int8_t leinuo_dev_init();
+../Core/Inc/leinuo_driver.h(20): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
+  operations* leinuo_get_mydev_p();
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/uart_driver.h(14): warning:  #1295-D: Deprecated declaration uart_dev_init - give arg types
+  int8_t uart_dev_init();
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+../Core/Inc/fingerprint_driver.h(18): warning:  #1295-D: Deprecated declaration fingerprint_dev_init - give arg types
+  int8_t fingerprint_dev_init();
+../Core/Inc/fingerprint_driver.h(20): warning:  #1295-D: Deprecated declaration fingerprint_get_mydev_p - give arg types
+  operations* fingerprint_get_mydev_p();
+../Core/Inc/fingerprint_driver.h(22): warning:  #1-D: last line of file ends without a newline
+  uint8_t fingerprint_is_leinuo_protocol(uint8_t* frame);
+..\Core\Src\dev_handle.c(38): warning:  #1-D: last line of file ends without a newline
+  //}
+..\Core\Src\dev_handle.c(10): warning:  #177-D: variable "dev_con"  was declared but never referenced
+  static dev_controller* dev_con;
+..\Core\Src\dev_handle.c: 17 warnings, 0 errors
+compiling ft5206.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\HARDWARE\TOUCH\ft5206.c(104): warning:  #223-D: function "printf" declared implicitly
+  		A_Log("CTP ID:%x\r\n",((u16)temp[0]<<8)+temp[1]);
+..\HARDWARE\TOUCH\ft5206.c: 4 warnings, 0 errors
+compiling fingerprint_driver.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/fingerprint_driver.h(18): warning:  #1295-D: Deprecated declaration fingerprint_dev_init - give arg types
+  int8_t fingerprint_dev_init();
+../Core/Inc/fingerprint_driver.h(20): warning:  #1295-D: Deprecated declaration fingerprint_get_mydev_p - give arg types
+  operations* fingerprint_get_mydev_p();
+../Core/Inc/fingerprint_driver.h(22): warning:  #1-D: last line of file ends without a newline
+  uint8_t fingerprint_is_leinuo_protocol(uint8_t* frame);
+../Core/Inc/utils.h(5): warning:  #1-D: last line of file ends without a newline
+  uint16_t utils_calculate_check_num_uint16_t(uint8_t* msg,uint8_t index_start, uint8_t len);
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+..\Core\Src\fingerprint_driver.c(57): warning:  #940-D: missing return statement at end of non-void function "fingerprint_encapsulate_command_mes_and_send" 
+  }
+..\Core\Src\fingerprint_driver.c(76): warning:  #111-D: statement is unreachable
+  			break;
+..\Core\Src\fingerprint_driver.c(127): warning:  #940-D: missing return statement at end of non-void function "fingerprint_parse_msg" 
+  }
+..\Core\Src\fingerprint_driver.c(134): warning:  #68-D: integer conversion resulted in a change of sign
+  		return -1;
+..\Core\Src\fingerprint_driver.c(137): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	if(strncmp(mydev->dev.name, "fingerprint1", strlen("fingerprint1")) == 0){
+..\Core\Src\fingerprint_driver.c(146): warning:  #68-D: integer conversion resulted in a change of sign
+  			return -1;
+..\Core\Src\fingerprint_driver.c(149): warning:  #68-D: integer conversion resulted in a change of sign
+  			return -1;
+..\Core\Src\fingerprint_driver.c(153): warning:  #940-D: missing return statement at end of non-void function "fingerprint_uart_msg_recv" 
+  }
+..\Core\Src\fingerprint_driver.c(157): warning:  #940-D: missing return statement at end of non-void function "fingerprint_connct_timeout" 
+  }
+..\Core\Src\fingerprint_driver.c(162): warning:  #940-D: missing return statement at end of non-void function "fingerprint_connct_suc" 
+  }
+..\Core\Src\fingerprint_driver.c(197): warning:  #188-D: enumerated type mixed with another type
+  						HAL_GPIO_WritePin(finger_vcc_d1_GPIO_Port, finger_vcc_d1_Pin, 1);
+..\Core\Src\fingerprint_driver.c(198): warning:  #188-D: enumerated type mixed with another type
+  						HAL_GPIO_WritePin(finger_vcc_d2_GPIO_Port, finger_vcc_d2_Pin, 1);
+..\Core\Src\fingerprint_driver.c(220): warning:  #940-D: missing return statement at end of non-void function "write" 
+  }
+..\Core\Src\fingerprint_driver.c(173): warning:  #177-D: variable "ret"  was declared but never referenced
+  	int8_t ret = -1;
+..\Core\Src\fingerprint_driver.c(258): warning:  #940-D: missing return statement at end of non-void function "fingerprint_dev_init" 
+  }
+..\Core\Src\fingerprint_driver.c(155): warning:  #177-D: function "fingerprint_connct_timeout"  was declared but never referenced
+  static int8_t fingerprint_connct_timeout(){
+..\Core\Src\fingerprint_driver.c(159): warning:  #177-D: function "fingerprint_connct_suc"  was declared but never referenced
+  static int8_t fingerprint_connct_suc(){
+..\Core\Src\fingerprint_driver.c: 26 warnings, 0 errors
+compiling myLcd.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\HARDWARE\LCD\myLcd.c: 3 warnings, 0 errors
+compiling dev_urgent_handle.c...
+../Core/Inc/dev_urgent_handle.h(5): warning:  #1295-D: Deprecated declaration dev_urgent_handle - give arg types
+  void dev_urgent_handle();
+../Core/Inc/dev_urgent_handle.h(6): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t dev_urgent_handle_get_task_queue();
+../Core/Inc/dev_urgent_handle.h(6): warning:  #1295-D: Deprecated declaration dev_urgent_handle_get_task_queue - give arg types
+  QueueHandle_t dev_urgent_handle_get_task_queue();
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/wifi_task.h(12): warning:  #1295-D: Deprecated declaration wifi_get_Wifi_Queue - give arg types
+  QueueHandle_t wifi_get_Wifi_Queue();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+..\Core\Src\dev_urgent_handle.c(24): warning:  #177-D: function "dev_urgent_handle_init"  was declared but never referenced
+  static void dev_urgent_handle_init(){
+..\Core\Src\dev_urgent_handle.c: 9 warnings, 0 errors
+compiling gt9147.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\HARDWARE\TOUCH\gt9147.c: 3 warnings, 0 errors
+compiling leinuo_driver.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/leinuo_driver.h(18): warning:  #1295-D: Deprecated declaration leinuo_dev_init - give arg types
+  int8_t leinuo_dev_init();
+../Core/Inc/leinuo_driver.h(20): warning:  #1295-D: Deprecated declaration leinuo_get_mydev_p - give arg types
+  operations* leinuo_get_mydev_p();
+../Core/Inc/utils.h(5): warning:  #1-D: last line of file ends without a newline
+  uint16_t utils_calculate_check_num_uint16_t(uint8_t* msg,uint8_t index_start, uint8_t len);
+../Core/Inc/common_event.h(56): warning:  #1295-D: Deprecated declaration common_event_init - give arg types
+  void common_event_init();
+..\Core\Src\leinuo_driver.c(15): warning:  #1295-D: Deprecated declaration leinuo_connct_timeout - give arg types
+  static int8_t leinuo_connct_timeout();
+..\Core\Src\leinuo_driver.c(16): warning:  #1295-D: Deprecated declaration leinuo_connct_suc - give arg types
+  static int8_t leinuo_connct_suc();
+..\Core\Src\leinuo_driver.c(23): warning:  #68-D: integer conversion resulted in a change of sign
+  		return -1;
+..\Core\Src\leinuo_driver.c(26): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	if(strncmp(mydev->dev.name, "LeiNuoWifi1", strlen("LeiNuoWifi1")) == 0){
+..\Core\Src\leinuo_driver.c(29): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if(strncmp(buf, "leinuo1 connect suc", len) == 0){
+..\Core\Src\leinuo_driver.c(37): warning:  #940-D: missing return statement at end of non-void function "leinuo_uart_msg_recv" 
+  }
+..\Core\Src\leinuo_driver.c(41): warning:  #940-D: missing return statement at end of non-void function "leinuo_connct" 
+  }
+..\Core\Src\leinuo_driver.c(45): warning:  #940-D: missing return statement at end of non-void function "leinuo_connct_timeout" 
+  }
+..\Core\Src\leinuo_driver.c(50): warning:  #940-D: missing return statement at end of non-void function "leinuo_connct_suc" 
+  }
+..\Core\Src\leinuo_driver.c(95): warning:  #940-D: missing return statement at end of non-void function "write" 
+  }
+..\Core\Src\leinuo_driver.c(61): warning:  #177-D: variable "ret"  was declared but never referenced
+  	int8_t ret = -1;
+..\Core\Src\leinuo_driver.c(143): warning:  #940-D: missing return statement at end of non-void function "leinuo_dev_init" 
+  }
+..\Core\Src\leinuo_driver.c(43): warning:  #177-D: function "leinuo_connct_timeout"  was declared but never referenced
+  static int8_t leinuo_connct_timeout(){
+..\Core\Src\leinuo_driver.c(47): warning:  #177-D: function "leinuo_connct_suc"  was declared but never referenced
+  static int8_t leinuo_connct_suc(){
+..\Core\Src\leinuo_driver.c: 22 warnings, 0 errors
+compiling mygui_LedDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_LedDLG.c: 10 warnings, 0 errors
+compiling mygui_AlarmDLG.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/common_timer.h(24): warning:  #1-D: last line of file ends without a newline
+  void commom_timer_init(Common_Timer* commom_timer);
+../Core/Inc/mygui_driver.h(49): warning:  #1295-D: Deprecated declaration mygui_init - give arg types
+  int8_t mygui_init();
+../Core/Inc/mygui_driver.h(50): warning:  #1295-D: Deprecated declaration mygui_get_mydev_p - give arg types
+  operations* mygui_get_mydev_p();
+../Core/Inc/gui_task.h(12): warning:  #1295-D: Deprecated declaration gui_get_gui_Queue - give arg types
+  QueueHandle_t gui_get_gui_Queue();
+../Core/Inc/mygui_api.h(32): warning:  #1295-D: Deprecated declaration mygui_show_ui_temp - give arg types
+  void mygui_show_ui_temp();
+../Core/Inc/mygui_api.h(40): warning:  #1295-D: Deprecated declaration mygui_show_ui_main - give arg types
+  void mygui_show_ui_main();
+../Core/Inc/mygui_api.h(46): warning:  #1295-D: Deprecated declaration mygui_poll_task_handle - give arg types
+  void mygui_poll_task_handle();
+..\Middlewares\Third_Party\STemWin\Application\mygui_AlarmDLG.c(63): warning:  #177-D: variable "status"  was declared but never referenced
+  static char status = 0;//报警装置的状�?
+..\Middlewares\Third_Party\STemWin\Application\mygui_AlarmDLG.c: 11 warnings, 0 errors
+compiling freertos.c...
+../Core/Inc/common_dev.h(49): warning:  #1295-D: Deprecated declaration common_dev_get_controller - give arg types
+  dev_controller* common_dev_get_controller();
+../Core/Inc/common_dev.h(51): warning:  #1295-D: Deprecated declaration dev_poll_handle - give arg types
+  void dev_poll_handle();
+../Core/Inc/message.h(223): warning:  #1-D: last line of file ends without a newline
   #endif
 ../Core/Inc/gui_poll_handle.h(4): warning:  #1-D: last line of file ends without a newline
   void gui_poll_handle(TaskHandle_t handle);
@@ -124,19 +828,27 @@ compiling freertos.c...
   QueueHandle_t app_get_wifiApp_queue();
 ../Core/Inc/wifi_app.h(5): warning:  #1295-D: Deprecated declaration app_get_wifiApp_queue - give arg types
   QueueHandle_t app_get_wifiApp_queue();
+../Core/Inc/fingerprint_app.h(5): warning:  #1295-D: Deprecated declaration fingerprint_app_main - give arg types
+  int fingerprint_app_main();
+../Core/Inc/fingerprint_app.h(6): warning:  #1-D: last line of file ends without a newline
+  QueueHandle_t app_get_fingerprintApp_queue();
+../Core/Inc/fingerprint_app.h(6): warning:  #1295-D: Deprecated declaration app_get_fingerprintApp_queue - give arg types
+  QueueHandle_t app_get_fingerprintApp_queue();
 ../Core/Inc/gui_app.h(4): warning:  #1-D: last line of file ends without a newline
   int gui_app_main();
 ../Core/Inc/gui_app.h(4): warning:  #1295-D: Deprecated declaration gui_app_main - give arg types
   int gui_app_main();
 ../Core/Inc/message_handle.h(2): warning:  #1295-D: Deprecated declaration uart1_interrupt_handle - give arg types
   void uart1_interrupt_handle();
-../Core/Inc/message_handle.h(3): warning:  #1-D: last line of file ends without a newline
+../Core/Inc/message_handle.h(3): warning:  #1295-D: Deprecated declaration uart2_interrupt_handle - give arg types
+  void uart2_interrupt_handle();
+../Core/Inc/message_handle.h(4): warning:  #1-D: last line of file ends without a newline
   void message_handle(const void* const handle);
-../Core/Src/freertos.c: 21 warnings, 0 errors
+../Core/Src/freertos.c: 24 warnings, 0 errors
 linking...
-Program Size: Code=121948 RO-data=266228 RW-data=804 ZI-data=44592  
+Program Size: Code=127712 RO-data=267032 RW-data=768 ZI-data=34940  
 FromELF: creating hex file...
-"mylot\mylot.axf" - 0 Error(s), 50 Warning(s).
+"mylot\mylot.axf" - 0 Error(s), 379 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -160,7 +872,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:15
 </pre>
 </body>
 </html>

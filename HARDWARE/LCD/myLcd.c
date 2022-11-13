@@ -548,7 +548,7 @@ void LCD_Init(void)
 			} 
 		}
 	}   
-	LOG(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID   
+	A_Log(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID   
 	if(lcddev.id==0X9341)	//9341初始化
 	{	 
 		LCD_WR_REG(0xCF);  
